@@ -2,6 +2,8 @@ require 'spec_helper'
 
 describe "StaticPages" do
 
+	let(:base_title) { "Grandstream Certification" }
+
   describe "Home page" do
     it "should have the content 'Grandstream Certification'" do
       visit '/static_pages/home'
@@ -9,7 +11,7 @@ describe "StaticPages" do
     end
     it "should have the right title" do 
 			visit '/static_pages/home'
-			expect(page).to have_title("Grandstream Certification | Home")
+			expect(page).to have_title("#{base_title} | Home")
 		end
   end
   
