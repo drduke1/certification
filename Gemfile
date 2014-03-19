@@ -4,6 +4,7 @@ gem 'rails', '4.0.4'
 gem 'railties', '4.0.4'
 gem 'activesupport', '4.0.4'
 gem 'bootstrap-sass', '3.0'
+gem 'bcrypt-ruby', '3.1.2'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'
