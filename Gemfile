@@ -3,7 +3,7 @@ ruby '2.1.1'
 gem 'rails', '4.0.4'
 gem 'railties', '4.0.4'
 gem 'activesupport', '4.0.4'
-gem 'bootstrap-sass', '3.0'
+gem 'bootstrap-sass', '2.3.2.0'
 gem 'bcrypt-ruby', '3.1.2'
 
 group :development, :test do
