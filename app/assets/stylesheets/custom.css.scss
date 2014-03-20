@@ -84,6 +84,7 @@ p {
 
 /* forms */
 
+
 input, textarea, select, .uneditable-input {
 	border: 1px solid #bbb;
 	width: 100%;
@@ -91,9 +92,11 @@ input, textarea, select, .uneditable-input {
 	@include box_sizing;
 }
 
+
 input {
 	height: auto !important;
 }
+
 
 #error-explanation {
 	color: #f00;
@@ -168,4 +171,19 @@ footer {
 	width: 100%;
 	margin-top: 45px;
 	@include box_sizing;
+}
+
+/* Users index */
+
+.users {
+	list-style: none;
+	margin: 0;
+	li {
+		overflow: auto;
+		padding: 10px 0;
+		border-top: 1px solid $gray-lighter;
+		&:last-child {
+			border-bottom: 1px solid $gray-lighter;
+		}
+	}
 }

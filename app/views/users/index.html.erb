@@ -1,4 +1,14 @@
-<h1>Listing users</h1>
+<% provide(:title, 'All Users') %>
+
+<h1>All Users</h1>
+
+<%= will_paginate %>
+
+<ul class="users">
+	<%= render @users %>
+</ul>
+
+<%= will_paginate %>
 
 <table>
   <thead>
