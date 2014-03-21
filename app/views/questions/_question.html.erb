@@ -1,0 +1,16 @@
+<li>
+	<%= link_to "#{question.id}. #{question.content}", question %>
+	<div class="pull-right">
+		| <small><%= question.question_type %></small>
+		| <small><%= Product.find(question.product_id).name %></small> |
+		<%= link_to question do %>
+			<i class="glyphicon glyphicon-zoom-in"></i>
+		<% end %>
+		<%= link_to edit_question_path(question) do %>
+			<i class="glyphicon glyphicon-pencil"></i>
+		<% end %>
+		<%= link_to question, method: :delete, data: { confirm: 'Are you sure?' } do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %>
+	</div>
+</li>

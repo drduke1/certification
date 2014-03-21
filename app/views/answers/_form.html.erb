@@ -1,29 +1,22 @@
 <%= form_for(@answer) do |f| %>
-  <% if @answer.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@answer.errors.count, "error") %> prohibited this answer from being saved:</h2>
+  <%= render 'shared/error_answers' %>
+  
+    <%= f.label :content, "Answer" %>
+    <%= f.text_field :content, class: "input-lg" %>
 
-      <ul>
-      <% @answer.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
-
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_field :content %>
-  </div>
-  <div class="field">
-    <%= f.label :question_id %><br>
-    <%= f.number_field :question_id %>
-  </div>
-  <div class="field">
-    <%= f.label :correct %><br>
+    <%= f.label :correct, "Correct Answer?" %><br>
     <%= f.check_box :correct %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
+    
+    <%= f.number_field :question_id, style: "visibility: hidden" %>
+
+    <%= f.submit "Update Answer", class: "btn btn-lg btn-primary" %>
+
 <% end %>
+
+<script>
+	$(document).ready(function(){
+		$("#answer_correct").bootstrapSwitch('onText', 'Yes');
+		$("#answer_correct").bootstrapSwitch('offText', 'No');
+		$("#answer_correct").bootstrapSwitch('size', 'large');
+	});
+</script>

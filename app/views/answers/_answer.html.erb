@@ -1,0 +1,15 @@
+<% if answer.correct %>
+	<li class="alert alert-success">	
+<% else %>
+	<li class="alert alert-danger">
+<% end %>
+		<%= answer.content %>
+		<div class="pull-right">
+			<%= link_to edit_answer_path(answer) do %>
+				<span class="glyphicon glyphicon-pencil"></span>
+			<% end %>
+			<%= link_to answer, method: :delete, data: { confirm: 'Are you sure?' } do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %>
+		</div>
+	</li>

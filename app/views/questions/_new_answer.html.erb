@@ -1,0 +1,23 @@
+<%= form_for(@answer) do |f| %>
+
+	<%= render 'shared/error_answers' %>
+
+  <%= f.label :content %><br>
+  <%= f.text_field :content, class: "input-lg" %>
+
+  <%= f.label :correct, "Correct Answer?" %><br>
+  <%= f.check_box :correct %>
+
+  <%= f.number_field :question_id, class: "input-lg", value: @question.id, style: "visibility: hidden" %>
+
+  <%= f.submit "Add Answer", class: "btn btn-lg btn-primary" %>
+    
+<% end %>
+
+<script>
+	$(document).ready(function(){
+		$("#answer_correct").bootstrapSwitch('onText', 'Yes');
+		$("#answer_correct").bootstrapSwitch('offText', 'No');
+		$("#answer_correct").bootstrapSwitch('size', 'large');
+	});
+</script>

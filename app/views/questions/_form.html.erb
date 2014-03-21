@@ -1,37 +1,22 @@
-<%= form_for(@question) do |f| %>
-  <% if @question.errors.any? %>
-    <div id="error_explanation">
-      <h2><%= pluralize(@question.errors.count, "error") %> prohibited this question from being saved:</h2>
+<%= f.label :content, "Question" %><br>
+<%= f.text_field :content, class: "input-lg" %>
 
-      <ul>
-      <% @question.errors.full_messages.each do |msg| %>
-        <li><%= msg %></li>
-      <% end %>
-      </ul>
-    </div>
-  <% end %>
+<%= f.label :question_type %><br>
+<%= f.select :question_type, [ ["Multiple Choice", "MC"], ["True or False", "TF"] ], {prompt: "Select a type"}, {class: "form-control input-lg"} %>
 
-  <div class="field">
-    <%= f.label :content %><br>
-    <%= f.text_field :content %>
-  </div>
-  <div class="field">
-    <%= f.label :question_type %><br>
-    <%= f.text_field :question_type %>
-  </div>
-  <div class="field">
-    <%= f.label :category %><br>
-    <%= f.text_field :category %>
-  </div>
-  <div class="field">
-    <%= f.label :product_id %><br>
-    <%= f.number_field :product_id %>
-  </div>
-  <div class="field">
-    <%= f.label :active %><br>
-    <%= f.check_box :active %>
-  </div>
-  <div class="actions">
-    <%= f.submit %>
-  </div>
-<% end %>
+<%= f.label :category %><br>
+<%= f.text_field :category, class: "input-lg" %>
+
+<%= f.label :product_id %><br>
+<%= f.collection_select :product_id, Product.all, :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg"} %>
+
+<%= f.label :active %><br>
+<%= f.check_box :active %>
+
+<script>
+	$(document).ready(function(){
+		$("#question_active").bootstrapSwitch('onText', 'Active');
+		$("#question_active").bootstrapSwitch('offText', 'Off');
+		$("#question_active").bootstrapSwitch('size', 'large');
+	});
+</script>

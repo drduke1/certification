@@ -1,20 +1,24 @@
 class QuestionsController < ApplicationController
-  before_action :set_question, only: [:show, :edit, :update, :destroy]
+  before_action :set_question, only: [:show, :edit, :update, :destroy]  
+  before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
+
 
   # GET /questions
   # GET /questions.json
   def index
-    @questions = Question.all
+    @questions = Question.paginate(page: params[:page], per_page: 10)
   end
 
   # GET /questions/1
   # GET /questions/1.json
   def show
+  	@answer = Answer.new
   end
 
   # GET /questions/new
   def new
     @question = Question.new
+    @products = Product.all
   end
 
   # GET /questions/1/edit
@@ -71,4 +75,13 @@ class QuestionsController < ApplicationController
     def question_params
       params.require(:question).permit(:content, :question_type, :category, :product_id, :active)
     end
+    
+    # Before filters
+    def signed_in_user
+    	unless signed_in?
+    		store_location
+	    	redirect_to signin_url, notice: "Please sign in."
+	    end
+    end
+
 end

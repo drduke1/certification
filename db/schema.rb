@@ -11,12 +11,12 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320123227) do
+ActiveRecord::Schema.define(version: 20140320132346) do
 
   create_table "answers", force: true do |t|
     t.string   "content"
     t.integer  "question_id"
-    t.boolean  "correct"
+    t.boolean  "correct",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end
@@ -27,6 +27,8 @@ ActiveRecord::Schema.define(version: 20140320123227) do
     t.datetime "updated_at"
   end
 
+  add_index "products", ["id"], name: "index_products_on_id"
+
   create_table "questions", force: true do |t|
     t.string   "content"
     t.string   "question_type"
@@ -36,6 +38,8 @@ ActiveRecord::Schema.define(version: 20140320123227) do
     t.datetime "created_at"
     t.datetime "updated_at"
   end
+
+  add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
 
   create_table "users", force: true do |t|
     t.string   "name"
