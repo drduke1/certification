@@ -5,11 +5,11 @@ class Question < ActiveRecord::Base
 	default_scope -> { order('created_at ASC') }
 	
 	  
-  @@category_check = ['ip_voice', 'ip_pbx', 'ip_video_surveillance', 'ip_video_telephony', 'consumer_atas', 'enterprise_gateways']  
+  @category_check = ['ip_voice', 'ip_pbx', 'ip_video_surveillance', 'ip_video_telephony', 'consumer_atas', 'enterprise_gateways']  
     
   validates :product_id, presence: true
   validates :content, length: { maximum: 1000 }
-  validates_inclusion_of :category, in: @@category_check
+  validates_inclusion_of :category, in: @category_check
       
    # private
    # def self.category_check
