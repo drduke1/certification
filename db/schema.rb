@@ -27,7 +27,7 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.datetime "updated_at"
   end
 
-  add_index "products", ["id"], name: "index_products_on_id"
+  add_index "products", ["id"], name: "index_products_on_id", using: :btree
 
   create_table "questions", force: true do |t|
     t.string   "content"
@@ -39,7 +39,7 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.datetime "updated_at"
   end
 
-  add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
+  add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at", using: :btree
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -51,7 +51,7 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.boolean  "admin",           default: false
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
+  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
 
 end

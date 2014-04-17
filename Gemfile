@@ -3,7 +3,7 @@ ruby '2.1.1'
 gem 'rails', '4.0.4'
 gem 'railties', '4.0.4'
 gem 'activesupport', '4.0.4'
-gem 'bootstrap-sass', '3.0'
+gem 'bootstrap-sass', '3.1.1'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate'
@@ -31,5 +31,6 @@ group :doc do
 end
 
 group :production do
-	gem 'rails_12factor', '0.0.2'
+  gem 'mysql2'
+  gem 'rails_12factor', '0.0.2'
 end
