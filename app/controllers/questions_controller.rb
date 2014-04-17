@@ -31,7 +31,6 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-    #the answers are not getting the question_id because they are not assigned yet.
 
     respond_to do |format|
       if @question.save
@@ -76,7 +75,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:question_type, :category, :product_id, :active, answers_attributes: [ :content, :correct, :question_id ] )
+      params.require(:question).permit(:content, :question_type, :category, :product_id, :active, answers_attributes: [ :content, :correct, :question_id ] )
     end
 #    def question_params
 #      params.require(:question).permit(:content, :question_type, :category, :product_id, :active)
