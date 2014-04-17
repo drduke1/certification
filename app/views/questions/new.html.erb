@@ -5,6 +5,12 @@
 	<%= render 'shared/error_questions' %>
 
   <%= render 'form', f: f %>
+ 
+<h1>Answers</h1>
+
+  <%= f.fields_for :answers do |builder| %>
+  	<%= render 'four_answers', :f => builder %>
+  <% end %>
 
   <%= f.submit "Create Question", class: "btn btn-lg btn-primary" %>
 <% end %>
