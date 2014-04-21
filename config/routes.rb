@@ -4,6 +4,11 @@ Certification::Application.routes.draw do
   get "static_pages/home"
   get "static_pages/help"
   
+  get "/mc_question", to: "questions#new_mc", as: "new_mc_question"
+  get "/tf_question", to: "questions#new_tf", as: "new_tf_question"
+  post "/mc_question", to: "questions#create"
+  post "/tf_question", to: "questions#create"
+  
   resources :answers
 
   resources :products

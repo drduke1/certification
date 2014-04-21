@@ -17,10 +17,16 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   def new
+    @question = Question.new    
+    @products = Product.all
+  end
+  def new_mc
     @question = Question.new
     4.times { @question.answers.build }
-    
-    @products = Product.all
+  end
+  def new_tf
+    @question = Question.new
+    2.times { @question.answers.build }
   end
 
   # GET /questions/1/edit

@@ -8,9 +8,14 @@
 		</div>
 	</li>
 	<%= render @questions %>
-	<%= link_to new_question_path, id: "new_button" do %>
+	<%= link_to 'mc_question', id: "new_button" do %>
 		<button type="button" class="btn btn-lg btn-success">
-			<span class="glyphicon glyphicon-plus"></span>  New
+			<span class="glyphicon glyphicon-plus"></span>  New Multiple Choice
+		</button>
+	<% end %>
+	<%= link_to 'tf_question', id: "new_button" do %>
+		<button type="button" class="btn btn-lg btn-success">
+			<span class="glyphicon glyphicon-plus"></span>  New True/False
 		</button>
 	<% end %>
 </ul>
