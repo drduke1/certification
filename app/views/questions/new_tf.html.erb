@@ -1,9 +1,9 @@
-<h1>New question</h1>
-
+<h1>New True/False Question</h1>
+<%= link_to 'Back', questions_path %>
 <%= form_for @question, url: new_tf_question_path(@question) do |f| %>
 
 	<%= render 'shared/error_questions' %>
-
+	
   <%#= render 'form', f: f %>
   <%= f.label :content, "Question" %><br>
 	<%= f.text_field :content, class: "input-lg" %>
@@ -17,15 +17,14 @@
 	<%= f.label :active %><br>
 	<%= f.check_box :active %>
 	
-	<%= f.select :question_type, [["True False", "TF"]], {class: "form-control input-lg"}, style: "visibility: hidden" %>
-<h1>Answers</h1>
-<%= f.fields_for :answers do |builder| %>
+	<%= f.fields_for :answers do |builder| %>
   	
   	<%= render 'tf_answers', :f => builder %>
 		
   <% end %>
-  
+  <%= f.select :question_type, [["True False", "TF"]], {class: "form-control input-lg"}, style: "visibility: hidden" %>
   <%= f.submit "Create Question", class: "btn btn-lg btn-primary", style: "margin-top: 45px;" %>
+
 <% end %>
 <br/>
 <%= link_to 'Back', questions_path %>

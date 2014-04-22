@@ -26,7 +26,7 @@ class QuestionsController < ApplicationController
   end
   def new_tf
     @question = Question.new
-    2.times { @question.answers.build }
+    @question.answers.build
   end
 
   # GET /questions/1/edit
