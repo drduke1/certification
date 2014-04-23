@@ -81,12 +81,9 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:content, :question_type, :category, :product_id, :active, answers_attributes: [ :content, :correct, :question_id ] )
-    end
-#    def question_params
-#      params.require(:question).permit(:content, :question_type, :category, :product_id, :active)
-#    end
-    
+      params.require(:question).permit(:content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :content, :correct, :question_id ] ).
+      merge user_id: current_user.id
+    end    
     
     # Before filters
     def signed_in_user

@@ -18,6 +18,7 @@
 	<%= f.check_box :active %>
 	
 	<%= f.select :question_type, [["Multiple Choice", "MC"]], {class: "form-control input-lg"}, style: "visibility: hidden" %>
+	
 <h1>Answers</h1>
 <%= f.fields_for :answers do |builder| %>
   	
