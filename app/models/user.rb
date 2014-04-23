@@ -2,6 +2,7 @@ class User < ActiveRecord::Base
 	before_save { self.email = email.downcase }
 	before_create :create_remember_token
 	has_many :questions
+	serialize :permission
 
 	validates :name, presence: true, length: { maximum: 50 }
 	validates :permission, presence: true
