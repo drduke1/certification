@@ -1,6 +1,7 @@
 <li>
 	<%= link_to "#{question.id}. #{question.content}", question %>
 	<div class="pull-right">
+			<small><%= User.find(question.user_id).name %></small>
 		| <small><%= question.question_type %></small>
 		| <small><%= Product.find(question.product_id).name %></small> |
 		<%= link_to question do %>

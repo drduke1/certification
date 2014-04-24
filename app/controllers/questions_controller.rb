@@ -40,6 +40,13 @@ class QuestionsController < ApplicationController
 
     respond_to do |format|
       if @question.save
+        @answer = Answer.find_by_question_id(@question.id)
+        if @answer.content == "True"
+          Answer.create(content: "False", question_id: @answer.question_id, correct: false)
+        end
+        if @answer.content == "False"
+          Answer.create(content: "True", question_id: @answer.question_id, correct: false)
+        end
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render action: 'show', status: :created, location: @question }
       else
