@@ -13,7 +13,7 @@
 <%= f.password_field :password_confirmation, class: "input-lg" %>
 
 <%= f.label :permission, "Permission Level" %>
-<%= f.select :permission, [ ["Read Only", "read"], ["IP Voice Telephony", "ip_voice"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"], ["Master of All", "all"] ], {prompt: "Select Permission Level"}, {:multiple => true, class: "input-lg"} %>
+<%= f.select :permission, [ ["Read Only", "read"], ["IP Voice Telephony", "ip_voice"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"], ["Master of All", "all"] ], {}, {:multiple => true, class: "input-lg"} %>
 	
 <%= f.label :admin %><br>
 	<%= f.check_box :admin %>
