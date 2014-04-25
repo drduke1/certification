@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140423131657) do
+ActiveRecord::Schema.define(version: 20140425154305) do
 
   create_table "answers", force: true do |t|
     t.string   "content"
@@ -25,6 +25,7 @@ ActiveRecord::Schema.define(version: 20140423131657) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category"
   end
 
   add_index "products", ["id"], name: "index_products_on_id", using: :btree
