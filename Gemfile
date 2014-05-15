@@ -8,6 +8,9 @@ gem 'bootstrap-sass', '3.1.1'
 gem 'bcrypt-ruby', '3.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate'
+gem 'jquery-ui-rails'
+gem 'jquery-ui-themes'
+gem 'jquery-ui-form'
 gem 'jquery-tablesorter'
 
 group :development, :test do

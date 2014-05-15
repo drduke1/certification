@@ -1,4 +1,6 @@
 Certification::Application.routes.draw do 
+  resources :tests
+
 	root "sessions#new"
 	
   get "static_pages/home"

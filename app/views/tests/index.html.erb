@@ -1,0 +1,78 @@
+
+<h1>Listing tests</h1>
+
+<div id="container" style="width:1100px; margin-left: auto; margin-right: auto;">
+<table width="100%" class="tablesorter">
+	
+  <thead>
+  	  <tr>
+  	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Name</th>
+      <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Type</th>
+	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Category</th>
+	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Description</th>
+	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">User</th>
+      <th width="8%" class="filter-false"></th>
+      <th width="8%" class="filter-false"></th>
+      <th width="9%" class="filter-false"></th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @tests.each do |test| %>
+      <tr>
+        <td><%= test.name %></td>
+        <td><%= test.type %></td>
+        <td><%= test.category %></td>
+        <td><%= test.description %></td>
+        <td><%= test.user_id %></td>
+        <td><%= link_to 'Show', test %></td>
+        <td><%= link_to 'Edit', edit_test_path(test) %></td>
+        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+<%= link_to 'New Test', new_test_path %>
+
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>

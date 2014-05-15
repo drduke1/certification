@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140425154305) do
+ActiveRecord::Schema.define(version: 20140513214712) do
 
   create_table "answers", force: true do |t|
     t.string   "content"
@@ -28,7 +28,12 @@ ActiveRecord::Schema.define(version: 20140425154305) do
     t.string   "category"
   end
 
-  add_index "products", ["id"], name: "index_products_on_id", using: :btree
+  add_index "products", ["id"], name: "index_products_on_id"
+
+  create_table "question_tests", force: true do |t|
+    t.integer "test_id",     null: false
+    t.integer "question_id", null: false
+  end
 
   create_table "questions", force: true do |t|
     t.string   "content"
@@ -41,7 +46,17 @@ ActiveRecord::Schema.define(version: 20140425154305) do
     t.integer  "user_id"
   end
 
-  add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at", using: :btree
+  add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
+
+  create_table "tests", force: true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.string   "category"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -54,7 +69,7 @@ ActiveRecord::Schema.define(version: 20140425154305) do
     t.string   "permission"
   end
 
-  add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
-  add_index "users", ["remember_token"], name: "index_users_on_remember_token", using: :btree
+  add_index "users", ["email"], name: "index_users_on_email", unique: true
+  add_index "users", ["remember_token"], name: "index_users_on_remember_token"
 
 end
