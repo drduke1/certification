@@ -1,32 +1,61 @@
 <h1>Listing tests</h1>
+<%= link_to 'New Test', new_test_path %>
 
-<div id="container" style="width:1100px; margin-left: auto; margin-right: auto;">
+<%= form_for(@test) do |f| %>
+  <% if @test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @test.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description %>
+  </div>
+  
+<div id="container" style="width:1140px; margin-left: auto; margin-right: auto;">
 <button type="button" class="reset">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Name</th>
-      <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Type</th>
-	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Category</th>
-	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Description</th>
-	  <th width="10%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">User</th>
-      <th width="8%" class="filter-false"></th>
-      <th width="8%" class="filter-false"></th>
-      <th width="9%" class="filter-false"></th>
+  	  <th width="5%" class="filter-false"</th>
+  	  <th width="37%" data-placeholder="Search">Content</th>
+      <th width="10%" data-placeholder="Search">Type</th>
+	  <th width="10%" data-placeholder="Search">Category</th>
+	  <th width="10%" data-placeholder="Search">Product</th>
+	  <th width="10%" data-placeholder="Search">User</th>
+      <th width="8%" data-placeholder="Search">Active</th>
       </tr>
   </thead>
 
   <tbody>
-    <% @tests.each do |test| %>
+    <% @questions.each do |q| %>
       <tr>
-        <td><%= test.name %></td>
-        <td><%= test.type %></td>
-        <td><%= test.category %></td>
-        <td><%= test.description %></td>
-        <td><%= test.user_id %></td>
-        <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+      	<td><%= check_box_tag "test[question_ids][]", q.id, @test.question_ids.include?(q.id) %></td>
+        <td><%= q.content %></td>
+        <td><%= q.question_type %></td>
+        <td><%= q.category %></td>
+        <td>GXP</td>
+        <td><%= q.user_id %></td>
+        <td><%= q.active %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,6 +63,10 @@
 
 <br>
 </div>
+<div class="actions">
+    <%= f.submit "Create Test", id: "commit" %>
+</div>
+<% end %>
 <%= link_to 'New Test', new_test_path %>
 
 <script>
