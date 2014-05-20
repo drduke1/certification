@@ -14,6 +14,14 @@ class TestsController < ApplicationController
     # GET /tests/1.json
     def show
       @test = Test.find(params[:id])
+      @test = @test.questions
+      respond_to do |format|
+        format.html
+        format.pdf do
+          pdf = TestReport.new(@test)
+          send_data pdf.render, filename: 'certification_test.pdf', type: 'application/pdf' #, disposition: 'inline' 
+        end
+      end
     end
   
     # GET /tests/new
