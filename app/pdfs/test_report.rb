@@ -3,9 +3,10 @@ class TestReport < LayoutPdf
   #TABLE_WIDTHS = [20, 400, 200]
   #TABLE_HEADERS = ["ID", "Content", "Answer"]
 
-  def initialize(test=[])
+  def initialize(test=[], answer=[])
     super()
-    @test = test
+    @test_questions = test
+    @all_answers = answer
     
     header 'Certification Test'
     display_test
@@ -18,7 +19,7 @@ class TestReport < LayoutPdf
       #row(0).font_style = :bold
       self.header = true
       #self.row_colors = ['DDDDDD']
-      self.column_widths = [40, 500]
+      self.column_widths = [40, 300, 200]
     end
       #headers: TABLE_HEADERS,
       #column_widths: TABLE_WIDTHS,
@@ -29,7 +30,9 @@ class TestReport < LayoutPdf
   
   def test_questions
     [['#', 'Question']] +
-    @test_questions ||= @test.map { |e| [e.id, e.content] }
+    @test_me ||= @test_questions.map { |e| [e.id, e.content] } +
+    #@all_answers.each do |a| a.content end
+    @answer_me ||= @all_answers.flatten.map { |a| [a.content] }
   end
 end
 
