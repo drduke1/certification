@@ -33,7 +33,7 @@
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="5%" class="filter-false"><!--<input type="checkbox" onClick="toggle(this)"--></th>
+  	  <th width="5%" class="filter-false"><input type="checkbox" onClick="toggle(this)"></th>
   	  <th width="37%" data-placeholder="Search">Content</th>
       <th width="10%" data-placeholder="Search">Type</th>
 	  <th width="10%" data-placeholder="Search">Category</th>
@@ -61,7 +61,7 @@
 <br>
 </div>
 <div class="actions">
-    <%= f.submit "Create Test", id: "commit", class: "btn btn-lg btn-primary" %>
+    <%= f.submit "Update Test", class: "btn btn-lg btn-primary" %>
 </div>
 <% end %>
 
@@ -103,13 +103,4 @@
 	  	$("#tests").removeClass('tablesorter tablesorter-jui');
 	  }
 );
-</script>
-<script>
-    
-	function toggle(source) {
-  checkboxes = document.getElementsByName('check-box');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-  }
-}
 </script>

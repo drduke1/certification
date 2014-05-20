@@ -1,12 +1,5 @@
-<style>
-	.tablesorter-jui .tablesorter-processing {
-		background-color:#2694E8;
-	}
-</style>
-
-
 <h1>Listing tests</h1>
-
+<%= link_to 'New Test', new_test_path %>
 <div id="container" style="width:1100px; margin-left: auto; margin-right: auto;">
 <button type="button" class="reset">Reset Search</button>
 <table width="100%" class="tablesorter">
@@ -41,7 +34,7 @@
 
 <br>
 </div>
-<%= link_to 'New Test', new_test_path %>
+<%= link_to 'New Test', new_test_path, class: "btn btn-lg btn-primary" %>
 
 <script>
 	$(function()

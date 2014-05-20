@@ -24,6 +24,7 @@ class TestsController < ApplicationController
     
     # GET /tests/1/edit
     def edit
+      @questions = Question.all
     end
   
     # POST /tests
@@ -49,10 +50,9 @@ class TestsController < ApplicationController
   
     # PATCH/PUT /tests/1
     # PATCH/PUT /tests/1.json
-    def update
-      @test.attributes = {'question_ids' => []}.merge(params[:test] || {})
+  def update
       respond_to do |format|
-        if @test.save
+        if @test.update(test_params)
           format.html { redirect_to @test, notice: 'Test was successfully updated.' }
           format.json { head :no_content }
         else
@@ -75,6 +75,7 @@ class TestsController < ApplicationController
     private
       # Use callbacks to share common setup or constraints between actions.
       def set_test
+        @test = Test.find(params[:id])
         @question = Test.find(params[:id])
       end
   

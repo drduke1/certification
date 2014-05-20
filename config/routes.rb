@@ -16,6 +16,8 @@ Certification::Application.routes.draw do
   resources :products
 
   resources :questions
+  
+  resources :tests
 
   resources :users
   
