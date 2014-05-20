@@ -1,8 +1,8 @@
 class LayoutPdf < Prawn::Document
   
-  TABLE_ROW_COLORS = ["FFFFFF","DDDDDD"]
-  TABLE_FONT_SIZE = 9
-  TABLE_BORDER_STYLE = :grid
+  #TABLE_ROW_COLORS = ["FFFFFF","DDDDDD"]
+  #TABLE_FONT_SIZE = 9
+  #TABLE_BORDER_STYLE = :grid
   
   def initialize(default_prawn_options={})
     super(default_prawn_options)
