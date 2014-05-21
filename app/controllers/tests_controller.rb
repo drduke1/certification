@@ -13,16 +13,20 @@ class TestsController < ApplicationController
     # GET /tests/1
     # GET /tests/1.json
     def show
-      @all_answers = []
-      @test = Test.find(params[:id])
-      @test_questions = @test.questions
-      @test_questions.each do |a|
-        @all_answers << Answer.find_all_by_question_id(a)
-      end
+      
       respond_to do |format|
         format.html
         format.pdf do
-          pdf = TestReport.new(@test_questions, @all_answers)
+          @pdf = []
+          @test = Test.find(params[:id])
+          @test_questions = @test.questions
+          answers = Answer.all
+          @all_answers = answers.group_by(&:question_id)
+          @test_questions.each do |q|
+            @pdf << q
+            @pdf += @all_answers[q.id]
+          end
+          pdf = TestReport.new(@pdf)
           send_data pdf.render, filename: 'certification_test.pdf', type: 'application/pdf' , disposition: 'inline' 
         end
       end

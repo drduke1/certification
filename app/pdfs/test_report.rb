@@ -3,10 +3,11 @@ class TestReport < LayoutPdf
   #TABLE_WIDTHS = [20, 400, 200]
   #TABLE_HEADERS = ["ID", "Content", "Answer"]
 
-  def initialize(test=[], answer=[])
+  def initialize(pdf=[])
     super()
-    @test_questions = test
-    @all_answers = answer
+    @pdf = pdf
+    #@test_questions = test
+    #@all_answers = answer
     
     header 'Certification Test'
     display_test
@@ -30,12 +31,12 @@ class TestReport < LayoutPdf
   
   def test_questions
     [['#', 'Question']] +
-    @test_me ||= @test_questions.map { |e| [e.id, e.content] } +
-    #@all_answers.each do |a| a.content end
-    @answer_me ||= @all_answers.flatten.map { |a| [a.content] }
+    @the_pdf ||= @pdf.map { |e| [e.id, e.content] }
+    #@test_me ||= @test_questions.map { |e| [e.id, e.content] } +
+    #@answer_me ||= @all_answers.flatten.map { |a| [a.content] }
   end
 end
-
+#@all_answers.each do |a| a.content end
 #[["Number", "Content", "Answer"]] +
 #    @test.questions.map do |question|
 #      $i +=1
