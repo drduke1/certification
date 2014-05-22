@@ -11,6 +11,8 @@ Certification::Application.routes.draw do
   post "/mc_question", to: "questions#create"
   post "/tf_question", to: "questions#create"
   
+  get "/print/:id", to: "tests#print", as: 'print'
+  
   resources :answers
 
   resources :products
@@ -20,6 +22,8 @@ Certification::Application.routes.draw do
   resources :tests
 
   resources :users
+  
+  resources :prints
   
   resources :sessions, only: [:new, :create, :destroy]
   

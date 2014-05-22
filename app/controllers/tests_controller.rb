@@ -9,11 +9,10 @@ class TestsController < ApplicationController
       @tests = Test.all
       #@tests = Test.paginate(page: params[:page], per_page: 10)
     end
-  
+    
     # GET /tests/1
     # GET /tests/1.json
     def show
-      
       respond_to do |format|
         format.html
         format.pdf do
@@ -66,7 +65,7 @@ class TestsController < ApplicationController
   
     # PATCH/PUT /tests/1
     # PATCH/PUT /tests/1.json
-  def update
+    def update
       respond_to do |format|
         if @test.update(test_params)
           format.html { redirect_to @test, notice: 'Test was successfully updated.' }
@@ -86,6 +85,11 @@ class TestsController < ApplicationController
         format.html { redirect_to tests_url }
         format.json { head :no_content }
       end
+    end
+    
+    def print
+      @test_questions = @test.questions
+      @answers = Answer.all
     end
   
     private
