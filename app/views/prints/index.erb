@@ -1,18 +1,23 @@
+<% @i = 0 %>
+<% @a = ("a".."z").to_a %>
 <table class="table" border="1" bordercolor="#003399" style="margin-top: 40px;" width="100%" cellpadding="3" cellspacing="3">
   <thead>
   
   </thead>
   <tbody> 
 <% @test_questions.each do |question| %>
+  <% @i += 1 %>
   <tr>
-    <td style="width: 40px;"><%= question.id %>.</td>
+    <td style="width: 40px;"><%= @i %>.</td>
     <td><%= question.content %></td>
   </tr>
   
-    <% question.answers.each do |answer| %>
+  <% question.answers.each_with_index do |answer, i| %>
   <tr>
-    <td></td>
-    <td><%= answer.option %></td>
+  	<% if answer %>
+      <td><%= @a[i] %>.</td>
+      <td><%= answer.option %></td>
+    <% end %>
   </tr>
   <% end %>
 <% end %>
