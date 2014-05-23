@@ -3,7 +3,7 @@ class Question < ActiveRecord::Base
 	has_many :question_tests
 	has_many :tests, through: :question_tests
 	belongs_to :user
-  accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:content].blank? }, :allow_destroy => true
+  accepts_nested_attributes_for :answers, :reject_if => lambda { |a| a[:option].blank? }, :allow_destroy => true
       
 	#default_scope -> { order('created_at ASC') }
 	

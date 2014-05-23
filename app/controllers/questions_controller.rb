@@ -37,15 +37,15 @@ class QuestionsController < ApplicationController
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-
+    
     respond_to do |format|
       if @question.save
         @answer = Answer.find_by_question_id(@question.id)
-        if @answer.content == "True"
-          Answer.create(content: "False", question_id: @answer.question_id, correct: false)
+        if @answer.option == "True"
+          Answer.create(option: "False", question_id: @answer.question_id, correct: false)
         end
-        if @answer.content == "False"
-          Answer.create(content: "True", question_id: @answer.question_id, correct: false)
+        if @answer.option == "False"
+          Answer.create(option: "True", question_id: @answer.question_id, correct: false)
         end
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render action: 'show', status: :created, location: @question }
@@ -88,7 +88,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :content, :correct, :question_id ] ).
+      params.require(:question).permit(:content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :option, :correct, :question_id ] ).
       merge user_id: current_user.id
     end    
     

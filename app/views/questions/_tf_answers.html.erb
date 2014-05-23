@@ -6,8 +6,8 @@
 <%#= f.label :correct, "Correct Answer?" %>&nbsp;
 <%= f.check_box :correct, {checked: true, style: "visibility: hidden"} %>
 
-<%= f.label :content, "Answer" %>
-  <%= f.text_field :content, :value => 'True', :readonly => true, :class => "input-lg", :id => "answer" %>
+<%= f.label :option, "Answer" %>
+  <%= f.text_field :option, :value => 'True', :readonly => true, :class => "input-lg", :id => "answer" %>
   <%= button_tag "Toggle True/False", :id => "toggle", :class => "btn btn-small btn-inverse", :type => "button" %>
 
 

@@ -1,1 +1,21 @@
-<%= @pdf %>
+<table class="table" border="1" bordercolor="#003399" style="margin-top: 40px;" width="100%" cellpadding="3" cellspacing="3">
+  <thead>
+  
+  </thead>
+  <tbody> 
+<% @test_questions.each do |question| %>
+  <tr>
+    <td style="width: 40px;"><%= question.id %>.</td>
+    <td><%= question.content %></td>
+  </tr>
+  
+    <% question.answers.each do |answer| %>
+  <tr>
+    <td></td>
+    <td><%= answer.option %></td>
+  </tr>
+  <% end %>
+<% end %>
+</tbody>
+</table>
+

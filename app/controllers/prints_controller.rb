@@ -6,15 +6,23 @@ class PrintsController < ApplicationController
     # GET /prints
     # GET /prints.json
     def index
-      @pdf = []
+#      @pdf = []
       @test = Test.find(params[:format])
-      @test_questions = @test.questions
-      answers = Answer.all
-      @all_answers = answers.group_by(&:question_id)
-      @test_questions.each do |q|
-        @pdf << q
-        @pdf += @all_answers[q.id]
-      end
+#      @test_questions = @test.questions
+#      answers = Answer.all
+#      @all_answers = answers.group_by(&:question_id)
+#      @pdf = @test_questions.map { |q| [q, answers: @all_answers[q.id]] }
+      
+      @test_questions = @test.questions.includes(:answers)
+      
+#      @test = Test.find(params[:format])
+#      @test_questions = @test.questions
+#      @answers = Answer.all
+#      @all_answers = @answers.group_by(&:question_id)
+#      @test_questions.each do |q|
+#        @pdf << q
+#        @pdf += @all_answers[q.id]
+#      end
     end
     
     # GET /prints/1
