@@ -48,15 +48,10 @@ ActiveRecord::Schema.define(version: 20140513214712) do
 
   add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
 
-  create_table "test_questions", force: true do |t|
-    t.integer  "test_id"
-    t.integer  "question_id"
-    t.datetime "created_at"
-    t.datetime "updated_at"
+  create_table "questions_tests", id: false, force: true do |t|
+    t.integer "test_id",     null: false
+    t.integer "question_id", null: false
   end
-
-  add_index "test_questions", ["question_id"], name: "index_test_questions_on_question_id"
-  add_index "test_questions", ["test_id"], name: "index_test_questions_on_test_id"
 
   create_table "tests", force: true do |t|
     t.string   "name"
