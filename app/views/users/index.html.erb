@@ -23,7 +23,7 @@
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td style="white-space:pre-wrap;"><%= @permission.gsub(/,/, "\n") %></td>
+        <td style="white-space:normal;"><%= @permission.gsub(/,/, "\n") %></td>
         <td><%= user.admin %></td>
         <td><%= link_to 'Show', user %></td>
         <td><%= link_to 'Edit', edit_user_path(user) %></td>

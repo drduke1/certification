@@ -1,32 +1,25 @@
-<h1>Listing tests</h1>
-<%= link_to 'New Test', new_test_path %>
-<div id="container" style="width:1100px; margin-left: auto; margin-right: auto;">
+<%= link_to 'New Section', new_section_path %>
+<div id="container" style="width:900px; margin-left: auto; margin-right: auto;">
 <button type="button" class="reset">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="12%" data-placeholder="Search">Name</th>
-      <th width="12%" data-placeholder="Search">Type</th>
-	  <th width="12%" data-placeholder="Search">Category</th>
-	  <th width="17%" data-placeholder="Search">Description</th>
-	  <th width="9%" data-placeholder="Search">User</th>
-      <th width="4%" class="filter-false"></th>
-      <th width="4%" class="filter-false"></th>
-      <th width="5%" class="filter-false"></th>
+  	  <th width="40%" data-placeholder="Search">Name</th>
+  	  <th width="25%" data-placeholder="Search">Active</th>
+      <th width="9%" class="filter-false"></th>
+      <th width="9%" class="filter-false"></th>
+      <th width="9%" class="filter-false"></th>
       </tr>
   </thead>
 
   <tbody>
-    <% @tests.each do |test| %>
+    <% @sections.each do |section| %>
       <tr>
-        <td><%= test.name %></td>
-        <td><%= test.type %></td>
-        <td><%= test.category %></td>
-        <td><%= test.description %></td>
-        <td><%= User.find(test.user_id).name %></td>
-        <td><%= link_to 'Show', test %></td>
-        <td><%= link_to 'Edit', edit_test_path(test) %></td>
-        <td><%= link_to 'Destroy', test, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= section.name %></td>
+        <td><%= section.active %></td>
+        <td><%= link_to 'Show', section %></td>
+        <td><%= link_to 'Edit', edit_section_path(section) %></td>
+        <td><%= link_to 'Destroy', section, method: :delete, data: { confirm: 'Are you sure?' } %></td>
       </tr>
     <% end %>
   </tbody>
@@ -34,7 +27,7 @@
 
 <br>
 </div>
-<%= link_to 'New Test', new_test_path, class: "btn btn-lg btn-primary" %>
+<%= link_to 'New Section', new_section_path, class: "btn btn-lg btn-primary" %>
 
 <script>
 	$(function()
@@ -71,7 +64,7 @@
 	        	filter_reset : 'button.reset',
 	       }
 	  	});
-	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  	$("#sections").removeClass('tablesorter tablesorter-jui');
 	  }
 );
 </script>

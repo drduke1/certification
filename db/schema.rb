@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140513214712) do
+ActiveRecord::Schema.define(version: 20140915203627) do
 
   create_table "answers", force: true do |t|
     t.string   "option"
@@ -44,6 +44,7 @@ ActiveRecord::Schema.define(version: 20140513214712) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "user_id"
+    t.string   "section"
   end
 
   add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
@@ -51,6 +52,13 @@ ActiveRecord::Schema.define(version: 20140513214712) do
   create_table "questions_tests", id: false, force: true do |t|
     t.integer "test_id",     null: false
     t.integer "question_id", null: false
+  end
+
+  create_table "sections", force: true do |t|
+    t.string   "name"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
   end
 
   create_table "tests", force: true do |t|

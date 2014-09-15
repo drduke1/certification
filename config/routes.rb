@@ -1,4 +1,6 @@
 Certification::Application.routes.draw do 
+  resources :sections
+
   resources :tests
 
 	root "sessions#new"

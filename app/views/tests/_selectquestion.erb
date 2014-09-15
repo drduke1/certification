@@ -50,8 +50,8 @@
         <td><%= q.content %></td>
         <td><%= q.question_type %></td>
         <td><%= q.category %></td>
-        <td>GXP</td>
-        <td><%= q.user_id %></td>
+        <td><%= Product.find(q.product_id).name %></td>
+        <td><%= User.find(q.user_id).name %></td>
         <td><%= q.active %></td>
       </tr>
     <% end %>

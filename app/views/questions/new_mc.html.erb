@@ -52,6 +52,10 @@
 	
 	<input id="targetField" type="hidden" name="question[product_id]" value=""/>
 	
+	<%= f.label :section %><br>
+	<%= f.collection_select :section, @sections, :id, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
+	
+	
 	<%= f.label :active %><br>
 	<%= f.check_box :active %>
 

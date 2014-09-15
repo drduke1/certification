@@ -1,19 +1,23 @@
-<h1>Listing products</h1>
 
-<table>
+<%= link_to 'New Product', new_product_path %>
+<div id="container" style="width:900px; margin-left: auto; margin-right: auto;">
+<button type="button" class="reset">Reset Search</button>
+<table width="100%" class="tablesorter">
   <thead>
-    <tr>
-      <th>Name</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+  	  <tr>
+  	  <th width="40%" data-placeholder="Search">Name</th>
+  	  <th width="25%" data-placeholder="Search">Category</th>
+      <th width="9%" class="filter-false"></th>
+      <th width="9%" class="filter-false"></th>
+      <th width="9%" class="filter-false"></th>
+      </tr>
   </thead>
 
   <tbody>
     <% @products.each do |product| %>
       <tr>
         <td><%= product.name %></td>
+        <td><%= product.category %></td>
         <td><%= link_to 'Show', product %></td>
         <td><%= link_to 'Edit', edit_product_path(product) %></td>
         <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
@@ -23,5 +27,45 @@
 </table>
 
 <br>
+</div>
+<%= link_to 'New product', new_product_path, class: "btn btn-lg btn-primary" %>
 
-<%= link_to 'New Product', new_product_path %>
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#products").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>
