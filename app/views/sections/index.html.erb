@@ -1,6 +1,6 @@
-<%= link_to 'New Section', new_section_path %>
-<div id="container" style="width:900px; margin-left: auto; margin-right: auto;">
-<button type="button" class="reset">Reset Search</button>
+<div id="container" style="width:800px; margin-left: auto; margin-right: auto; margin-top: 15px;">
+<%= link_to 'New Section', new_section_path, class: "reset" %>
+<button type="button" style="float: right" class="reset">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
@@ -26,8 +26,8 @@
 </table>
 
 <br>
+<%= link_to 'New Section', new_section_path, class: "reset" %>
 </div>
-<%= link_to 'New Section', new_section_path, class: "btn btn-lg btn-primary" %>
 
 <script>
 	$(function()

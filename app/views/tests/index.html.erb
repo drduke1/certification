@@ -1,14 +1,14 @@
 <h1>Listing tests</h1>
-<%= link_to 'New Test', new_test_path %>
 <div id="container" style="width:1100px; margin-left: auto; margin-right: auto;">
-<button type="button" class="reset">Reset Search</button>
+<%= link_to 'New Test', new_test_path, class: "reset" %>
+<button type="button" style="float: right" class="reset">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
   	  <th width="12%" data-placeholder="Search">Name</th>
-      <th width="12%" data-placeholder="Search">Type</th>
+      <th width="10%" data-placeholder="Search">Type</th>
 	  <th width="12%" data-placeholder="Search">Category</th>
-	  <th width="17%" data-placeholder="Search">Description</th>
+	  <th width="19%" data-placeholder="Search">Description</th>
 	  <th width="9%" data-placeholder="Search">User</th>
       <th width="4%" class="filter-false"></th>
       <th width="4%" class="filter-false"></th>
@@ -31,10 +31,9 @@
     <% end %>
   </tbody>
 </table>
-
 <br>
+<%= link_to 'New Test', new_test_path, class: "reset" %>
 </div>
-<%= link_to 'New Test', new_test_path, class: "btn btn-lg btn-primary" %>
 
 <script>
 	$(function()

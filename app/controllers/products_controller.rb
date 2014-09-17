@@ -1,5 +1,6 @@
 class ProductsController < ApplicationController
   before_action :set_product, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
 
   # GET /products
   # GET /products.json
@@ -62,6 +63,14 @@ class ProductsController < ApplicationController
   end
 
   private
+    # Before filters
+      def signed_in_user
+        unless signed_in?
+          store_location
+          redirect_to signin_url, notice: "Please sign in."
+        end
+      end
+      
     # Use callbacks to share common setup or constraints between actions.
     def set_product
       @product = Product.find(params[:id])

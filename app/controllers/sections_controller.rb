@@ -1,5 +1,6 @@
 class SectionsController < ApplicationController
   before_action :set_section, only: [:show, :edit, :update, :destroy]
+  before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
 
   # GET /sections
   # GET /sections.json
@@ -62,6 +63,14 @@ class SectionsController < ApplicationController
   end
 
   private
+    # Before filters
+      def signed_in_user
+        unless signed_in?
+          store_location
+          redirect_to signin_url, notice: "Please sign in."
+        end
+      end
+  
     # Use callbacks to share common setup or constraints between actions.
     def set_section
       @section = Section.find(params[:id])

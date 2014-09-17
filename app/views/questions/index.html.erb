@@ -1,23 +1,70 @@
 <h1>All Questions</h1>
+<div id="container" style="width:950px; margin-left: auto; margin-right: auto;">
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="50%" data-placeholder="Search">Question</th>
+  	  <th width="15%" data-placeholder="Search">User</th>
+      <th width="8%" data-placeholder="Search">Type</th>
+	  <th width="15%" data-placeholder="Search">Product</th>
+	  <th width="12%" data-placeholder="Search">Functions</th>
+      </tr>
+  </thead>
 
-<ul class="questions">
-	<li>
-		<h4>Question
-		<div class="pull-right">
-			User | Type | Product | Functions
-		</div>
-	</li>
-	<%= render @questions %>
-	<%= link_to 'mc_question', id: "new_button" do %>
-		<button type="button" class="btn btn-lg btn-success">
-			<span class="glyphicon glyphicon-plus"></span>  New Multiple Choice
-		</button>
-	<% end %>
-	<%= link_to 'tf_question', id: "new_button" do %>
-		<button type="button" class="btn btn-lg btn-success">
-			<span class="glyphicon glyphicon-plus"></span>  New True/False
-		</button>
-	<% end %>
-</ul>
-
+  <tbody>
+    <%= render @questions %>
+  </tbody>
+</table>
+<br/>
+<%= link_to 'mc_question', id: "new_button" do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New Multiple Choice
+	</button>
+<% end %>
+<%= link_to 'tf_question', id: "new_button" do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New True/False
+	</button>
+<% end %>
+</div>
 <%= will_paginate %>
+
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#questions").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>

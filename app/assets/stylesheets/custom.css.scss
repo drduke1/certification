@@ -40,6 +40,17 @@ a:hover {
 	text-decoration: none;
 }
 
+a {
+  color: #000;
+  &:visited {
+    color: #fff;
+  }
+  &:hover {
+    color: #fff;
+    background-color: #000;
+  }
+}
+
 .alert {
 	margin-top: 15px;
 }
@@ -323,7 +334,6 @@ a:hover {
 
 	.reset {
 		margin: 5px 3px 5px 3px;
-		float:right;
 		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
 		background-color: #006ccc;
 		*background-color: #0044cc;
