@@ -1,0 +1,36 @@
+<p id="notice"><%= notice %></p>
+<p>
+	<%#= link_to “Download test”, tests_path(@test.id, :format => “pdf”) %>
+</p>
+<p>
+  <strong>Name:</strong>
+  <%= @test.name %>
+</p>
+
+<p>
+  <strong>Type:</strong>
+  <%= @test.type %>
+</p>
+
+<p>
+  <strong>Category:</strong>
+  <%= @test.category %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @test.description %>
+</p>
+
+<p>
+  <strong>User:</strong>
+  <%= @test.user_id %>
+</p>
+<p>
+	<strong>Question:</strong>
+	<%= @test.question_ids %>
+</p>
+
+<%= link_to 'Edit', edit_test_path(@test) %> |
+<%= link_to 'Back', tests_path %> |
+<%= link_to 'Print', prints_path(@test) %>

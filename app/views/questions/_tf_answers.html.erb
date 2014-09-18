@@ -1,0 +1,31 @@
+<br/>
+
+<%#= f.label :content, "Answer" %><br>
+<%#= f.text_field :content, :value => 'True', class: "input-lg" %>
+
+<%#= f.label :correct, "Correct Answer?" %>&nbsp;
+<%= f.check_box :correct, {checked: true, style: "visibility: hidden"} %>
+
+<%= f.label :option, "Answer" %>
+  <%= f.text_field :option, :value => 'True', :readonly => true, :class => "input-lg", :id => "answer" %>
+  <%= button_tag "Toggle True/False", :id => "toggle", :class => "btn btn-small btn-inverse", :type => "button" %>
+
+
+<script>
+function checkAnswer() {
+    var answer = $('#answer').val();
+    if ('False' == answer) {
+        $("#answer").val('True');
+    } else {
+        $("#answer").val('False');
+    }
+}
+
+
+$(document).ready(function(){
+    $('#toggle').click(function () {
+    checkAnswer();
+});
+
+});
+</script>

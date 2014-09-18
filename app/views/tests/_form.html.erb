@@ -1,0 +1,165 @@
+<style>
+#ip_voice, #ip_video_surveillance, #ip_video_telephony, #consumer_atas, #enterprise_gateways, #ip_pbx
+    {
+        display:none;
+    }
+</style>
+
+<%= form_for(@test) do |f| %>
+  <% if @test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @test.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "input-lg" %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type, , class: "input-lg" %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description, class: "input-lg" %>
+  </div>
+  
+  <div id="ip_voice" class="field">
+    <%= f.label :question %><br>
+    <%= f.collection_check_boxes :question_ids, Question.where({ category: "ip_voice"}).to_a.collect, :id, :content, {class: "form-control input-lg", id: "voice", name: "voice"} %>
+    <%#= f.collection_select(:question_ids, Question.all.to_a.collect, :id, :content, {:prompt => "Please select"} ) %>
+  </div>
+  
+  <div id="ip_video_surveillance">
+    <%= f.label :question %><br>
+ 	<%= f.collection_check_boxes :question_ids, Question.where({ category: "ip_video_surveillance" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "surv", name: "surv"} %>
+  </div>
+
+  <div id="ip_video_telephony">
+    <%= f.label :question %><br>
+ 	<%= f.collection_check_boxes :question_ids, Question.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "video", name: "video"} %>
+  </div>
+
+  <div id="consumer_atas">
+    <%= f.label :question %><br>
+ 	<%= f.collection_check_boxes :question_ids, Question.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "atas", name: "atas"} %>
+  </div>
+
+  <div id="enterprise_gateways">
+    <%= f.label :question %><br>
+ 	<%= f.collection_check_boxes :question_ids, Question.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "gate", name: "gate"} %>
+  </div>
+
+  <div id="ip_pbx">
+    <%= f.label :question %><br>
+ 	<%= f.collection_check_boxes :question_ids, Question.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "pbx", name: "pbx"} %>
+    </div>
+
+  <input id="targetField" type="hidden" name="question[question_id]" value=""/>
+  
+  <div class="actions">
+    <%= f.submit "Create Test", id: "commit" %>
+  </div>
+<% end %>
+
+<script>
+$(document).ready(function(e) {
+        $('#category').change(function() {
+            if ($('#category').val()== 'ip_voice')
+            {
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_voice').show();
+            }
+            else if ($('#category').val()== 'ip_video_surveillance')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_video_surveillance').show();
+            }
+            else if ($('#category').val()== 'ip_video_telephony')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_video_telephony').show();
+            }
+            else if ($('#category').val()== 'consumer_atas')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#consumer_atas').show();
+            }
+            else if ($('#category').val()== 'enterprise_gateways')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#ip_pbx').hide();
+                $('#enterprise_gateways').show();
+            }
+            else if ($('#category').val()== 'ip_pbx')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').show();
+            }
+            
+
+        });
+});
+</script>
+<script>
+$(function(){
+    $("#commit").on("click", function(){
+        
+        var valueAssigned = false;
+        $('select').each(function(){
+            if($(this).val())
+            {
+                $("[name='question[question_id]']").val($(this).val());
+                valueAssigned = true;
+                return;
+            }
+        });
+
+        
+    });
+});
+</script>
+<!-- Tell what is value
+if(!valueAssigned)
+        {
+            alert('nothing selected');
+        }
+        else
+        {
+            alert("Value of the hidden field: " + $("#targetField").val());
+        }
+-->

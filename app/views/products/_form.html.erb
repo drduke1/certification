@@ -13,9 +13,14 @@
 
   <div class="field">
     <%= f.label :name %><br>
-    <%= f.text_field :name %>
+    <%= f.text_field :name, class: "input-lg" %>
+  </div>
+  
+  <div class="field">
+    <%= f.label :category %><br>
+	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
   </div>
   <div class="actions">
-    <%= f.submit %>
+    <%= f.submit class: "btn btn-lg btn-primary" %>
   </div>
 <% end %>

@@ -17,21 +17,39 @@ class QuestionsController < ApplicationController
 
   # GET /questions/new
   def new
-    @question = Question.new
+    @question = Question.new    
     @products = Product.all
+  end
+  def new_mc
+    @sections = Section.all
+    @question = Question.new
+    4.times { @question.answers.build }
+  end
+  def new_tf
+    @sections = Section.all
+    @question = Question.new
+    @question.answers.build
   end
 
   # GET /questions/1/edit
   def edit
+    @sections = Section.all
   end
 
   # POST /questions
   # POST /questions.json
   def create
     @question = Question.new(question_params)
-
+    
     respond_to do |format|
       if @question.save
+        @answer = Answer.find_by_question_id(@question.id)
+        if @answer.option == "True"
+          Answer.create(option: "False", question_id: @answer.question_id, correct: false)
+        end
+        if @answer.option == "False"
+          Answer.create(option: "True", question_id: @answer.question_id, correct: false)
+        end
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render action: 'show', status: :created, location: @question }
       else
@@ -73,8 +91,9 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:content, :question_type, :category, :product_id, :active)
-    end
+      params.require(:question).permit(:section, :content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :option, :correct, :question_id ] ).
+      merge user_id: current_user.id
+    end    
     
     # Before filters
     def signed_in_user

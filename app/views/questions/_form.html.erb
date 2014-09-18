@@ -1,14 +1,17 @@
 <%= f.label :content, "Question" %><br>
 <%= f.text_field :content, class: "input-lg" %>
 
-<%= f.label :question_type %><br>
-<%= f.select :question_type, [ ["Multiple Choice", "MC"], ["True or False", "TF"] ], {prompt: "Select a type"}, {class: "form-control input-lg"} %>
+<%#= f.label :question_type %><br>
+<%#= f.select :question_type, [ ["Multiple Choice", "MC"], ["True or False", "TF"] ], {prompt: "Select a type"}, {class: "form-control input-lg"} %>
 
 <%= f.label :category %><br>
-<%= f.text_field :category, class: "input-lg" %>
+<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg" %>
 
 <%= f.label :product_id %><br>
 <%= f.collection_select :product_id, Product.all, :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg"} %>
+
+<%= f.label :section %><br>
+<%= f.collection_select :section, @sections, :id, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
 
 <%= f.label :active %><br>
 <%= f.check_box :active %>

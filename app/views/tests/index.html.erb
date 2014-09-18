@@ -1,0 +1,83 @@
+<style>
+	td {text-align: center;}
+</style>
+<h1>Listing tests</h1>
+<div id="container" style="width:1000px; margin-left: auto; margin-right: auto;">
+<%= link_to 'New Test', new_test_path, class: "reset" %>
+<button type="button" style="float: right" class="reset">Reset Search</button>
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="15%" data-placeholder="Search">Name</th>
+      <th width="10%" data-placeholder="Search">Type</th>
+	  <th width="15%" data-placeholder="Search">Category</th>
+	  <th width="30%" data-placeholder="Search">Description</th>
+	  <th width="10%" data-placeholder="Search">User</th>
+      <th width="10%" class="filter-false">Functions</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @tests.each do |test| %>
+      <tr>
+        <td><%= link_to test.name, test %></td>
+        <td><%= test.type %></td>
+        <td><%= test.category.capitalize %></td>
+        <td><%= test.description %></td>
+        <td><%= User.find(test.user_id).name %></td>
+        <td><%= link_to test do %>
+			<i class="glyphicon glyphicon-zoom-in"></i>
+		<% end %>
+		<%= link_to edit_test_path(test) do %>
+			<i class="glyphicon glyphicon-pencil"></i>
+		<% end %>
+		<%= link_to test, method: :delete, data: { confirm: 'Are you sure?' } do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+<%= link_to 'New Test', new_test_path, class: "reset" %>
+</div>
+
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>

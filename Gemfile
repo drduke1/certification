@@ -2,11 +2,22 @@ source 'https://rubygems.org'
 ruby '2.1.2'
 gem 'rails', '4.1.5'
 gem 'railties', '4.1.5'
+<<<<<<< HEAD
 gem 'activesupport', '4.1.5'
 gem 'bootstrap-sass', '3.0'
+=======
+gem 'jquery-rails', '3.0.4'
+gem 'activesupport', '4.1.5'
+gem 'bootstrap-sass', '3.1.1'
+>>>>>>> origin/Duke
 gem 'bcrypt-ruby', '3.1.2'
 gem 'will_paginate', '3.0.4'
 gem 'bootstrap-will_paginate'
+gem 'jquery-ui-rails'
+gem 'jquery-ui-themes'
+gem 'jquery-ui-form'
+gem 'jquery-tablesorter'
+gem 'prawn'
 
 group :development, :test do
 	gem 'sqlite3', '1.3.8'
@@ -22,7 +33,7 @@ end
 gem 'sass-rails', '~>4.0.2'
 gem 'uglifier', '2.1.1'
 gem 'coffee-rails', '4.0.1'
-gem 'jquery-rails', '3.0.4'
+
 gem 'turbolinks', '1.1.1'
 gem 'jbuilder', '1.0.2'
 
@@ -31,5 +42,6 @@ group :doc do
 end
 
 group :production do
-	gem 'rails_12factor', '0.0.2'
+  gem 'mysql2'
+  gem 'rails_12factor', '0.0.2'
 end

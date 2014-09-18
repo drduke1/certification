@@ -71,6 +71,19 @@ p {
 	line-height: 1.7em;
 }
 
+/* errors */
+#error_explanation {
+	color: #f00;
+	ul {
+		list-style: none;
+		margin: 0 0 18px 0;
+	}
+}
+
+.field_with_errors {
+	@extend .has-error;
+}
+
 /* header */
 
 #logo {
@@ -245,3 +258,104 @@ footer {
 #new_button button{
 	margin-top: 15px;
 }
+
+/* Tables */
+
+.tablesorter-filter-row td {
+	  background: #eee;
+	  line-height: normal;
+	  text-align: center; /* center the input */
+	  -webkit-transition: line-height 0.1s ease;
+	  -moz-transition: line-height 0.1s ease;
+	  -o-transition: line-height 0.1s ease;
+	  transition: line-height 0.1s ease;
+}
+	/* optional disabled input styling */
+	.tablesorter-filter-row .disabled {
+	  opacity: 0.5;
+	  filter: alpha(opacity=50);
+	  cursor: not-allowed;
+}
+	
+	/* hidden filter row */
+	.tablesorter-filter-row.hideme td {
+	  /*** *********************************************** ***/
+	  /*** change this padding to modify the thickness     ***/
+	  /*** of the closed filter row (height = padding x 2) ***/
+	  padding: 2px;
+	  /*** *********************************************** ***/
+	  margin: 0;
+	  line-height: 0;
+	  cursor: pointer;
+}
+	.tablesorter-filter-row.hideme .tablesorter-filter {
+	  height: 1px;
+	  min-height: 0;
+	  border: 0;
+	  padding: 0;
+	  margin: 0;
+	  /* don't use visibility: hidden because it disables tabbing */
+	  opacity: 0;
+	  filter: alpha(opacity=0);
+}
+	
+	/* filters */
+	.tablesorter-filter {
+	  width: 95%;
+	  height: inherit;
+	  margin: 0px 5px 0px -4px;
+	  padding: 0px;
+	  background-color: #fff;
+	  border: 1px solid #bbb;
+	  color: #333;
+	  -webkit-box-sizing: border-box;
+	  -moz-box-sizing: border-box;
+	  box-sizing: border-box;
+	  -webkit-transition: height 0.1s ease;
+	  -moz-transition: height 0.1s ease;
+	  -o-transition: height 0.1s ease;
+	  transition: height 0.1s ease;
+}
+
+	.reset {
+		margin: 5px 3px 5px 3px;
+		text-shadow: 0 -1px 0 rgba(0, 0, 0, 0.25);
+		background-color: #006ccc;
+		*background-color: #0044cc;
+		background-image: linear-gradient(to bottom, #0088cc, #0044cc);
+		background-repeat: repeat-x;
+		border-color: #0044cc #0044cc #002a80;
+		border: 1px solid #006ccc; 
+		-webkit-border-radius: 5px;
+		border-radius: 10px;  font-size:16px;
+		-webkit-box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); 
+		box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.2), 0 1px 2px rgba(0, 0, 0, 0.05); 
+		-webkit-align-items: flex-start; box-sizing: border-box; 
+		font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; padding: 5px 7px 5px 7px; 
+		text-decoration:none; display:inline-block; font-weight:normal; color: #FFFFFF;    
+		-webkit-box-shadow: 0 0 15px 2px #013953;
+  	-moz-box-shadow: 0 0 15px 2px #013953;
+  	box-shadow: 0 0 15px 2px #013953;
+  	a {
+    color: #fff !important;
+    &:hover {
+      color: #fff !important;
+    }
+  }
+}
+
+table {
+  table-layout: fixed;
+  word-wrap: break-word;
+ 	-webkit-box-shadow: 0 0 15px 2px #013953;
+  -moz-box-shadow: 0 0 15px 2px #013953;
+  box-shadow: 0 0 15px 2px #013953;
+}
+
+/*.btn {
+	-webkit-box-shadow: 0 0 15px 2px #013953;
+  -moz-box-shadow: 0 0 15px 2px #013953;
+  box-shadow: 0 0 15px 2px #013953;
+}*/
+
+/* End of Tables */

@@ -1,0 +1,18 @@
+<br/>
+<%= f.label :option, "Answer" %><br>
+<%= f.text_field :option, class: "input-lg" %>
+
+<%= f.label :correct, "Correct Answer?" %>&nbsp;
+<%= f.check_box :correct, :style => "width: 30px;"%>
+<hr/>
+<script>
+	$(document).ready(function(){
+		$("#answer_correct").bootstrapSwitch('onText', 'Yes');
+		$("#answer_correct").bootstrapSwitch('offText', 'No');
+		$("#answer_correct").bootstrapSwitch('size', 'large');
+	});
+</script>
+
+<!-- USE #question_answers_attributes_0_correct as ID to make a switch,
+	 but need to make ID increase by number for each new answer.
+	 -->

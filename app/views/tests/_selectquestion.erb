@@ -1,0 +1,113 @@
+<%= form_for(@test) do |f| %>
+  <% if @test.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @test.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :name %><br>
+    <%= f.text_field :name, class: "input-lg" %>
+  </div>
+  <div class="field">
+    <%= f.label :type %><br>
+    <%= f.text_field :type, class: "input-lg" %>
+  </div>
+  <div class="field">
+    <%= f.label :category %><br>
+	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
+  </div>
+  <div class="field">
+    <%= f.label :description %><br>
+    <%= f.text_field :description, class: "input-lg" %>
+  </div>
+  
+<div id="container" style="width:1000px; margin-left: auto; margin-right: auto;">
+<button type="button" class="reset">Reset Search</button>
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="9%" class="filter-false">Select<!--<input type="checkbox" onClick="toggle(this)"--></th>
+  	  <th width="42%" data-placeholder="Search">Content</th>
+      <th width="8%" data-placeholder="Search">Type</th>
+	  <th width="17%" data-placeholder="Search">Category</th>
+	  <th width="15%" data-placeholder="Search">Product</th>
+      <th width="9%" data-placeholder="Search">Active</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @questions.each do |q| %>
+      <tr>
+      	<td><%= check_box_tag "test[question_ids][]", q.id, @test.question_ids.include?(q.id) %></td>
+        <td><%= q.content %></td>
+        <td style="text-align: center;"><%= q.question_type %></td>
+        <td><%= q.category %></td>
+        <td style="text-align: center;"><%= Product.find(q.product_id).name %></td>
+        <td style="text-align: center;"><%= q.active %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<br>
+</div>
+<div class="actions">
+    <%= f.submit "Create Test", id: "commit", class: "btn btn-lg btn-primary" %>
+</div>
+<% end %>
+
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>
+<script>
+    
+	function toggle(source) {
+  checkboxes = document.getElementsByName('check-box');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>

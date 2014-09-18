@@ -2,38 +2,64 @@
 
 <h1>All Users</h1>
 
-<%= will_paginate %>
-
-<ul class="users">
-	<%= render @users %>
-</ul>
-
-<%= will_paginate %>
-
-<table>
+<div id="container" style="width:900px; margin-left: auto; margin-right: auto;">
+<%= link_to 'New User', new_user_path, class: "reset" %>
+  <button type="button" style="float: right" class="reset">Reset Search</button>
+<table id="users" class="table table-striped table-hover table-bordered" style="background-color: white">
   <thead>
-    <tr>
-      <th>Name</th>
-      <th>Email</th>
-      <th></th>
-      <th></th>
-      <th></th>
-    </tr>
+      <th width="30%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Name</th>
+      <th width="35%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Email</th>
+      <th width="15%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Permission</th>
+      <th width="8%" onMouseOver="this.style.color='#00F'" onMouseOut="this.style.color='black'" data-placeholder="Search">Admin</th>
+      <th width="12%" class="filter-false" >Functions</th>
   </thead>
 
   <tbody>
     <% @users.each do |user| %>
+    <% @permission = user.permission.to_s %>
+    <% @permission = @permission.gsub(/[\["_\]]/, ' ') %>
       <tr>
         <td><%= user.name %></td>
         <td><%= user.email %></td>
-        <td><%= link_to 'Show', user %></td>
-        <td><%= link_to 'Edit', edit_user_path(user) %></td>
-        <td><%= link_to 'Destroy', user, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td style="white-space:normal;"><%= @permission.gsub(/,/, "\n") %></td>
+        <td style="text-align: center;"><%= user.admin %></td>
+        <td style="text-align: center;"><%= link_to user do %>
+			<i class="glyphicon glyphicon-zoom-in"></i>
+		<% end %>
+		<%= link_to edit_user_path(user) do %>
+			<i class="glyphicon glyphicon-pencil"></i>
+		<% end %>
+		<%= link_to user, method: :delete, data: { confirm: 'Are you sure?' } do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
 
+</div>
 <br>
 
-<%= link_to 'New User', new_user_path %>
+
+<script>
+
+	$(document).ready(function() 
+	    { 
+	        $("#users").tablesorter({
+	        widgets: ["filter"],
+	        
+	        widgetOptions: {
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	        	
+	        }
+	     });
+	     		
+	     	 $("#users").removeClass('tablesorter tablesorter-default');
+	    } 
+	);
+
+</script>

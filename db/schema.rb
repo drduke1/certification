@@ -11,10 +11,10 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140320132346) do
+ActiveRecord::Schema.define(version: 20140915203627) do
 
   create_table "answers", force: true do |t|
-    t.string   "content"
+    t.string   "option"
     t.integer  "question_id"
     t.boolean  "correct",     default: false
     t.datetime "created_at"
@@ -25,9 +25,15 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.string   "name"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.string   "category"
   end
 
   add_index "products", ["id"], name: "index_products_on_id"
+
+  create_table "question_tests", force: true do |t|
+    t.integer "test_id",     null: false
+    t.integer "question_id", null: false
+  end
 
   create_table "questions", force: true do |t|
     t.string   "content"
@@ -37,9 +43,33 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.boolean  "active"
     t.datetime "created_at"
     t.datetime "updated_at"
+    t.integer  "user_id"
+    t.string   "section"
   end
 
   add_index "questions", ["product_id", "created_at"], name: "index_questions_on_product_id_and_created_at"
+
+  create_table "questions_tests", id: false, force: true do |t|
+    t.integer "test_id",     null: false
+    t.integer "question_id", null: false
+  end
+
+  create_table "sections", force: true do |t|
+    t.string   "name"
+    t.boolean  "active"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
+
+  create_table "tests", force: true do |t|
+    t.string   "name"
+    t.string   "type"
+    t.string   "category"
+    t.string   "description"
+    t.integer  "user_id"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "users", force: true do |t|
     t.string   "name"
@@ -49,6 +79,7 @@ ActiveRecord::Schema.define(version: 20140320132346) do
     t.string   "password_digest"
     t.string   "remember_token"
     t.boolean  "admin",           default: false
+    t.string   "permission"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
