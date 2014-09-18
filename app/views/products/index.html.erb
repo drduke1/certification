@@ -1,3 +1,6 @@
+<style>
+	td {text-align: center;}
+</style>
 <div id="container" style="width:800px; margin-left: auto; margin-right: auto; margin-top: 15px;">
 <%= link_to 'New Product', new_product_path, class: "reset" %>
 <button type="button" style="float: right" class="reset">Reset Search</button>
@@ -6,20 +9,24 @@
   	  <tr>
   	  <th width="40%" data-placeholder="Search">Name</th>
   	  <th width="25%" data-placeholder="Search">Category</th>
-      <th width="9%" class="filter-false"></th>
-      <th width="9%" class="filter-false"></th>
-      <th width="9%" class="filter-false"></th>
+      <th width="15%" class="filter-false">Functions</th>
       </tr>
   </thead>
 
   <tbody>
     <% @products.each do |product| %>
       <tr>
-        <td><%= product.name %></td>
-        <td><%= product.category %></td>
-        <td><%= link_to 'Show', product %></td>
-        <td><%= link_to 'Edit', edit_product_path(product) %></td>
-        <td><%= link_to 'Destroy', product, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= link_to product.name, product %></td>
+        <td><%= product.category.upcase %></td>
+        <td><%= link_to product do %>
+			<i class="glyphicon glyphicon-zoom-in"></i>
+		<% end %>
+		<%= link_to edit_product_path(product) do %>
+			<i class="glyphicon glyphicon-pencil"></i>
+		<% end %>
+		<%= link_to product, method: :delete, data: { confirm: 'Are you sure?' } do %>
+			<i class="glyphicon glyphicon-trash"></i>
+		<% end %></td>
       </tr>
     <% end %>
   </tbody>

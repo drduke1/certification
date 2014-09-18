@@ -3,10 +3,10 @@
 	<%= link_to "#{question.id}. #{question.content}", question %>
 	</td>
 	<div class="pull-right">
-		<td><small><%= User.find(question.user_id).name %></small></td>
-		<td><small><%= question.question_type %></small></td>
-		<td><small><%= Product.find(question.product_id).name %></small></td>
-		<td>
+		<td style="text-align: center;"><small><%= User.find(question.user_id).name %></small></td>
+		<td style="text-align: center;"><small><%= question.question_type %></small></td>
+		<td style="text-align: center;"><small><%= Product.find(question.product_id).name %></small></td>
+		<td style="text-align: center;">
 		<%= link_to question do %>
 			<i class="glyphicon glyphicon-zoom-in"></i>
 		<% end %>
