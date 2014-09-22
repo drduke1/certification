@@ -22,35 +22,35 @@
 	
 	<div id="ip_voice">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "voice", name: "voice"} %>
+	<%= f.collection_select :ip_voice_product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id1"} %>
 	</div>
 	
 	<div id="ip_video_surveillance">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "ip_video_surveillance" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "surv", name: "surv"} %>
+	<%= f.collection_select :ip_video_surveillance_product_id, Product.where({ category: "ip_video_surveillance" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
 	</div>
 	
 	<div id="ip_video_telephony">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "video", name: "video"} %>
+	<%= f.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
 	</div>
 	
 	<div id="consumer_atas">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "atas", name: "atas"} %>
+	<%= f.collection_select :consumer_atas_product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id3"} %>
 	</div>
 	
 	<div id="enterprise_gateways">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "gate", name: "gate"} %>
+	<%= f.collection_select :enterprise_gateways_product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id4"} %>
 	</div>
 	
 	<div id="ip_pbx">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "pbx", name: "pbx"} %>
+	<%= f.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
 	</div>
 	
-	<input id="targetField" type="hidden" name="question[product_id]" value=""/>
+	<!-- <input id="targetField" type="hidden" name="question[product_id]" value="0"/> -->
 	
 	<%= f.label :section %><br>
 	<%= f.collection_select :section, @sections, :id, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
@@ -140,7 +140,7 @@ $(document).ready(function(e) {
         });
 });
 </script>
-<script>
+<!-- <script>
 $(function(){
     $("#commit").on("click", function(){
         
@@ -153,7 +153,14 @@ $(function(){
                 return;
             }
         });
-				
+		if(!valueAssigned)
+        {
+            alert('nothing selected');
+        }
+        else
+        {
+            alert("Value of the hidden field: " + $("#targetField").val());
+        }	
     });
 });
 </script>

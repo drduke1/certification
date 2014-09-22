@@ -14,5 +14,5 @@
 //= require jquery_ujs
 //= require bootstrap
 //= require jquery-tablesorter
-//= require jquery.ui.all
+//= require jquery-ui
 //= require_tree .

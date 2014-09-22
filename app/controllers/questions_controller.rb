@@ -39,8 +39,8 @@ class QuestionsController < ApplicationController
   # POST /questions
   # POST /questions.json
   def create
-    @question = Question.new(question_params)
-    
+    @question = Question.new(question_params) 
+    @question.product_id = question_params["#{question_params[:category]}_product_id"]
     respond_to do |format|
       if @question.save
         @answer = Answer.find_by_question_id(@question.id)
@@ -91,7 +91,7 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:section, :content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :option, :correct, :question_id ] ).
+      params.require(:question).permit(:ip_pbx_product_id, :ip_video_telephony_product_id, :enterprise_gateways_product_id, :ip_video_surveillance_product_id, :ip_voice_product_id, :consumer_atas_product_id, :section, :content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :option, :correct, :question_id ] ).
       merge user_id: current_user.id
     end    
     
