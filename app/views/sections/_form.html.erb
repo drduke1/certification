@@ -16,10 +16,79 @@
     <%= f.text_field :name, class: "input-lg" %>
   </div>
   
-    <%#= f.label :active %><br>
-    <%#= f.check_box :active %>
-    
-  <div class="actions">
-    <%= f.submit class: "btn btn-lg btn-primary" %>
-  </div>
+  <div id="container" style="width:1000px; margin-left: auto; margin-right: auto;">
+<button type="button" class="reset">Reset Search</button>
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="9%" class="filter-false">Select<!--<input type="checkbox" onClick="toggle(this)"--></th>
+  	  <th width="42%" data-placeholder="Search">Name</th>
+	  <th width="17%" data-placeholder="Search">Category</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |p| %>
+      <tr>
+      	<td><%= check_box_tag "section[product_ids][]", p.id, @section.product_ids.include?(p.id) %></td>
+        <td style="text-align: center;"><%= p.name %></td>
+        <td style="text-align: center;"><%= p.category %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+</div>
+<div class="actions">
+    <%= f.submit "Create Section", id: "commit", class: "btn btn-lg btn-primary" %>
+</div>
 <% end %>
+
+<script>
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	$("table").tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.reset',
+	       }
+	  	});
+	  	$("#sections").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>
+<script>
+    
+	function toggle(source) {
+  checkboxes = document.getElementsByName('check-box');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script>

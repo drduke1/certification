@@ -1,6 +1,6 @@
 <tr>
 	<td>
-	<%= link_to "#{question.id}. #{question.content}", question %>
+	<%= link_to "#{question.content}", question %>
 	</td>
 	<div class="pull-right">
 		<td style="text-align: center;"><small><%= User.find(question.user_id).name %></small></td>

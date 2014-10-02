@@ -1,7 +1,5 @@
 class Product < ActiveRecord::Base
-  
-  #class Product < ActiveRecord::Base
-  #  scope :category, -> { where(category: "ip_voice") }
-  #end
-  
+  has_many :product_sections
+  has_many :sections, through: :product_sections
+  accepts_nested_attributes_for :sections
 end
