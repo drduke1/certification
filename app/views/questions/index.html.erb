@@ -1,21 +1,11 @@
-<h1>All Questions</h1>
-<div id="container" style="width:950px; margin-left: auto; margin-right: auto;">
-<table width="100%" class="tablesorter">
-  <thead>
-  	  <tr>
-  	  <th width="50%" data-placeholder="Search">Question</th>
-  	  <th width="15%" data-placeholder="Search">User</th>
-      <th width="8%" data-placeholder="Search">Type</th>
-	  <th width="15%" data-placeholder="Search">Product</th>
-	  <th width="12%" data-placeholder="Search">Functions</th>
-      </tr>
-  </thead>
+<style>
+	.input-group {
+		width: 98%;
+	}
+</style>
 
-  <tbody>
-    <%= render @questions %>
-  </tbody>
-</table>
-<br/>
+<h1>All Questions</h1>
+<div style="text-align: left; margin-right: 20px;">
 <%= link_to 'mc_question', id: "new_button" do %>
 	<button type="button" class="btn btn-lg btn-success">
 		<span class="glyphicon glyphicon-plus"></span>  New Multiple Choice
@@ -26,11 +16,74 @@
 		<span class="glyphicon glyphicon-plus"></span>  New True/False
 	</button>
 <% end %>
+</div>
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">Search Filters</div>
+  <div class="panel-body">
+	<div class="row">
+	  <div class="col-lg-6 col-md-6 col-xs-6">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Question" data-column="0"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-6 col-md-6 col-xs-6">
+	    <div class="input-group" style="width: 100%;">
+			<input class="form-control selectable" name="search selectable" type="search" placeholder="Search" data-column="all">
+			<select class="selectpicker" multiple>
+			  <option value="all">All</option>
+			  <option value="0">Question</option>
+			  <option value="1">Category</option>
+			  <option value="2">Type</option>
+			  <option value="3">Product</option>
+			</select>
+		</div>
+	  </div>
+	</div>
+	<div class="row" style="margin-top: 20px;">
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Category" data-column="1"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Type" data-column="2"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Product" data-column="3"><br>
+		</div>
+	  </div>
+	</div>
+	<button type="button" class="reset" style="margin: 15px;">Reset Search</button>
+  </div>
+</div>
+<br/>
+
 </div> 
 
+<div id="container" style="width:1200px; margin-left: auto; margin-right: auto;">
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="50%" data-placeholder="Search">Question</th>
+  	  <th width="15%" data-placeholder="Search">Category</th>
+      <th width="8%" data-placeholder="Search">Type</th>
+	  <th width="15%" data-placeholder="Search">Product</th>
+	  <th width="12%" data-placeholder="Search">Functions</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <%= render @questions %>
+  </tbody>
+</table>
+</div>
+
 <script>
-	$(function()
-	  {
+	$(function()  {
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -49,7 +102,7 @@
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
 	  		  	
-	  	$("table").tablesorter({
+	  	var $table = $("table").tablesorter({
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter'],
@@ -63,7 +116,35 @@
 	        	filter_reset : 'button.reset',
 	       }
 	  	});
+	  	
+		// Target the $('.search') input using built in functioning
+		// this binds to the search using "search" and "keyup"
+		// Allows using filter_liveSearch or delayed search &
+		// pressing escape to cancel the search
+		$.tablesorter.filter.bindSearch( $table, $('.form-control') );
+		
+		// Basic search binding, alternate to the above
+		// bind to search - pressing enter and clicking on "x" to clear (Webkit)
+		// keyup allows dynamic searching
+		/*
+		$(".search").bind('search keyup', function (e) {
+		  $('table').trigger('search', [ [this.value] ]);
+		});
+		*/
+		
+		// Allow changing an input from one column (any column) to another
+		$('selectpicker').change(function(){
+		// modify the search input data-column value (swap "0" or "all in this demo)
+		$('.selectable').attr( 'data-column', $(this).val() );
+		// update external search inputs
+		$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
+		});
+	  	
 	  	$("#questions").removeClass('tablesorter tablesorter-jui');
-	  }
-);
+	});
 </script>
+<script src="/assets/bootstrap-select.js"></script>
+<script type="text/javascript">
+    $('.selectpicker').selectpicker({
+      });
+    </script>
