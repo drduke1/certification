@@ -1,6 +1,6 @@
 <style>
 	.input-group {
-		width: 98%;
+		width: 95%;
 	}
 </style>
 
@@ -19,7 +19,10 @@
 </div>
 <br/>
 <div class="panel panel-default">
-  <div class="panel-heading">Search Filters</div>
+  <div class="panel-heading">
+  	<div style="display: inline; text-align: left;">Search Filters</div>  
+  	<div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success">Reset Search</button></div>
+  </div>
   <div class="panel-body">
 	<div class="row">
 	  <div class="col-lg-6 col-md-6 col-xs-6">
@@ -57,22 +60,48 @@
 		</div>
 	  </div>
 	</div>
-	<button type="button" class="reset" style="margin: 15px;">Reset Search</button>
+	
+	<div class="row" style="margin-top: 15px;">
+        <div id="filter-panel" class="collapse filter-panel">
+                <div class="panel-body">
+                    <div class="row">
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Section" data-column="4"><br>
+						</div>
+					  </div>
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Created" data-column="5"><br>
+						</div>
+					  </div>
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Updated" data-column="6"><br>
+						</div>
+					  </div>
+					</div>
+                </div>
+        </div>    
+        <button type="button" class="btn btn-success" style="margin-left: 15px;" data-toggle="collapse" data-target="#filter-panel">
+            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+        </button>
+	</div>
   </div>
 </div>
-<br/>
-
 </div> 
-
-<div id="container" style="width:1200px; margin-left: auto; margin-right: auto;">
+<div id="container" style="width:1400px; margin-left: auto; margin-right: auto;">
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="50%" data-placeholder="Search">Question</th>
-  	  <th width="15%" data-placeholder="Search">Category</th>
-      <th width="8%" data-placeholder="Search">Type</th>
-	  <th width="15%" data-placeholder="Search">Product</th>
-	  <th width="12%" data-placeholder="Search">Functions</th>
+  	  <th width="40%" data-placeholder="Search">Question</th>
+  	  <th width="12%" data-placeholder="Search">Category</th>
+      <th width="6%" data-placeholder="Search">Type</th>
+	  <th width="9%" data-placeholder="Search">Product</th>
+	  <th width="8%" data-placeholder="Search">Section</th>
+	  <th width="8%" data-placeholder="Search">Created</th>
+	  <th width="8%" data-placeholder="Search">Updated</th>
+	  <th width="9%" data-placeholder="Search">Functions</th>
       </tr>
   </thead>
 

@@ -6,6 +6,9 @@
 		<td style="text-align: center;"><small><%= question.category.upcase %></small></td>
 		<td style="text-align: center;"><small><%= question.question_type %></small></td>
 		<td style="text-align: center;"><small><%= Product.find(question.product_id).name %></small></td>
+		<td style="text-align: center;"><small><%= question.section %></small></td>
+		<td style="text-align: center;"><small><%= question.created_at.strftime("%b %d, %y") %></small></td>
+		<td style="text-align: center;"><small><%= question.updated_at.strftime("%b %d, %y") %></small></td>
 		<td style="text-align: center;">
 		<%= link_to question do %>
 			<i class="glyphicon glyphicon-zoom-in"></i>
