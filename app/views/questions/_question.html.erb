@@ -2,7 +2,6 @@
 	<td>
 	<%= link_to "#{question.content}", question %>
 	</td>
-	<div class="pull-right">
 		<td style="text-align: center;"><small><%= question.category.upcase %></small></td>
 		<td style="text-align: center;"><small><%= question.question_type %></small></td>
 		<td style="text-align: center;"><small><%= Product.find(question.product_id).name %></small></td>
@@ -20,6 +19,5 @@
 			<i class="glyphicon glyphicon-trash"></i>
 		<% end %>
 		</td>
-	</div>
 	
 </tr>

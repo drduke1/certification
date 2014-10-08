@@ -2,6 +2,9 @@
 	.input-group {
 		width: 95%;
 	}
+	.selectpicker {
+		width: auto !important;
+	}
 </style>
 
 <h1>All Questions</h1>
@@ -21,7 +24,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">
   	<div style="display: inline; text-align: left;">Search Filters</div>  
-  	<div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success">Reset Search</button></div>
+  	<div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success yo">Reset Search</button></div>
   </div>
   <div class="panel-body">
 	<div class="row">
@@ -90,6 +93,21 @@
   </div>
 </div>
 </div> 
+<div class="awesome" style="margin-left: 50px;">
+	<!-- Page: <select class="gotoPage"></select> -->
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/first.png" class="first" alt="First" title="First page" />
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/prev.png" class="prev" alt="Prev" title="Previous page" />
+	<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/next.png" class="next" alt="Next" title="Next page" />
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/last.png" class="last" alt="Last" title= "Last page" />
+	<span style="margin-left: 25px;">Questions per page: </span>
+	<select class="selectpicker pagesize">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="40">40</option>
+	</select>
+</div>
 <div id="container" style="width:1400px; margin-left: auto; margin-right: auto;">
 <table width="100%" class="tablesorter">
   <thead>
@@ -101,7 +119,7 @@
 	  <th width="8%" data-placeholder="Search">Section</th>
 	  <th width="8%" data-placeholder="Search">Created</th>
 	  <th width="8%" data-placeholder="Search">Updated</th>
-	  <th width="9%" data-placeholder="Search">Functions</th>
+	  <th width="9%" class="filter-false remove sorter-false">Functions</th>
       </tr>
   </thead>
 
@@ -113,6 +131,22 @@
 
 <script>
 	$(function()  {
+		// For Pages!
+		var pagerOptions = {
+		    // target the pager markup - see the HTML block below
+		    container: $(".awesome"),
+		    // output string - default is '{page}/{totalPages}'; possible variables: {page}, {totalPages}, {startRow}, {endRow} and {totalRows}
+		    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
+		    // if true, the table will remain the same height no matter how many records are displayed. The space is made up by an empty
+		    // table row set to a height to compensate; default is false
+		    fixedHeight: true,
+		    // remove rows from the table to speed up the sort of large tables.
+		    // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+		    removeRows: false,
+		    // go to page selector - select dropdown that sets the current page
+		    cssGoto: '.pagenum'
+		};
+		
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -130,8 +164,10 @@
 		    even       : 'ui-widget-content', // odd row zebra striping
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
-	  		  	
-	  	var $table = $("table").tablesorter({
+			  		  	
+	  	var $table = $("table")
+	  	.tablesorter({
+	  		debug: false,
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter'],
@@ -142,9 +178,11 @@
 	        	filter_ignoreCase : true,
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
-	        	filter_reset : 'button.reset',
+	        	filter_reset : 'button.yo',
 	       }
-	  	});
+	  	})
+	  	// initialize Pager plugin
+	  	.tablesorterPager(pagerOptions);
 	  	
 		// Target the $('.search') input using built in functioning
 		// this binds to the search using "search" and "keyup"
@@ -160,7 +198,6 @@
 		  $('table').trigger('search', [ [this.value] ]);
 		});
 		*/
-		
 		// Allow changing an input from one column (any column) to another
 		$('selectpicker').change(function(){
 		// modify the search input data-column value (swap "0" or "all in this demo)
@@ -174,6 +211,8 @@
 </script>
 <script src="/assets/bootstrap-select.js"></script>
 <script type="text/javascript">
+$(function(){
     $('.selectpicker').selectpicker({
       });
+ });
     </script>

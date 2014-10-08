@@ -12,7 +12,8 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery-tablesorter
 //= require jquery-ui
+//= require jquery-tablesorter
+//= require jquery-tablesorter/addons/pager/jquery.tablesorter.pager
 //= require bootstrap-sprockets
 //= require_tree .
