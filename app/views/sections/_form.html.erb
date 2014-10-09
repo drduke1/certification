@@ -1,3 +1,12 @@
+<style>
+	.input-group {
+		width: 100%;
+	}
+	.selectpicker {
+		width: auto !important;
+	}
+</style>
+
 <%= form_for(@section) do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
@@ -22,14 +31,16 @@
   	  <div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success yo">Reset Search</button></div>
     </div>
     <div class="panel-body">
-      <div class="col-lg-5 col-md-5 col-xs-5">
+      <div class="col-lg-6 col-md-6 col-xs-6">
 	  	<div class="input-group">
 			<input class="form-control" name="search" type="search" placeholder="Name" data-column="1"><br>
 		</div>
 	  </div>
-	  <div class="col-lg-5 col-md-5 col-xs-5">
+	  <div class="col-lg-6 col-md-6 col-xs-6">
 	  	<div class="input-group">
-			<input class="form-control" name="search" type="search" placeholder="Category" data-column="2"><br>
+			<select class="form-control" data-column="2">
+			  
+			</select>
 		</div>
 	  </div>
     </div>
@@ -39,9 +50,9 @@
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="15%" class="filter-false"><input type="checkbox"></th>
-  	  <th width="60%" data-placeholder="Search">Name</th>
-	  <th width="25%" data-placeholder="Search">Category</th>
+  	  <th width="14%" class="filter-false"><input type="checkbox"></th>
+  	  <th width="45%" data-placeholder="Search">Name</th>
+	  <th width="41%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
       </tr>
   </thead>
 
@@ -159,6 +170,11 @@ $.tablesorter.addParser({
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
 	        	filter_reset : 'button.yo',
+	        	filter_functions : {
+		        // Add select menu to this column
+		        // set the column value to true, and/or add "filter-select" class name to header
+		        '.category' : true
+		      }
 	       }
 	  	});
 	  	$.tablesorter.filter.bindSearch( $table, $('.form-control') );
@@ -174,7 +190,7 @@ $.tablesorter.addParser({
 	  }
 );
 </script>
-<script>
+<!-- ><script>
     
 	function toggle(source) {
   checkboxes = document.getElementsByName('check-box');
@@ -182,4 +198,11 @@ $.tablesorter.addParser({
     checkboxes[i].checked = source.checked;
   }
 }
+</script> -->
+<script src="/assets/bootstrap-select.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.selectpicker').selectpicker({
+      });
+ });
 </script>
