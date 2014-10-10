@@ -22,7 +22,7 @@
 	
 	<div id="ip_voice">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :ip_voice_product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id1"} %>
+	<%= f.collection_select :ip_voice_product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg product", id: "question_product_id1"} %>
 	</div>
 	
 	<div id="ip_video_surveillance">
@@ -50,10 +50,10 @@
 	<%= f.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
 	</div>
 	
-	<!-- <input id="targetField" type="hidden" name="question[product_id]" value=""/> -->
+	<!-- <input id="targetField" type="hidden" name="question[product_id]" id="product_id" value=""/> -->
 	
 	<%= f.label :section %><br>
-	<%= f.collection_select :section, @sections, :name, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
+	<%= f.select :section, options_for_select([ ["None", "None"] ]), {prompt: "Select a section"}, {class: "form-control input-lg" } %>
 	
 	
 	<%= f.label :active %><br>
@@ -79,7 +79,65 @@
 	});
 </script>
 <script>
+var product_sections = <%= @product_sections.to_json.html_safe %>
+
 $(document).ready(function(e) {
+		$('#question_product_id1').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id1').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id2').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id2').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id3').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id3').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id4').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id4').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id5').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id5').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+	
         $('#category').change(function() {
             if ($('#category').val()== 'ip_voice')
             {
@@ -141,12 +199,10 @@ $(document).ready(function(e) {
 });
 </script>
 <!--
-<script>
-$(function(){
-    $("#commit").on("click", function(){
+	$(function(){
         
         var valueAssigned = false;
-        $('select').each(function(){
+        $('.product').each(function(){
             if($(this).val())
             {
                 $("[name='question[product_id]']").val($(this).val());
@@ -157,8 +213,6 @@ $(function(){
 
         
     });
-});
-</script>
  Tell what is value
 if(!valueAssigned)
         {

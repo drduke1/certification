@@ -21,13 +21,29 @@ class QuestionsController < ApplicationController
     @products = Product.all
   end
   def new_mc
-    @sections = Section.all
+    @sections = ProductSection.all
     @question = Question.new
+    @product_sections = {}
+    @sections.each do |section|
+      @section_name = Section.find(section.section_id).name
+      @product_sections["#{section.id}"] = {
+        "product"          => "#{section.product_id}",
+        "section"          => "#{@section_name}"
+      }
+    end
     4.times { @question.answers.build }
   end
   def new_tf
-    @sections = Section.all
+    @sections = ProductSection.all
     @question = Question.new
+    @product_sections = {}
+    @sections.each do |section|
+      @section_name = Section.find(section.section_id).name
+      @product_sections["#{section.id}"] = {
+        "product"         => "#{section.product_id}",
+        "section"         => "#{@section_name}"
+      }
+    end
     @question.answers.build
   end
 
