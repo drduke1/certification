@@ -19,24 +19,25 @@
     <%= f.label :type %><br>
     <%= f.text_field :type, class: "input-lg" %>
   </div>
-  <div class="field">
-    <%= f.label :category %><br>
-	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
-  </div>
-  <div class="field">
+  <div class="field" data-column="2">
     <%= f.label :description %><br>
     <%= f.text_field :description, class: "input-lg" %>
   </div>
+  <div class="input-group">
+    <%= f.label :category %><br>
+	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  3} %>
+	<!-- [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ] -->
+  </div>
   
-<div id="container" style="width:1000px; margin-left: auto; margin-right: auto;">
-<button type="button" class="reset">Reset Search</button>
+<div id="container" style="width:1000px; margin-top: 15px; margin-left: auto; margin-right: auto;">
+<button type="button" class="btn btn-success yo">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="9%" class="filter-false">Select<!--<input type="checkbox" onClick="toggle(this)"--></th>
+  	  <th width="9%" class="filter-false"><input type="checkbox"</th>
   	  <th width="42%" data-placeholder="Search">Content</th>
       <th width="8%" data-placeholder="Search">Type</th>
-	  <th width="17%" data-placeholder="Search">Category</th>
+	  <th width="17%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
 	  <th width="15%" data-placeholder="Search">Product</th>
       <th width="9%" data-placeholder="Search">Active</th>
       </tr>
@@ -64,6 +65,64 @@
 <% end %>
 
 <script>
+$.tablesorter.addParser({
+    id: 'checkbox',
+    is: function(s) {
+        return false;
+    },
+    format: function(s, table, cell, cellIndex) {
+        var $t = $(table),
+            $tb = $t.children('tbody'),
+            $c = $(cell),
+            c, check,
+
+            // resort the table after the checkbox status has changed
+            resort = false;
+
+        if (!$t.hasClass('hasCheckbox')) {
+            
+            // update the select all visible checkbox in the header
+            check = function($t) {
+                var $v = $tb.children('tr:visible'),
+                    $c = $v.filter('.checked');
+                $t.find('.selectVisible').prop('checked', $v.length === $c.length);
+            };
+
+            $t
+            .addClass('hasCheckbox')
+            // update select all checkbox in header
+            .bind('pageMoved filterEnd', function() {
+                check($t);
+            })
+            // make checkbox in header set all others
+            .find('thead th:eq(' + cellIndex + ') input[type=checkbox]')
+            .addClass('selectVisible')
+            .bind('change', function() {
+                c = this.checked;
+                $tb.find('> tr:visible td:nth-child(' + (cellIndex + 1) + ') input')
+                    .each(function() {
+                        this.checked = c;
+                        $(this).trigger('change');
+                    });
+            }).bind('mouseup', function() {
+                return false;
+            });
+            $tb.children('tr').each(function() {
+                $(this).find('td:eq(' + cellIndex + ')').find('input[type=checkbox]')
+                    .bind('change', function() {
+                        $t.trigger('updateCell', [$(this).closest('td')[0], resort]);
+                        check($t);
+                    });
+            });
+        }
+        // return 1 for true, 2 for false, so true sorts before false
+        c = ($c.find('input[type=checkbox]')[0].checked) ? 1 : 2;
+        $c.closest('tr')[c === 1 ? 'addClass' : 'removeClass']('checked');
+        return c;
+    },
+    type: 'numeric'
+});
+
 	$(function()
 	  {
 	  	$.extend($.tablesorter.themes.jui, {
@@ -84,10 +143,14 @@
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
 	  		  	
-	  	$("table").tablesorter({
+	  	var $table = $("table")
+	  	.tablesorter({
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		headers: {
+	  			0: { sorter: 'checkbox' }
+	  		},
 	  		
 	  		widgetOptions: {
 	  			zebra   : ["even", "odd"],
@@ -95,19 +158,31 @@
 	        	filter_ignoreCase : true,
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
-	        	filter_reset : 'button.reset',
+	        	filter_reset : 'button.yo',
+	        	filter_functions : {
+		        // Add select menu to this column
+		        // set the column value to true, and/or add "filter-select" class name to header
+		        '.category' : true
+		      }
 	       }
 	  	});
+	  	$.tablesorter.filter.bindSearch( $table, $('.form-control') );
+		
+		// Allow changing an input from one column (any column) to another
+		$('selectpicker').change(function(){
+		// modify the search input data-column value (swap "0" or "all in this demo)
+		$('.selectable').attr( 'data-column', $(this).val() );
+		// update external search inputs
+		$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
+		});
 	  	$("#tests").removeClass('tablesorter tablesorter-jui');
 	  }
 );
 </script>
-<script>
-    
-	function toggle(source) {
-  checkboxes = document.getElementsByName('check-box');
-  for(var i=0, n=checkboxes.length;i<n;i++) {
-    checkboxes[i].checked = source.checked;
-  }
-}
+<script src="/assets/bootstrap-select.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.selectpicker').selectpicker({
+      });
+ });
 </script>
