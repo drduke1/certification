@@ -11,35 +11,42 @@
     </div>
   <% end %>
 
-  <div class="field">
+  <div class="field" style="display: inline-block; width: 49%;">
     <%= f.label :name %><br>
     <%= f.text_field :name, class: "input-lg" %>
   </div>
-  <div class="field">
+  <div class="field" style="display: inline-block; width: 49%; float: right;">
     <%= f.label :type %><br>
     <%= f.text_field :type, class: "input-lg" %>
   </div>
-  <div class="field" data-column="2">
+  <div class="field">
     <%= f.label :description %><br>
     <%= f.text_field :description, class: "input-lg" %>
   </div>
-  <div class="input-group">
+  <div class="input-group" style="display: inline-block;">
     <%= f.label :category %><br>
 	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  3} %>
 	<!-- [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ] -->
   </div>
+  <div style="display: inline-block; width: 30%">
+  <div class="input-group">
+  <span class="input-group-addon">Number of Questions Select:</span>
+  <input type="text" id="count" name="count-checked-checkboxes" value="0" class="form-control" />
+  </div>
+  </div>
   
-<div id="container" style="width:1000px; margin-top: 15px; margin-left: auto; margin-right: auto;">
+<div id="container" style="width:1200px; margin-top: 15px; margin-left: auto; margin-right: auto;">
 <button type="button" class="btn btn-success yo">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="9%" class="filter-false"><input type="checkbox"</th>
-  	  <th width="42%" data-placeholder="Search">Content</th>
-      <th width="8%" data-placeholder="Search">Type</th>
-	  <th width="17%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
-	  <th width="15%" data-placeholder="Search">Product</th>
-      <th width="9%" data-placeholder="Search">Active</th>
+  	  <th width="6%" class="filter-false"><input type="checkbox"</th>
+  	  <th width="40%" data-placeholder="Search">Content</th>
+      <th width="7%" data-placeholder="Search">Type</th>
+	  <th width="15%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
+	  <th width="13%" data-placeholder="Search">Product</th>
+	  <th width="11%" data-placeholder="Search">Section</th>
+      <th width="8%" data-placeholder="Search">Active</th>
       </tr>
   </thead>
 
@@ -51,6 +58,7 @@
         <td style="text-align: center;"><%= q.question_type %></td>
         <td><%= q.category %></td>
         <td style="text-align: center;"><%= Product.find(q.product_id).name %></td>
+        <td style="text-align: center;"><%= q.section.capitalize %></td>
         <td style="text-align: center;"><%= q.active %></td>
       </tr>
     <% end %>
@@ -60,7 +68,7 @@
 <br>
 </div>
 <div class="actions">
-    <%= f.submit "Create Test", id: "commit", class: "btn btn-lg btn-primary" %>
+    <%= f.submit "Save Test", id: "commit", class: "btn btn-lg btn-primary" %>
 </div>
 <% end %>
 
@@ -185,4 +193,16 @@ $(function(){
     $('.selectpicker').selectpicker({
       });
  });
+</script>
+<script>
+	$(document).ready(function(){
+
+    var $checkboxes = $('#new_test td input[type="checkbox"]');
+        
+    $checkboxes.change(function(){
+        var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+        // $('#count-checked-checkboxes').text(countCheckedCheckboxes);
+        $('#count').val(countCheckedCheckboxes);
+    });
+});
 </script>

@@ -22,7 +22,7 @@
       <tr>
         <td><%= link_to test.name, test %></td>
         <td><%= test.type %></td>
-        <td><%= test.category.capitalize %></td>
+        <td><%= test.category %></td>
         <td><%= test.description %></td>
         <td><%= User.find(test.user_id).name %></td>
         <td><%= link_to test do %>
