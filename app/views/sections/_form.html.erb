@@ -25,6 +25,8 @@
       <%= f.label :name %><br>
       <%= f.text_field :name, class: "input-lg" %>
     </div>
+    <%= f.label :active %><br>
+	<%= f.check_box :active %>
   <div class="panel panel-default">
     <div class="panel-heading">
   	  <div style="display: inline; text-align: left;">Search Filters</div>  
@@ -69,10 +71,16 @@
 <br>
 </div>
 <div class="actions">
-    <%= f.submit "Create Section", id: "commit", class: "btn btn-lg btn-primary" %>
+    <%= f.submit "Save Section", id: "commit", class: "btn btn-lg btn-primary" %>
 </div>
 <% end %>
-
+<script>
+	$(document).ready(function(){
+		$("#section_active").bootstrapSwitch('onText', 'Active');
+		$("#section_active").bootstrapSwitch('offText', 'Off');
+		$("#section_active").bootstrapSwitch('size', 'large');
+	});
+</script>
 <script>
 // add parser through the tablesorter addParser method
 $.tablesorter.addParser({

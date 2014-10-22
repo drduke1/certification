@@ -28,15 +28,15 @@
 	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  3} %>
 	<!-- [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ] -->
   </div>
-  <div style="display: inline-block; width: 30%">
-  <div class="input-group">
-  <span class="input-group-addon">Number of Questions Select:</span>
-  <input type="text" id="count" name="count-checked-checkboxes" value="0" class="form-control" />
-  </div>
-  </div>
   
 <div id="container" style="width:1200px; margin-top: 15px; margin-left: auto; margin-right: auto;">
-<button type="button" class="btn btn-success yo">Reset Search</button>
+  <div style="display: inline-block; width: 24%;">
+    <div class="input-group">
+      <span class="input-group-addon">Number of Questions Selected:</span>
+      <input type="text" id="count" name="count-checked-checkboxes" value="0" class="form-control input-lg" disabled />
+    </div>
+  </div>
+<button type="button" class="btn btn-success yo" style="display: inline-block; float: right;">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
