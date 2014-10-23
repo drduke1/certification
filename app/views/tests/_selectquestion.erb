@@ -25,7 +25,7 @@
   </div>
   <div class="input-group" style="display: inline-block;">
     <%= f.label :category %><br>
-	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  3} %>
+	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  4} %>
 	<!-- [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ] -->
   </div>
   
@@ -41,12 +41,12 @@
   <thead>
   	  <tr>
   	  <th width="6%" class="filter-false"><input type="checkbox"</th>
+      <th width="8%" data-placeholder="Search">Order</th>
   	  <th width="40%" data-placeholder="Search">Content</th>
       <th width="7%" data-placeholder="Search">Type</th>
 	  <th width="15%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
 	  <th width="13%" data-placeholder="Search">Product</th>
 	  <th width="11%" data-placeholder="Search">Section</th>
-      <th width="8%" data-placeholder="Search">Active</th>
       </tr>
   </thead>
 
@@ -54,12 +54,12 @@
     <% @questions.each do |q| %>
       <tr>
       	<td><%= check_box_tag "test[question_ids][]", q.id, @test.question_ids.include?(q.id) %></td>
+      	<td style="text-align: center;">&nbsp;</td>
         <td><%= q.content %></td>
         <td style="text-align: center;"><%= q.question_type %></td>
         <td><%= q.category %></td>
         <td style="text-align: center;"><%= Product.find(q.product_id).name %></td>
         <td style="text-align: center;"><%= q.section.capitalize %></td>
-        <td style="text-align: center;"><%= q.active %></td>
       </tr>
     <% end %>
   </tbody>
@@ -155,7 +155,7 @@ $.tablesorter.addParser({
 	  	.tablesorter({
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
-	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		widgets: ['uitheme', 'zebra', 'filter', 'editable'],
 	  		headers: {
 	  			0: { sorter: 'checkbox' }
 	  		},
@@ -171,9 +171,49 @@ $.tablesorter.addParser({
 		        // Add select menu to this column
 		        // set the column value to true, and/or add "filter-select" class name to header
 		        '.category' : true
+		      	},
+		      	editable_columns       : [1],       // or "0-2" (v2.14.2); point to the columns to make editable (zero-based index)
+		        editable_enterToAccept : true,          // press enter to accept content, or click outside if false
+		        editable_autoAccept    : true,          // accepts any changes made to the table cell automatically (v2.17.6)
+		        editable_autoResort    : true,         // auto resort after the content has changed.
+		        editable_validate      : {
+		        	// make sure the price column(s) are using a number
+		        	1 : function(txt, orig, columnIndex, $element) {
+		        		return isNaN( txt.replace(/\D/, '')) ? '' : txt;
+		        	}       	
+		        },          
+		        // return a valid string: function(text, original, columnIndex){ return text; }
+		        editable_focused       : function(txt, columnIndex, $element) {
+		          // $element is the div, not the td
+		          // to get the td, use $element.closest('td')
+		          $element.addClass('focused');
+		        },
+		        editable_blur          : function(txt, columnIndex, $element) {
+		          // $element is the div, not the td
+		          // to get the td, use $element.closest('td')
+		          $element.removeClass('focused');
+		        },
+		        editable_selectAll     : function(txt, columnIndex, $element){
+		          // note $element is the div inside of the table cell, so use $element.closest('td') to get the cell
+		          // only select everthing within the element when the content starts with the letter "B"
+		          return /^b/i.test(txt) && columnIndex === 0;
+		        },
+		        editable_wrapContent   : '<div class="form-control input-sm">',       // wrap all editable cell content... makes this widget work in IE, and with autocomplete
+		        editable_noEdit        : 'no-edit',     // class name of cell that is not editable
+		        editable_editComplete  : 'editComplete' // event fired after the table content has been edited
 		      }
-	       }
-	  	});
+		     
+		   })
+		    // config event variable new in v2.17.6
+		    .children('tbody').on('editComplete', 'td', function(event, config){
+		      var $this = $(this),
+		
+		        newContent = $this.text(),
+		        cellIndex = this.cellIndex, // there shouldn't be any colspans in the tbody
+		        rowIndex = $this.closest('tr').attr('id'); // data-row-index stored in row id
+		    });
+		    
+		var $table = $("table");
 	  	$.tablesorter.filter.bindSearch( $table, $('.form-control') );
 		
 		// Allow changing an input from one column (any column) to another

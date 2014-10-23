@@ -16,6 +16,7 @@
 //= require jquery-tablesorter
 //= require jquery-tablesorter/jquery.tablesorter.widgets
 //= require jquery-tablesorter/addons/pager/jquery.tablesorter.pager
+//= require jquery-tablesorter/widgets/widget-editable.js
 //= require bootstrap-sprockets
 //= require bootstrap-switch
 //= require_tree .
