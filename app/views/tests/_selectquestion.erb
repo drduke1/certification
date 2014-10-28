@@ -1,3 +1,18 @@
+<style>
+	.count {
+		position: relative;
+		z-index: 2;
+		float: left;
+		width: 100%;
+		margin-bottom: 0;
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+		/* cursor: not-allowed; */
+		background-color: #eeeeee;
+		opacity: 1;
+	}
+</style>
+
 <%= form_for(@test) do |f| %>
   <% if @test.errors.any? %>
     <div id="error_explanation">
@@ -33,7 +48,7 @@
   <div style="display: inline-block; width: 24%;">
     <div class="input-group">
       <span class="input-group-addon">Number of Questions Selected:</span>
-      <input type="text" id="count" name="count-checked-checkboxes" value="0" class="form-control input-lg" disabled />
+      <input type="text" id="count" name="count-checked-checkboxes" value="0" class="input-lg count" disabled />
     </div>
   </div>
 <button type="button" class="btn btn-success yo" style="display: inline-block; float: right;">Reset Search</button>

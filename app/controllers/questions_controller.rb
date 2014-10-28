@@ -1,4 +1,5 @@
 class QuestionsController < ApplicationController
+  #before_filter :admin_user
   before_action :set_question, only: [:show, :edit, :update, :destroy]  
   before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
 
@@ -117,6 +118,12 @@ class QuestionsController < ApplicationController
     		store_location
 	    	redirect_to signin_url, notice: "Please sign in."
 	    end
+    end
+    
+    def admin_user
+      unless admin_user?
+        redirect_to root_url, notice: "Administrator permissions needed."
+      end
     end
 
 end
