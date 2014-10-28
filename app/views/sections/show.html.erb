@@ -1,14 +1,28 @@
-<p id="notice"><%= notice %></p>
-
-<p>
-  <strong>Name:</strong>
-  <%= @section.name %>
-</p>
-
-<p>
-  <strong>Active:</strong>
-  <%= @section.active %>
-</p>
-
-<%= link_to 'Edit', edit_section_path(@section) %> |
-<%= link_to 'Back', sections_path %>
+<!-- <p id="notice"><%= notice %></p> -->
+<div class="row">
+	<div class="col-md-9 col-md-offset-2">
+		<h3>
+			Exam Section
+		</h3>
+		<hr />
+		<p>
+		  <strong>Name:</strong>
+		  <%= @section.name %>
+		</p>
+		
+		<p>
+			<strong>Products:</strong>
+			<% @section.products.each do |product| %>
+			<%= product.name.upcase %> | 
+			<% end %>
+		</p>
+		
+		<p>
+		  <strong>Active:</strong>
+		  <%= @section.active %>
+		</p>
+		
+		<%= link_to 'Edit', edit_section_path(@section) %> |
+		<%= link_to 'Back', sections_path %>
+	</div>
+</div>

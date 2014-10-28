@@ -24,3 +24,4 @@ doc/
 .idea
 bundler_stubs/
 public/
+/config/secrets.yml

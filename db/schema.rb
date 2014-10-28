@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140915203627) do
+ActiveRecord::Schema.define(version: 20141001215643) do
 
   create_table "answers", force: true do |t|
     t.string   "option"
@@ -19,6 +19,11 @@ ActiveRecord::Schema.define(version: 20140915203627) do
     t.boolean  "correct",     default: false
     t.datetime "created_at"
     t.datetime "updated_at"
+  end
+
+  create_table "product_sections", force: true do |t|
+    t.integer "product_id", null: false
+    t.integer "section_id", null: false
   end
 
   create_table "products", force: true do |t|

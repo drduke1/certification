@@ -16,10 +16,12 @@ class SectionsController < ApplicationController
   # GET /sections/new
   def new
     @section = Section.new
+    @products = Product.all
   end
 
   # GET /sections/1/edit
   def edit
+    @products = Product.all
   end
 
   # POST /sections
@@ -78,6 +80,6 @@ class SectionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def section_params
-      params.require(:section).permit(:name, :active)
+      params.require(:section).permit(:name, :active, :product_ids => [], product_attributes: [ :id ] )
     end
 end

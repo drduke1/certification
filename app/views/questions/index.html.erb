@@ -1,21 +1,14 @@
-<h1>All Questions</h1>
-<div id="container" style="width:950px; margin-left: auto; margin-right: auto;">
-<table width="100%" class="tablesorter">
-  <thead>
-  	  <tr>
-  	  <th width="50%" data-placeholder="Search">Question</th>
-  	  <th width="15%" data-placeholder="Search">User</th>
-      <th width="8%" data-placeholder="Search">Type</th>
-	  <th width="15%" data-placeholder="Search">Product</th>
-	  <th width="12%" data-placeholder="Search">Functions</th>
-      </tr>
-  </thead>
+<style>
+	.input-group {
+		width: 95%;
+	}
+	.selectpicker {
+		width: auto !important;
+	}
+</style>
 
-  <tbody>
-    <%= render @questions %>
-  </tbody>
-</table>
-<br/>
+<h1>All Questions</h1>
+<div style="text-align: left; margin-right: 20px;">
 <%= link_to 'mc_question', id: "new_button" do %>
 	<button type="button" class="btn btn-lg btn-success">
 		<span class="glyphicon glyphicon-plus"></span>  New Multiple Choice
@@ -27,11 +20,133 @@
 	</button>
 <% end %>
 </div>
-<% will_paginate %> 
+<br/>
+<div class="panel panel-default">
+  <div class="panel-heading">
+  	<div style="display: inline; text-align: left;">Search Filters</div>  
+  	<div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success yo">Reset Search</button></div>
+  </div>
+  <div class="panel-body">
+	<div class="row">
+	  <div class="col-lg-6 col-md-6 col-xs-6">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Question" data-column="0"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-6 col-md-6 col-xs-6">
+	    <div class="input-group" style="width: 100%;">
+			<input class="form-control selectable" name="search selectable" type="search" placeholder="Search" data-column="all">
+			<select class="selectpicker" multiple>
+			  <option value="all">All</option>
+			  <option value="0">Question</option>
+			  <option value="1">Category</option>
+			  <option value="2">Type</option>
+			  <option value="3">Product</option>
+			</select>
+		</div>
+	  </div>
+	</div>
+	<div class="row" style="margin-top: 20px;">
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Category" data-column="1"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Type" data-column="2"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-4 col-md-4 col-xs-4">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Product" data-column="3"><br>
+		</div>
+	  </div>
+	</div>
+	
+	<div class="row" style="margin-top: 15px;">
+        <div id="filter-panel" class="collapse filter-panel">
+                <div class="panel-body">
+                    <div class="row">
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Section" data-column="4"><br>
+						</div>
+					  </div>
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Created" data-column="5"><br>
+						</div>
+					  </div>
+					  <div class="col-lg-4 col-md-4 col-xs-4">
+					  	<div class="input-group">
+							<input class="form-control" name="search" type="search" placeholder="Updated" data-column="6"><br>
+						</div>
+					  </div>
+					</div>
+                </div>
+        </div>    
+        <button type="button" class="btn btn-success" style="margin-left: 15px;" data-toggle="collapse" data-target="#filter-panel">
+            <span class="glyphicon glyphicon-cog"></span> Advanced Search
+        </button>
+	</div>
+  </div>
+</div>
+</div> 
+<div class="awesome" style="width: 1400px; margin-left: auto; margin-right: auto; padding-left: 5px;">
+	<!-- Page: <select class="gotoPage"></select> -->
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/first.png" class="first" alt="First" title="First page" />
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/prev.png" class="prev" alt="Prev" title="Previous page" />
+	<span class="pagedisplay"></span> <!-- this can be any element, including an input -->
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/next.png" class="next" alt="Next" title="Next page" />
+	<img src="../assets/jquery-tablesorter/addons/pager/icons/last.png" class="last" alt="Last" title= "Last page" />
+	<span style="margin-left: 25px;">Questions per page: </span>
+	<select class="selectpicker pagesize">
+		<option value="10">10</option>
+		<option value="20">20</option>
+		<option value="30">30</option>
+		<option value="40">40</option>
+	</select>
+</div>
+<div id="container" style="width:1400px; margin-left: auto; margin-right: auto;">
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="40%" data-placeholder="Search">Question</th>
+  	  <th width="12%" data-placeholder="Search">Category</th>
+      <th width="6%" data-placeholder="Search">Type</th>
+	  <th width="9%" data-placeholder="Search">Product</th>
+	  <th width="8%" data-placeholder="Search">Section</th>
+	  <th width="8%" data-placeholder="Search">Created</th>
+	  <th width="8%" data-placeholder="Search">Updated</th>
+	  <th width="9%" class="filter-false remove sorter-false">Functions</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <%= render @questions %>
+  </tbody>
+</table>
+</div>
 
 <script>
-	$(function()
-	  {
+	$(function()  {
+		// For Pages!
+		var pagerOptions = {
+		    // target the pager markup - see the HTML block below
+		    container: $(".awesome"),
+		    // output string - default is '{page}/{totalPages}'; possible variables: {page}, {totalPages}, {startRow}, {endRow} and {totalRows}
+		    output: '{startRow} - {endRow} / {filteredRows} ({totalRows})',
+		    // if true, the table will remain the same height no matter how many records are displayed. The space is made up by an empty
+		    // table row set to a height to compensate; default is false
+		    fixedHeight: true,
+		    // remove rows from the table to speed up the sort of large tables.
+		    // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+		    removeRows: false,
+		    // go to page selector - select dropdown that sets the current page
+		    cssGoto: '.pagenum'
+		};
+		
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -49,8 +164,10 @@
 		    even       : 'ui-widget-content', // odd row zebra striping
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
-	  		  	
-	  	$("table").tablesorter({
+			  		  	
+	  	var $table = $("table")
+	  	.tablesorter({
+	  		debug: false,
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter'],
@@ -61,10 +178,41 @@
 	        	filter_ignoreCase : true,
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
-	        	filter_reset : 'button.reset',
+	        	filter_reset : 'button.yo',
 	       }
-	  	});
+	  	})
+	  	// initialize Pager plugin
+	  	.tablesorterPager(pagerOptions);
+	  	
+		// Target the $('.search') input using built in functioning
+		// this binds to the search using "search" and "keyup"
+		// Allows using filter_liveSearch or delayed search &
+		// pressing escape to cancel the search
+		$.tablesorter.filter.bindSearch( $table, $('.form-control') );
+		
+		// Basic search binding, alternate to the above
+		// bind to search - pressing enter and clicking on "x" to clear (Webkit)
+		// keyup allows dynamic searching
+		/*
+		$(".search").bind('search keyup', function (e) {
+		  $('table').trigger('search', [ [this.value] ]);
+		});
+		*/
+		// Allow changing an input from one column (any column) to another
+		$('selectpicker').change(function(){
+		// modify the search input data-column value (swap "0" or "all in this demo)
+		$('.selectable').attr( 'data-column', $(this).val() );
+		// update external search inputs
+		$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
+		});
+	  	
 	  	$("#questions").removeClass('tablesorter tablesorter-jui');
-	  }
-);
+	});
+</script>
+<script src="/assets/bootstrap-select.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.selectpicker').selectpicker({
+      });
+ });
 </script>

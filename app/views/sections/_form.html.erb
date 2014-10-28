@@ -1,3 +1,12 @@
+<style>
+	.input-group {
+		width: 100%;
+	}
+	.selectpicker {
+		width: auto !important;
+	}
+</style>
+
 <%= form_for(@section) do |f| %>
   <% if @section.errors.any? %>
     <div id="error_explanation">
@@ -11,15 +20,196 @@
     </div>
   <% end %>
 
-  <div class="field">
-    <%= f.label :name %><br>
-    <%= f.text_field :name, class: "input-lg" %>
+<div class="col-lg-6 col-md-6 col-xs-6">
+	<div class="field">
+      <%= f.label :name %><br>
+      <%= f.text_field :name, class: "input-lg" %>
+    </div>
+    <%= f.label :active %><br>
+	<%= f.check_box :active %>
+  <div class="panel panel-default">
+    <div class="panel-heading">
+  	  <div style="display: inline; text-align: left;">Search Filters</div>  
+  	  <div class="btn-group pull-right" style="margin-top: -7px;"><button type="button" class="btn btn-success yo">Reset Search</button></div>
+    </div>
+    <div class="panel-body">
+      <div class="col-lg-6 col-md-6 col-xs-6">
+	  	<div class="input-group">
+			<input class="form-control" name="search" type="search" placeholder="Name" data-column="1"><br>
+		</div>
+	  </div>
+	  <div class="col-lg-6 col-md-6 col-xs-6">
+	  	<div class="input-group">
+			<select class="form-control" data-column="2">
+			  
+			</select>
+		</div>
+	  </div>
+    </div>
   </div>
-  
-    <%#= f.label :active %><br>
-    <%#= f.check_box :active %>
-    
-  <div class="actions">
-    <%= f.submit class: "btn btn-lg btn-primary" %>
-  </div>
+</div>
+  <div id="container" class="col-lg-6 col-md-6 col-xs-6">
+<table width="100%" class="tablesorter">
+  <thead>
+  	  <tr>
+  	  <th width="14%" class="filter-false"><input type="checkbox"></th>
+  	  <th width="45%" data-placeholder="Search">Name</th>
+	  <th width="41%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
+      </tr>
+  </thead>
+
+  <tbody>
+    <% @products.each do |p| %>
+      <tr>
+      	<td><%= check_box_tag "section[product_ids][]", p.id, @section.product_ids.include?(p.id) %></td>
+        <td style="text-align: center;"><%= p.name %></td>
+        <td style="text-align: center;"><%= p.category %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<br>
+</div>
+<div class="actions">
+    <%= f.submit "Save Section", id: "commit", class: "btn btn-lg btn-primary" %>
+</div>
 <% end %>
+<script>
+	$(document).ready(function(){
+		$("#section_active").bootstrapSwitch('onText', 'Active');
+		$("#section_active").bootstrapSwitch('offText', 'Off');
+		$("#section_active").bootstrapSwitch('size', 'large');
+	});
+</script>
+<script>
+// add parser through the tablesorter addParser method
+$.tablesorter.addParser({
+    id: 'checkbox',
+    is: function(s) {
+        return false;
+    },
+    format: function(s, table, cell, cellIndex) {
+        var $t = $(table),
+            $tb = $t.children('tbody'),
+            $c = $(cell),
+            c, check,
+
+            // resort the table after the checkbox status has changed
+            resort = false;
+
+        if (!$t.hasClass('hasCheckbox')) {
+            
+            // update the select all visible checkbox in the header
+            check = function($t) {
+                var $v = $tb.children('tr:visible'),
+                    $c = $v.filter('.checked');
+                $t.find('.selectVisible').prop('checked', $v.length === $c.length);
+            };
+
+            $t
+            .addClass('hasCheckbox')
+            // update select all checkbox in header
+            .bind('pageMoved filterEnd', function() {
+                check($t);
+            })
+            // make checkbox in header set all others
+            .find('thead th:eq(' + cellIndex + ') input[type=checkbox]')
+            .addClass('selectVisible')
+            .bind('change', function() {
+                c = this.checked;
+                $tb.find('> tr:visible td:nth-child(' + (cellIndex + 1) + ') input')
+                    .each(function() {
+                        this.checked = c;
+                        $(this).trigger('change');
+                    });
+            }).bind('mouseup', function() {
+                return false;
+            });
+            $tb.children('tr').each(function() {
+                $(this).find('td:eq(' + cellIndex + ')').find('input[type=checkbox]')
+                    .bind('change', function() {
+                        $t.trigger('updateCell', [$(this).closest('td')[0], resort]);
+                        check($t);
+                    });
+            });
+        }
+        // return 1 for true, 2 for false, so true sorts before false
+        c = ($c.find('input[type=checkbox]')[0].checked) ? 1 : 2;
+        $c.closest('tr')[c === 1 ? 'addClass' : 'removeClass']('checked');
+        return c;
+    },
+    type: 'numeric'
+});
+
+	$(function()
+	  {
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  		  	
+	  	var $table = $("table")
+	  	.tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter'],
+	  		headers: {
+	  			0: { sorter: 'checkbox' }
+	  		},
+	  		
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.yo',
+	        	filter_functions : {
+		        // Add select menu to this column
+		        // set the column value to true, and/or add "filter-select" class name to header
+		        '.category' : true
+		      }
+	       }
+	  	});
+	  	$.tablesorter.filter.bindSearch( $table, $('.form-control') );
+		
+		// Allow changing an input from one column (any column) to another
+		$('selectpicker').change(function(){
+		// modify the search input data-column value (swap "0" or "all in this demo)
+		$('.selectable').attr( 'data-column', $(this).val() );
+		// update external search inputs
+		$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
+		});
+	  	$("#sections").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>
+<!-- ><script>
+    
+	function toggle(source) {
+  checkboxes = document.getElementsByName('check-box');
+  for(var i=0, n=checkboxes.length;i<n;i++) {
+    checkboxes[i].checked = source.checked;
+  }
+}
+</script> -->
+<script src="/assets/bootstrap-select.js"></script>
+<script type="text/javascript">
+$(function(){
+    $('.selectpicker').selectpicker({
+      });
+ });
+</script>

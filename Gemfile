@@ -3,6 +3,7 @@ ruby '2.1.2'
 gem 'rails', '4.1.5'
 gem 'railties', '4.1.5'
 <<<<<<< HEAD
+<<<<<<< HEAD
 gem 'activesupport', '4.1.5'
 gem 'bootstrap-sass', '3.0'
 =======
@@ -12,6 +13,14 @@ gem 'bootstrap-sass', '3.1.1'
 >>>>>>> origin/Duke
 gem 'bcrypt-ruby', '3.1.2'
 gem 'will_paginate', '3.0.4'
+=======
+gem 'jquery-rails', '3.1.2'
+gem 'activesupport', '4.1.5'
+gem 'bootstrap-sass', '~> 3.2.0'
+gem 'bootstrap-switch-rails'
+gem 'bcrypt-ruby', '3.1.5'
+gem 'will_paginate'
+>>>>>>> origin/Duke
 gem 'bootstrap-will_paginate'
 gem 'jquery-ui-rails'
 gem 'jquery-ui-themes'
@@ -32,10 +41,10 @@ end
 
 gem 'sass-rails', '~>4.0.2'
 gem 'uglifier', '2.1.1'
-gem 'coffee-rails', '4.0.1'
+gem 'coffee-rails'
 
-gem 'turbolinks', '1.1.1'
-gem 'jbuilder', '1.0.2'
+gem 'turbolinks'
+gem 'jbuilder'
 
 group :doc do
   gem 'sdoc', '0.3.20', require: false

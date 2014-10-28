@@ -1,0 +1,2 @@
+class ProductSectionsController < ApplicationController
+end
