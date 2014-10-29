@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content="text/html; charset=UTF-8" http-equiv="Content-Type" />
+  </head>
+  <body>
+    <h1>Dear <%= @user.name %>,</h1>
+    <p>
+      You have requested a password reset. Please confirm this request by visiting the link below with the following information:
+    </p>
+
+    <h3>Reset Confirmation</h3>
+    <b>Confirmation Code: <%= @user.validate_code %></b><br />
+    
+   <br/>
+    <b><a href="https://certification.grandstream.com/reset_password">Click Here to reset your password.</a></b><br />
+        
+  </body>
+</html>
