@@ -67,6 +67,7 @@ class TestsController < ApplicationController
     # PATCH/PUT /tests/1.json
     def update
       respond_to do |format|
+        @test.question_ids = []
         if @test.update(test_params)
           format.html { redirect_to @test, notice: 'Test was successfully updated.' }
           format.json { head :no_content }
