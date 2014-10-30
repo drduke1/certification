@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141001215643) do
+ActiveRecord::Schema.define(version: 20141029214253) do
 
   create_table "answers", force: true do |t|
     t.string   "option"
@@ -85,6 +85,7 @@ ActiveRecord::Schema.define(version: 20141001215643) do
     t.string   "remember_token"
     t.boolean  "admin",           default: false
     t.string   "permission"
+    t.string   "validate_code"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true

@@ -1,0 +1,9 @@
+Dear <%= @user.name %>,
+===============================================
+ 
+You have requested a password reset. Please confirm this request by visiting the link below with the following information:
+
+Password Reset Confirmation
+Confirmation Code: <%= @user.validate_code %>
+
+Please reset your password by visiting the following link: https://certification.grandstream.com/reset_password

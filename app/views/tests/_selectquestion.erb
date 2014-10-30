@@ -40,9 +40,9 @@
   </div>
   <div class="input-group" style="display: inline-block;">
     <%= f.label :category %><br>
-	<%= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  4} %>
-	<!-- [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ] -->
-  </div>
+	<%#= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  4} %>
+	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
+ </div>
   
 <div id="container" style="width:1200px; margin-top: 15px; margin-left: auto; margin-right: auto;">
   <div style="display: inline-block; width: 24%;">
@@ -174,6 +174,7 @@ $.tablesorter.addParser({
 	  		headers: {
 	  			0: { sorter: 'checkbox' }
 	  		},
+	  		sortList : [[1,0]],
 	  		
 	  		widgetOptions: {
 	  			zebra   : ["even", "odd"],
@@ -228,16 +229,16 @@ $.tablesorter.addParser({
 		        rowIndex = $this.closest('tr').attr('id'); // data-row-index stored in row id
 		    });
 		    
-		var $table = $("table");
-	  	$.tablesorter.filter.bindSearch( $table, $('.form-control') );
+		//var $table = $("table");
+	  	//$.tablesorter.filter.bindSearch( $table, $('.form-control') );
 		
 		// Allow changing an input from one column (any column) to another
-		$('selectpicker').change(function(){
+		//$('selectpicker').change(function(){
 		// modify the search input data-column value (swap "0" or "all in this demo)
-		$('.selectable').attr( 'data-column', $(this).val() );
+		//$('.selectable').attr( 'data-column', $(this).val() );
 		// update external search inputs
-		$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
-		});
+		//$.tablesorter.filter.bindSearch( $table, $('.form-control'), false );
+		//});
 	  	$("#tests").removeClass('tablesorter tablesorter-jui');
 	  }
 );
