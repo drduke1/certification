@@ -24,7 +24,7 @@
 
 <p>
   <strong>User:</strong>
-  <%= @test.user_id %>
+  <%= User.find(@test.user_id).name %>
 </p>
 <p>
 	<strong>Question:</strong>
