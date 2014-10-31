@@ -18,14 +18,19 @@ class TestsController < ApplicationController
         format.pdf do
           @pdf = []
           @test = Test.find(params[:id])
-          @test_questions = @test.questions
-          answers = Answer.all
-          @all_answers = answers.group_by(&:question_id)
-          @test_questions.each do |q|
-            @pdf << q
-            @pdf += @all_answers[q.id]
-          end
-          pdf = TestReport.new(@pdf)
+            
+          #different
+          @test_questions = @test.questions.includes(:answers)
+          #end different  
+            
+          #@test_questions = @test.questions
+          #answers = Answer.all
+          #@all_answers = answers.group_by(&:question_id)
+          #@test_questions.each do |q|
+            #@pdf << q
+            #@pdf += @all_answers[q.id]
+          #end
+          pdf = TestReport.new(@test_questions, @test)
           send_data pdf.render, filename: 'certification_test.pdf', type: 'application/pdf' , disposition: 'inline' 
         end
       end
