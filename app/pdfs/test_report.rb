@@ -11,7 +11,7 @@ class TestReport < LayoutPdf
     #@all_answers = answer
     @i = 0
     @a = ("a".."z").to_a
-    header "#{@test.name}" + "Certification Test"
+    header "#{@test.name}"
     move_down 20
     @test_questions.each do |q|
      @i += 1
