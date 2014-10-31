@@ -11,7 +11,7 @@
 <%= f.collection_select :product_id, Product.all, :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg"} %>
 
 <%= f.label :section %><br>
-<%= f.collection_select :section, @sections, :id, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
+<%= f.collection_select :section, @sections, :name, :name, {prompt: "Select a section"}, {class: "form-control input-lg" } %>
 
 <%= f.label :active %><br>
 <%= f.check_box :active %>
