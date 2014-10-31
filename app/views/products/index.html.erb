@@ -8,7 +8,7 @@
   <thead>
   	  <tr>
   	  <th width="40%" data-placeholder="Search">Name</th>
-  	  <th width="25%" data-placeholder="Search">Category</th>
+  	  <th width="25%" class="filter-select filter-match" data-placeholder="Search">Category</th>
       <th width="15%" class="filter-false">Functions</th>
       </tr>
   </thead>
@@ -69,6 +69,11 @@
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
 	        	filter_reset : 'button.reset',
+	        	filter_functions : {
+		        // Add select menu to this column
+		        // set the column value to true, and/or add "filter-select" class name to header
+		        '.category' : true
+		      	},
 	       }
 	  	});
 	  	$("#products").removeClass('tablesorter tablesorter-jui');
