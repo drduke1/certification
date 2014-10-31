@@ -33,4 +33,6 @@
 
 <%= link_to 'Edit', edit_test_path(@test) %> |
 <%= link_to 'Back', tests_path %> |
-<%= link_to 'Print', prints_path(@test) %>
+<%= link_to 'Print', prints_path(@test) %> |
+<%#= link_to 'Download', url_for(params), :format => :pdf %>
+<%= link_to 'Download', :action => 'show', :format => :pdf %>
