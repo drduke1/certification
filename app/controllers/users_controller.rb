@@ -47,11 +47,22 @@ class UsersController < ApplicationController
   # PATCH/PUT /users/1
   # PATCH/PUT /users/1.json
   def update
-    if @user.update_attributes(user_params)
-    	flash[:success] = "Profile updated"
-    	redirect_to @user
+    if params[:user][:password] == ''
+      params[:user].delete(:password)
+      params[:user].delete(:password_confirmation)
+      if @user.update_attributes(user_nopass_params)
+        flash[:success] = "Profile updated"
+        redirect_to @user
+      else
+        render 'edit'
+      end
     else
-    	render 'edit'
+      if @user.update_attributes(user_params)
+      	flash[:success] = "Profile updated"
+      	redirect_to @user
+      else
+      	render 'edit'
+      end
     end
   end
 
@@ -76,6 +87,10 @@ class UsersController < ApplicationController
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
       params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :permission => [])
+    end
+    
+    def user_nopass_params
+      params.require(:user).permit(:name, :email, :admin, :permission => [])
     end
     
     # Before filters
