@@ -3,7 +3,7 @@
 </style>
 <div id="container" style="width:800px; margin-left: auto; margin-right: auto; margin-top: 15px;">
 <%= link_to 'New Product', new_product_path, class: "btn btn-success" %>
-<button type="button" style="float: right" class="btn btn-success">Reset Search</button>
+<button type="button" style="float: right" class="btn btn-success yo">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
@@ -33,7 +33,7 @@
 </table>
 
 <br>
-<%= link_to 'New product', new_product_path, class: "reset" %>
+<%= link_to 'New product', new_product_path, class: "btn btn-success" %>
 </div>
 
 <script>
@@ -68,7 +68,7 @@
 	        	filter_ignoreCase : true,
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
-	        	filter_reset : 'button.reset',
+	        	filter_reset : 'button.yo',
 	        	filter_functions : {
 		        // Add select menu to this column
 		        // set the column value to true, and/or add "filter-select" class name to header
