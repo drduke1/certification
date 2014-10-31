@@ -113,8 +113,8 @@
   <thead>
   	  <tr>
   	  <th width="40%" data-placeholder="Search">Question</th>
-  	  <th width="12%" data-placeholder="Search">Category</th>
-      <th width="6%" data-placeholder="Search">Type</th>
+  	  <th width="12%" class="filter-select filter-match" data-placeholder="Search">Category</th>
+      <th width="6%" class="filter-select filter-match" data-placeholder="&nbsp;--">Type</th>
 	  <th width="9%" data-placeholder="Search">Product</th>
 	  <th width="8%" data-placeholder="Search">Section</th>
 	  <th width="8%" data-placeholder="Search">Created</th>
@@ -179,6 +179,12 @@
 	        	filter_liveSearch : true,
 	        	filter_searchDelay : 300,
 	        	filter_reset : 'button.yo',
+	        	filter_functions : {
+		        // Add select menu to this column
+		        // set the column value to true, and/or add "filter-select" class name to header
+		        '.category' : true,
+		        '.type' : true
+		      	},
 	       }
 	  	})
 	  	// initialize Pager plugin
