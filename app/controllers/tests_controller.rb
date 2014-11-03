@@ -42,6 +42,21 @@ class TestsController < ApplicationController
       @questions = Question.all
     end
     
+    # GET /tests/newgen
+    def newgen
+      @test = Test.new
+      @sections = ProductSection.all
+      @question = Question.new
+      @product_sections = {}
+        @sections.each do |section|
+          @section_name = Section.find(section.section_id).name
+          @product_sections["#{section.id}"] = {
+            "product"         => "#{section.product_id}",
+            "section"         => "#{@section_name}"
+          }
+        end
+    end
+    
     # GET /tests/1/edit
     def edit
       @questions = Question.all

@@ -13,6 +13,9 @@ Certification::Application.routes.draw do
   post "/mc_question", to: "questions#create"
   post "/tf_question", to: "questions#create"
   
+  get "/newgen", to: "tests#newgen", as: "newgen_test"
+  post "/newgen", to: "tests#create"
+  
   get "/print/:id", to: "tests#print", as: 'print'
   
   resources :answers
