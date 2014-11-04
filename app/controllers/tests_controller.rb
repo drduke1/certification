@@ -65,15 +65,30 @@ class TestsController < ApplicationController
     # POST /tests
     # POST /tests.json
     def create
-      @test = Test.new(test_params)
-      #@build = @test.questions.build(test_params)
-      #Test.question_ids.create(:question_id => params[:test])
+      if params[:test][:percent]
+        @section_names = params[:test][:section]
+        #@section_ids = []
+        #@section_names.each do |me|
+        #  @section_ids << Section.find_by_name(me).id
+        #end
+        @questions = []
+        @question_ids = []
+        @section_names.each do |me|
+          @questions << Question.where(section: me)
+        end
+        @questions.each do |me|
+          me.each do |this|
+            @question_ids << this.id
+          end
+        end
+        @test = Test.new(test_params)
+        @test.question_ids = @question_ids
+        
+      else
+        @test = Test.new(test_params)
+      end
       respond_to do |format|
         if @test.save 
-         #@test.attributes = {'question_ids' => []}.merge(params[:test] )
-          #question = Test.last.questions
-           #test = Test.last.id
-          #@test.question_tests.update(question_id: question)
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
           format.json { render action: 'show', status: :created, location: @test }
         else
@@ -117,7 +132,7 @@ class TestsController < ApplicationController
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def test_params
-        params.require(:test).permit(:name, :user_id, :type, :category, :description, :question_ids => [], questions_attributes: [ :id ] ).
+        params.require(:test).permit(:name, :user_id, :type, :category, :description, :total, :question_ids => [], :section => [], :percent => [], questions_attributes: [ :id ] ).
         merge user_id: current_user.id
       end    
       
