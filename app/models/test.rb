@@ -6,4 +6,9 @@ class Test < ActiveRecord::Base
   attr_accessor :total, :section, :percent
   
   self.inheritance_column = nil
+  
+  validates :name, presence: true
+  validates :type, presence: true
+  validates :description, presence: true
+  
 end

@@ -18,12 +18,16 @@
 		background-color: white;
 		opacity: 1;
 	}
+	.tablesorter .remove {
+  	text-align: center;
+  	cursor: pointer;
+}
 </style>
 
 <h1>New Generated Test</h1>
 
 <%= link_to 'Back', tests_path %><br/>
-<%= form_for(@test) do |f| %>
+<%= form_for @test, url: newgen_test_path(@test) do |f| %>
 <% if @test.errors.any? %>
 	<div id="error_explanation">
 	  <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
@@ -281,6 +285,10 @@ $(document).ready(function(e) {
 <script>
 	$(function()
 	  {
+	  	$(".remove").click(function() {
+    		$(this).closest('tr').remove();
+  		})
+  		
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -304,9 +312,6 @@ $(document).ready(function(e) {
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter', 'editable'],
-	  		headers: {
-	  			0: { sorter: 'checkbox' }
-	  		},
 	  		sortList : [[1,0]],
 	  		
 	  		widgetOptions: {
@@ -321,10 +326,14 @@ $(document).ready(function(e) {
 		        editable_autoAccept    : true,          // accepts any changes made to the table cell automatically (v2.17.6)
 		        editable_autoResort    : true,         // auto resort after the content has changed.
 		        editable_validate      : {
-		        	// make sure the price column(s) are using a number
+		        	// make sure the order column are using a number
+		        	0 : function(txt, orig, columnIndex, $element) {
+		        		return isNaN( txt.replace(/\D/, '')) ? '' : txt;
+		        	},
+		        	// make sure the order column are using a number
 		        	1 : function(txt, orig, columnIndex, $element) {
 		        		return isNaN( txt.replace(/\D/, '')) ? '' : txt;
-		        	}       	
+		        	}		        	           	
 		        },          
 		        // return a valid string: function(text, original, columnIndex){ return text; }
 		        editable_focused       : function(txt, columnIndex, $element) {
@@ -337,11 +346,11 @@ $(document).ready(function(e) {
 		          // to get the td, use $element.closest('td')
 		          $element.removeClass('focused');
 		        },
-		        editable_selectAll     : function(txt, columnIndex, $element){
+		        //editable_selectAll     : function(txt, columnIndex, $element){
 		          // note $element is the div inside of the table cell, so use $element.closest('td') to get the cell
 		          // only select everthing within the element when the content starts with the letter "B"
-		          return /^b/i.test(txt) && columnIndex === 0;
-		        },
+		          //return /^b/i.test(txt) && columnIndex === 0;
+		        //},
 		        editable_wrapContent   : '<div class="form-control input-sm">',       // wrap all editable cell content... makes this widget work in IE, and with autocomplete
 		        editable_noEdit        : 'no-edit',     // class name of cell that is not editable
 		        editable_editComplete  : 'editComplete' // event fired after the table content has been edited
@@ -360,13 +369,13 @@ $(document).ready(function(e) {
 		    $('.add').click(function(){
 			    var count = $('input[name="question_count"]').val()
 			    var section = $('#question_section').val(),
-                row = '<tr>' +
-                '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[percent][]" type="text"></td>' +
-                '<td>&nbsp;</td>' +
-                '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
-                '<td>Icon ' + count + '</td>' +
-                '</tr>',
-                $row = $(row),
+	            row = '<tr>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[percent][]" type="number"></td>' +
+	            '<td>&nbsp;</td>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
+	            '<td class="remove">x</td>' +
+	            '</tr>',
+	            $row = $(row),
 			      // resort table using the current sort; set to false to prevent resort, otherwise 
 			      // any other value in resort will automatically trigger the table resort. 
 			      resort = true;
@@ -375,7 +384,7 @@ $(document).ready(function(e) {
 			      .trigger('addRows', [$row, resort]);
 			      
 			    return false;
-			  });
+			});
 	  	$("#tests").removeClass('tablesorter tablesorter-jui');
 	  }
 );

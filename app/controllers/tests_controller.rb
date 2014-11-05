@@ -65,34 +65,53 @@ class TestsController < ApplicationController
     # POST /tests
     # POST /tests.json
     def create
-      if params[:test][:percent]
-        @section_names = params[:test][:section]
-        #@section_ids = []
-        #@section_names.each do |me|
-        #  @section_ids << Section.find_by_name(me).id
-        #end
-        @questions = []
-        @question_ids = []
-        @section_names.each do |me|
-          @questions << Question.where(section: me)
-        end
-        @questions.each do |me|
-          me.each do |this|
-            @question_ids << this.id
-          end
-        end
-        @test = Test.new(test_params)
-        @test.question_ids = @question_ids
-        
-      else
-        @test = Test.new(test_params)
-      end
+      @test = Test.new
+      @questions = Question.all
       respond_to do |format|
         if @test.save 
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
           format.json { render action: 'show', status: :created, location: @test }
         else
           format.html { render action: 'new' }
+          format.json { render json: @test.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+    
+    def creategen
+      if (params[:test][:total] != "") && (params[:test][:percent].present?)
+        @percentages = params[:test][:percent]
+        @total_questions = params[:test][:total]
+        @section_names = params[:test][:section]
+        @questions = []
+        @question_ids = []
+        @section_names.each_with_index do |me, index|
+          @section_percent = @percentages.at(index)
+          @decimal_section_percent = @section_percent.to_i*0.01
+          # Get number of questions based on total and percentage
+          @calc_section_questions = @total_questions.to_i * @decimal_section_percent
+          
+          @questions = Question.where(section: me).order("RANDOM()").limit(@calc_section_questions)
+          
+          @questions.each do |q|
+            #q.each do |this|
+              @question_ids << q.id
+            #end
+          end
+        end
+        
+        
+        @test = Test.new(test_params)
+        @test.question_ids = @question_ids
+      end
+      respond_to do |format|
+        if @test.save 
+          format.html { redirect_to @test, notice: 'Test was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @test }
+        else
+          @test = Test.new(test_params)
+          @question = Question.new
+          format.html { render action: 'newgen' }
           format.json { render json: @test.errors, status: :unprocessable_entity }
         end
       end
