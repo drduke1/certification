@@ -109,8 +109,17 @@ class TestsController < ApplicationController
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
           format.json { render action: 'show', status: :created, location: @test }
         else
-          @test = Test.new(test_params)
+          @test = Test.new
+          @sections = ProductSection.all
           @question = Question.new
+          @product_sections = {}
+            @sections.each do |section|
+              @section_name = Section.find(section.section_id).name
+              @product_sections["#{section.id}"] = {
+                "product"         => "#{section.product_id}",
+                "section"         => "#{@section_name}"
+              }
+            end
           format.html { render action: 'newgen' }
           format.json { render json: @test.errors, status: :unprocessable_entity }
         end

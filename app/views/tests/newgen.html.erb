@@ -18,7 +18,7 @@
 		background-color: white;
 		opacity: 1;
 	}
-	.tablesorter .remove {
+	.tablesorter .removeRow {
   	text-align: center;
   	cursor: pointer;
 }
@@ -145,7 +145,7 @@
 	  	  <th width="12%" data-placeholder="Search">Percent</th>
 	      <th width="12%" data-placeholder="Search">Order</th>
 		  <th width="40%" data-placeholder="Search">Section</th>
-	  	  <th width="12%" >Remove</th>
+	  	  <th width="12%" class="filter-false">Remove</th>
 	      </tr>
 	  </thead>
 	
@@ -285,10 +285,12 @@ $(document).ready(function(e) {
 <script>
 	$(function()
 	  {
-	  	$(".remove").click(function() {
-    		$(this).closest('tr').remove();
-  		})
-  		
+	  	$('tbody').on('click', '.removeRow', function(){ 
+	  		$(this).closest('tr').remove(); 
+	  		$("table").trigger("updateCache");
+	  	});	  	
+	  	
+	  	
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -306,7 +308,8 @@ $(document).ready(function(e) {
 		    even       : 'ui-widget-content', // odd row zebra striping
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
-	  		  	
+		  
+		  	
 	  	var $table = $("table")
 	  	.tablesorter({
 	  		theme: 'jui',
@@ -373,7 +376,7 @@ $(document).ready(function(e) {
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[percent][]" type="number"></td>' +
 	            '<td>&nbsp;</td>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
-	            '<td class="remove">x</td>' +
+	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
 	            '</tr>',
 	            $row = $(row),
 			      // resort table using the current sort; set to false to prevent resort, otherwise 
