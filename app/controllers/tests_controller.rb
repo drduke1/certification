@@ -100,6 +100,9 @@ class TestsController < ApplicationController
           end
         end
         @test.question_ids = @question_ids
+        @test.section = @section_names.to_s
+        @test.percent = @percentages.to_s
+        @test.total = @total_questions.to_s
       end
       respond_to do |format|
         if @test.save 
