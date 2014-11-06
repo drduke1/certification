@@ -12,7 +12,9 @@ class Question < ActiveRecord::Base
   @category_check = ['ip_voice', 'ip_pbx', 'ip_video_surveillance', 'ip_video_telephony', 'consumer_atas', 'enterprise_gateways']  
     
   validates :product_id, presence: true
+  validates :section, presence: true
   validates :content, length: { maximum: 1000 }
   validates_inclusion_of :category, in: @category_check
+  
       
 end

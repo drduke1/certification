@@ -3,4 +3,6 @@ class Section < ActiveRecord::Base
   has_many :products, through: :product_sections
 
   accepts_nested_attributes_for :products
+  
+  validates :name, presence: true
 end
