@@ -70,8 +70,14 @@ class QuestionsController < ApplicationController
         format.html { redirect_to @question, notice: 'Question was successfully created.' }
         format.json { render action: 'show', status: :created, location: @question }
       else
-        format.html { render action: 'new' }
-        format.json { render json: @question.errors, status: :unprocessable_entity }
+        if params[:question][:question_type] == "TF"
+          format.html { render action: 'new_tf' }
+          format.json { render json: @question.errors, status: :unprocessable_entity }
+        else
+          format.html { render action: 'new_mc' }
+          format.json { render json: @question.errors, status: :unprocessable_entity }
+        end
+        
       end
     end
   end

@@ -93,7 +93,7 @@ class TestsController < ApplicationController
           # Get number of questions based on total and percentage
           @calc_section_questions = @total_questions.to_i * @decimal_section_percent
           # Get calculated number of questions for this section randomly
-          @questions = Question.where(section: me).order("RANDOM()").limit(@calc_section_questions)
+          @questions = Question.where(section: me).order("rand()").limit(@calc_section_questions)
           # Append the random question ids into the array
           @questions.each do |q|
               @question_ids << q.id
