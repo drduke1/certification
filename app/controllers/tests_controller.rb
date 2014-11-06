@@ -65,7 +65,7 @@ class TestsController < ApplicationController
     # POST /tests
     # POST /tests.json
     def create
-      @test = Test.new
+      @test = Test.new(test_params)
       @questions = Question.all
       respond_to do |format|
         if @test.save 
@@ -79,6 +79,8 @@ class TestsController < ApplicationController
     end
     
     def creategen
+      @test = Test.new(test_params)
+      # Check for total questions and percentage parameter
       if (params[:test][:total] != "") && (params[:test][:percent].present?)
         @percentages = params[:test][:percent]
         @total_questions = params[:test][:total]
@@ -90,18 +92,13 @@ class TestsController < ApplicationController
           @decimal_section_percent = @section_percent.to_i*0.01
           # Get number of questions based on total and percentage
           @calc_section_questions = @total_questions.to_i * @decimal_section_percent
-          
+          # Get calculated number of questions for this section randomly
           @questions = Question.where(section: me).order("RANDOM()").limit(@calc_section_questions)
-          
+          # Append the random question ids into the array
           @questions.each do |q|
-            #q.each do |this|
               @question_ids << q.id
-            #end
           end
         end
-        
-        
-        @test = Test.new(test_params)
         @test.question_ids = @question_ids
       end
       respond_to do |format|
@@ -109,7 +106,6 @@ class TestsController < ApplicationController
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
           format.json { render action: 'show', status: :created, location: @test }
         else
-          @test = Test.new
           @sections = ProductSection.all
           @question = Question.new
           @product_sections = {}

@@ -10,7 +10,7 @@
 		position: relative;
 		z-index: 2;
 		float: left;
-		width: 100px;
+		width: 100%;
 		margin-bottom: 0;
 		border-bottom-left-radius: 0;
 		border-top-left-radius: 0;
@@ -31,7 +31,6 @@
 <% if @test.errors.any? %>
 	<div id="error_explanation">
 	  <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
-	
 	  <ul>
 	  <% @test.errors.full_messages.each do |msg| %>
 	    <li><%= msg %></li>
@@ -47,7 +46,6 @@
 	  	</div>
 	  </div>
 	  <div class="panel-body">
-	  	
 		<div class="row">
 		  <div class="col-lg-12 col-md-12 col-xs-12">
 		  	<div class="col-lg-6 col-md-6 col-xs-4">
@@ -62,15 +60,8 @@
 		    		<%= f.text_field :type, class: "input-lg" %>
 		    	</div>
 	    	</div>
-	    	<!-- <div class="col-lg-4 col-md-4 col-xs-4">
-	    		<div class="input-group">
-	    			<%= f.label :category %><br>
-					<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
-	 			</div>
-	    	</div> -->
 	 	  </div>
 		</div>
-		  
 		<div class="row" style="margin-top: 20px;">
 		  <div class="col-lg-12 col-md-12 col-xs-12">
 		    	<div class="input-group">
@@ -80,7 +71,6 @@
 		  </div>
 		</div>
 	  </div>
-	
 		<%= form_for(@question) do |q| %>
 		<div class="panel-heading">
 	  	  <div style="display: inline; text-align: left;">Add Test Section</div>  
@@ -90,52 +80,49 @@
 	        	<div class="col-lg-12 col-md-12 col-xs-12">	
 			  	<%= q.label :category %><br>
 				<%= q.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
-				
 				<div id="ip_voice">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :ip_voice_product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id1"} %>
 				</div>
-				
 				<div id="ip_video_surveillance">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :ip_video_surveillance_product_id, Product.where({ category: "ip_video_surveillance" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
 				</div>
-				
 				<div id="ip_video_telephony">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
 				</div>
-				
 				<div id="consumer_atas">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :consumer_atas_product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id3"} %>
 				</div>
-				
 				<div id="enterprise_gateways">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :enterprise_gateways_product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id4"} %>
 				</div>
-				
 				<div id="ip_pbx">
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
 				</div>
-				
 				<%= q.label :section %><br>
 				<%= q.select :section, options_for_select([ ["None", "None"] ]), {prompt: "Select a section"}, {class: "form-control input-lg" } %>
-				
-				<input id="targetField" type="hidden" name="question_count" value="0"/>
 				</div>
-				<button type="button" class="btn btn-success add">Add Section</button>
+				
 			</div>
+			<button type="button" class="btn btn-success add">Add Section</button>
 	    </div> 
 	    <% end %>
-
 	<div id="container" style="width: 1100px; margin-top: 15px; margin-left: auto; margin-right: auto;">
-	  <div style="display: inline-block; width: 24%;">
+	  <div style="display: inline-block; width: 25%;">
 	    <div class="input-group">
-	      <span class="input-group-addon">Number of Questions Selected:</span>
+	      <span class="input-group-addon">Set Number of Questions:</span>
 	      <%= f.text_field :total, class: "input-lg count" %>
+	    </div>
+	  </div>
+	  <div style="display: inline-block; width: 20%;">
+	    <div class="input-group">
+	      <span class="input-group-addon">Total Percentage:</span>
+	      <input class="input-lg count" id="percent_total" name="percent_total" disabled="">
 	    </div>
 	  </div>
 	<button type="button" class="btn btn-success yo" style="display: inline-block; float: right;">Reset Search</button>
@@ -148,7 +135,6 @@
 	  	  <th width="12%" class="filter-false">Remove</th>
 	      </tr>
 	  </thead>
-	
 	  <tbody>
 	  </tbody>
 	</table>
@@ -165,12 +151,10 @@ var product_sections = <%= @product_sections.to_json.html_safe %>
 $(document).ready(function(e) {
 		$('#question_product_id1').change(function(){
 			$('#question_section').html("<option>Please Select a Section</option>");
-			
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id1').val())
 				{
-					
-						$('#question_section').append("<option>" + this.section + "</option>");
+					$('#question_section').append("<option>" + this.section + "</option>");
 				}
 			});
 		});
@@ -180,8 +164,7 @@ $(document).ready(function(e) {
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id2').val())
 				{
-					
-						$('#question_section').append("<option>" + this.section + "</option>");
+					$('#question_section').append("<option>" + this.section + "</option>");
 				}
 			});
 		});
@@ -191,8 +174,7 @@ $(document).ready(function(e) {
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id3').val())
 				{
-					
-						$('#question_section').append("<option>" + this.section + "</option>");
+					$('#question_section').append("<option>" + this.section + "</option>");
 				}
 			});
 		});
@@ -202,8 +184,7 @@ $(document).ready(function(e) {
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id4').val())
 				{
-					
-						$('#question_section').append("<option>" + this.section + "</option>");
+					$('#question_section').append("<option>" + this.section + "</option>");
 				}
 			});
 		});
@@ -213,8 +194,7 @@ $(document).ready(function(e) {
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id5').val())
 				{
-					
-						$('#question_section').append("<option>" + this.section + "</option>");
+					$('#question_section').append("<option>" + this.section + "</option>");
 				}
 			});
 		});
@@ -273,13 +253,14 @@ $(document).ready(function(e) {
                 $('#enterprise_gateways').hide();
                 $('#ip_pbx').show();
             }
-
         });
-        
-        //$('#question_section').change(function() {
-        //    <%# @count = Question.where(section: $('#question_section')).count %>
-		//	$('input[name="question_count"]').val(<% @count %>);
-        //});
+        $('tbody').on('change', '.percents', function(){
+        	var totalPercent = 0;
+        	$('.percents').each(function(i,n) {
+        		totalPercent += parseInt($(n).val(),10);
+        	});
+                $('input[name="percent_total"]').val(totalPercent);
+	  	});	
 });
 </script>
 <script>
@@ -288,9 +269,12 @@ $(document).ready(function(e) {
 	  	$('tbody').on('click', '.removeRow', function(){ 
 	  		$(this).closest('tr').remove(); 
 	  		$("table").trigger("updateCache");
-	  	});	  	
-	  	
-	  	
+	  		var totalPercent = 0;
+        	$('.percents').each(function(i,n) {
+        		totalPercent += parseInt($(n).val(),10);
+        	});
+                $('input[name="percent_total"]').val(totalPercent);
+	  	});
 	  	$.extend($.tablesorter.themes.jui, {
 		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
 		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
@@ -308,15 +292,12 @@ $(document).ready(function(e) {
 		    even       : 'ui-widget-content', // odd row zebra striping
 		    odd        : 'ui-state-default'   // even row zebra striping
 		  });
-		  
-		  	
 	  	var $table = $("table")
 	  	.tablesorter({
 	  		theme: 'jui',
 	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
 	  		widgets: ['uitheme', 'zebra', 'filter', 'editable'],
 	  		sortList : [[1,0]],
-	  		
 	  		widgetOptions: {
 	  			zebra   : ["even", "odd"],
 	        	filter_columnFilters : true,
@@ -349,21 +330,14 @@ $(document).ready(function(e) {
 		          // to get the td, use $element.closest('td')
 		          $element.removeClass('focused');
 		        },
-		        //editable_selectAll     : function(txt, columnIndex, $element){
-		          // note $element is the div inside of the table cell, so use $element.closest('td') to get the cell
-		          // only select everthing within the element when the content starts with the letter "B"
-		          //return /^b/i.test(txt) && columnIndex === 0;
-		        //},
 		        editable_wrapContent   : '<div class="form-control input-sm">',       // wrap all editable cell content... makes this widget work in IE, and with autocomplete
 		        editable_noEdit        : 'no-edit',     // class name of cell that is not editable
 		        editable_editComplete  : 'editComplete' // event fired after the table content has been edited
 		      }
-		     
 		   })
 		    // config event variable new in v2.17.6
 		    .children('tbody').on('editComplete', 'td', function(event, config){
 		      var $this = $(this),
-		
 		        newContent = $this.text(),
 		        cellIndex = this.cellIndex, // there shouldn't be any colspans in the tbody
 		        rowIndex = $this.closest('tr').attr('id'); // data-row-index stored in row id
@@ -373,7 +347,7 @@ $(document).ready(function(e) {
 			    var count = $('input[name="question_count"]').val()
 			    var section = $('#question_section').val(),
 	            row = '<tr>' +
-	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[percent][]" type="number"></td>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm percents" name="test[percent][]" type="number"></td>' +
 	            '<td>&nbsp;</td>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
 	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
@@ -385,10 +359,27 @@ $(document).ready(function(e) {
 			    $('table')
 			      .find('tbody').append($row)
 			      .trigger('addRows', [$row, resort]);
-			      
 			    return false;
 			});
 	  	$("#tests").removeClass('tablesorter tablesorter-jui');
 	  }
 );
+</script>
+<script>
+	$('.new_test').on('submit', function() {
+    // check validation
+    if ($('input[name="percent_total"]').val() != "100") {
+    	if ($('input[name="percent_total"]').val() == "") {
+    		alert('Total Percentage = 0')
+    	}
+    	else {
+    		alert('Total Percentage = ' + $('input[name="percent_total"]').val() )
+        }
+        return false;
+    }
+    if ($('input[name="test[total]"]').val() == "") {
+    	alert('Define Total Number of Questions')
+        return false;
+    }
+});
 </script>
