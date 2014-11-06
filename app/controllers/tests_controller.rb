@@ -42,6 +42,21 @@ class TestsController < ApplicationController
       @questions = Question.all
     end
     
+    # GET /tests/newgen
+    def newgen
+      @test = Test.new
+      @sections = ProductSection.all
+      @question = Question.new
+      @product_sections = {}
+        @sections.each do |section|
+          @section_name = Section.find(section.section_id).name
+          @product_sections["#{section.id}"] = {
+            "product"         => "#{section.product_id}",
+            "section"         => "#{@section_name}"
+          }
+        end
+    end
+    
     # GET /tests/1/edit
     def edit
       @questions = Question.all
@@ -51,18 +66,60 @@ class TestsController < ApplicationController
     # POST /tests.json
     def create
       @test = Test.new(test_params)
-      #@build = @test.questions.build(test_params)
-      #Test.question_ids.create(:question_id => params[:test])
+      @questions = Question.all
       respond_to do |format|
         if @test.save 
-         #@test.attributes = {'question_ids' => []}.merge(params[:test] )
-          #question = Test.last.questions
-           #test = Test.last.id
-          #@test.question_tests.update(question_id: question)
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
           format.json { render action: 'show', status: :created, location: @test }
         else
           format.html { render action: 'new' }
+          format.json { render json: @test.errors, status: :unprocessable_entity }
+        end
+      end
+    end
+    
+    def creategen
+      @test = Test.new(test_params)
+      # Check for total questions and percentage parameter
+      if (params[:test][:total] != "") && (params[:test][:percent].present?)
+        @percentages = params[:test][:percent]
+        @total_questions = params[:test][:total]
+        @section_names = params[:test][:section]
+        @questions = []
+        @question_ids = []
+        @section_names.each_with_index do |me, index|
+          @section_percent = @percentages.at(index)
+          @decimal_section_percent = @section_percent.to_i*0.01
+          # Get number of questions based on total and percentage
+          @calc_section_questions = @total_questions.to_i * @decimal_section_percent
+          # Get calculated number of questions for this section randomly
+          @questions = Question.where(section: me).order("RANDOM()").limit(@calc_section_questions)
+          # Append the random question ids into the array
+          @questions.each do |q|
+              @question_ids << q.id
+          end
+        end
+        @test.question_ids = @question_ids
+        @test.section = @section_names.to_s
+        @test.percent = @percentages.to_s
+        @test.total = @total_questions.to_s
+      end
+      respond_to do |format|
+        if @test.save 
+          format.html { redirect_to @test, notice: 'Test was successfully created.' }
+          format.json { render action: 'show', status: :created, location: @test }
+        else
+          @sections = ProductSection.all
+          @question = Question.new
+          @product_sections = {}
+            @sections.each do |section|
+              @section_name = Section.find(section.section_id).name
+              @product_sections["#{section.id}"] = {
+                "product"         => "#{section.product_id}",
+                "section"         => "#{@section_name}"
+              }
+            end
+          format.html { render action: 'newgen' }
           format.json { render json: @test.errors, status: :unprocessable_entity }
         end
       end
@@ -102,7 +159,7 @@ class TestsController < ApplicationController
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def test_params
-        params.require(:test).permit(:name, :user_id, :type, :category, :description, :question_ids => [], questions_attributes: [ :id ] ).
+        params.require(:test).permit(:name, :user_id, :type, :category, :description, :total, :question_ids => [], :section => [], :percent => [], questions_attributes: [ :id ] ).
         merge user_id: current_user.id
       end    
       

@@ -1,0 +1,385 @@
+<style>
+	.input-group {
+		width: 99%;
+	}
+	#ip_voice, #ip_video_surveillance, #ip_video_telephony, #consumer_atas, #enterprise_gateways, #ip_pbx
+    {
+        display:none;
+    }
+    .count {
+		position: relative;
+		z-index: 2;
+		float: left;
+		width: 100%;
+		margin-bottom: 0;
+		border-bottom-left-radius: 0;
+		border-top-left-radius: 0;
+		/* cursor: not-allowed; */
+		background-color: white;
+		opacity: 1;
+	}
+	.tablesorter .removeRow {
+  	text-align: center;
+  	cursor: pointer;
+}
+</style>
+
+<h1>New Generated Test</h1>
+
+<%= link_to 'Back', tests_path %><br/>
+<%= form_for @test, url: newgen_test_path(@test) do |f| %>
+<% if @test.errors.any? %>
+	<div id="error_explanation">
+	  <h2><%= pluralize(@test.errors.count, "error") %> prohibited this test from being saved:</h2>
+	  <ul>
+	  <% @test.errors.full_messages.each do |msg| %>
+	    <li><%= msg %></li>
+	  <% end %>
+	  </ul>
+	</div>
+<% end %>
+	<div class="panel panel-default">
+	  <div class="panel-heading">
+	  	<div style="display: inline; text-align: left;">Test Information</div>  
+	  	<div class="btn-group pull-right" style="margin-top: -7px;">
+	  		<%= f.submit "Clear Form", { :class => 'btn btn-success', :name => 'reset', :id => 'reset_button', :type => "reset" } %>
+	  	</div>
+	  </div>
+	  <div class="panel-body">
+		<div class="row">
+		  <div class="col-lg-12 col-md-12 col-xs-12">
+		  	<div class="col-lg-6 col-md-6 col-xs-4">
+			  	<div class="input-group">
+					<%= f.label :name %><br>
+		    		<%= f.text_field :name, class: "input-lg" %>
+				</div>
+			</div>
+			<div class="col-lg-6 col-md-6 col-xs-6">
+				<div class="input-group">
+					<%= f.label :type %><br>
+		    		<%= f.text_field :type, class: "input-lg" %>
+		    	</div>
+	    	</div>
+	 	  </div>
+		</div>
+		<div class="row" style="margin-top: 20px;">
+		  <div class="col-lg-12 col-md-12 col-xs-12">
+		    	<div class="input-group">
+		    		<%= f.label :description %><br>
+		    		<%= f.text_field :description, class: "input-lg" %>
+		    	</div>
+		  </div>
+		</div>
+	  </div>
+		<%= form_for(@question) do |q| %>
+		<div class="panel-heading">
+	  	  <div style="display: inline; text-align: left;">Add Test Section</div>  
+	    </div>
+	    <div class="panel-body">
+	        <div class="row">
+	        	<div class="col-lg-12 col-md-12 col-xs-12">	
+			  	<%= q.label :category %><br>
+				<%= q.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
+				<div id="ip_voice">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :ip_voice_product_id, Product.where({ category: "ip_voice" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id1"} %>
+				</div>
+				<div id="ip_video_surveillance">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :ip_video_surveillance_product_id, Product.where({ category: "ip_video_surveillance" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
+				</div>
+				<div id="ip_video_telephony">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
+				</div>
+				<div id="consumer_atas">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :consumer_atas_product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id3"} %>
+				</div>
+				<div id="enterprise_gateways">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :enterprise_gateways_product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id4"} %>
+				</div>
+				<div id="ip_pbx">
+				<%= q.label :product_id %><br>
+				<%= q.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
+				</div>
+				<%= q.label :section %><br>
+				<%= q.select :section, options_for_select([ ["None", "None"] ]), {prompt: "Select a section"}, {class: "form-control input-lg" } %>
+				</div>
+				
+			</div>
+			<button type="button" class="btn btn-success add">Add Section</button>
+	    </div> 
+	    <% end %>
+	<div id="container" style="width: 1100px; margin-top: 15px; margin-left: auto; margin-right: auto;">
+	  <div style="display: inline-block; width: 25%;">
+	    <div class="input-group">
+	      <span class="input-group-addon">Set Number of Questions:</span>
+	      <%= f.text_field :total, class: "input-lg count" %>
+	    </div>
+	  </div>
+	  <div style="display: inline-block; width: 20%;">
+	    <div class="input-group">
+	      <span class="input-group-addon">Total Percentage:</span>
+	      <input class="input-lg count" id="percent_total" name="percent_total" disabled="">
+	    </div>
+	  </div>
+	<button type="button" class="btn btn-success yo" style="display: inline-block; float: right;">Reset Search</button>
+	<table width="100%" class="tablesorter">
+	  <thead>
+	  	  <tr>
+	  	  <th width="12%" data-placeholder="Search">Percent</th>
+	      <th width="12%" data-placeholder="Search">Order</th>
+		  <th width="40%" data-placeholder="Search">Section</th>
+	  	  <th width="12%" class="filter-false">Remove</th>
+	      </tr>
+	  </thead>
+	  <tbody>
+	  </tbody>
+	</table>
+	</div>
+	<div class="actions">
+		<%= f.submit "Save Test", { :class => 'btn btn-lg btn-primary', :name => 'commit', :id => 'commit', :type => "submit" } %>
+	</div>
+<% end %>
+</div>
+
+<script>
+var product_sections = <%= @product_sections.to_json.html_safe %>
+
+$(document).ready(function(e) {
+		$('#question_product_id1').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id1').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id2').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id2').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id3').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id3').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id4').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id4').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id5').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id5').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+        $('#category').change(function() {
+            if ($('#category').val()== 'ip_voice')
+            {
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_voice').show();
+            }
+            else if ($('#category').val()== 'ip_video_surveillance')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_video_surveillance').show();
+            }
+            else if ($('#category').val()== 'ip_video_telephony')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#ip_video_telephony').show();
+            }
+            else if ($('#category').val()== 'consumer_atas')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').hide();
+                $('#consumer_atas').show();
+            }
+            else if ($('#category').val()== 'enterprise_gateways')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#ip_pbx').hide();
+                $('#enterprise_gateways').show();
+            }
+            else if ($('#category').val()== 'ip_pbx')
+            {
+                $('#ip_voice').hide();
+                $('#ip_video_surveillance').hide();
+                $('#ip_video_telephony').hide();
+                $('#consumer_atas').hide();
+                $('#enterprise_gateways').hide();
+                $('#ip_pbx').show();
+            }
+        });
+        $('tbody').on('change', '.percents', function(){
+        	var totalPercent = 0;
+        	$('.percents').each(function(i,n) {
+        		totalPercent += parseInt($(n).val(),10);
+        	});
+                $('input[name="percent_total"]').val(totalPercent);
+	  	});	
+});
+</script>
+<script>
+	$(function()
+	  {
+	  	$('tbody').on('click', '.removeRow', function(){ 
+	  		$(this).closest('tr').remove(); 
+	  		$("table").trigger("updateCache");
+	  		var totalPercent = 0;
+        	$('.percents').each(function(i,n) {
+        		totalPercent += parseInt($(n).val(),10);
+        	});
+                $('input[name="percent_total"]').val(totalPercent);
+	  	});
+	  	$.extend($.tablesorter.themes.jui, {
+		    // change default jQuery uitheme icons - find the full list of icons here: http://jqueryui.com/themeroller/ (hover over them for their name)
+		    table      : 'ui-widget ui-widget-content ui-corner-all', // table classes
+		    caption    : 'ui-widget-content ui-corner-all',
+		    header     : 'ui-widget-header ui-corner-all ui-state-default', // header classes
+		    footerRow  : '',
+		    footerCells: '',
+		    icons      : 'ui-icon', // icon class added to the <i> in the header
+		    sortNone   : 'ui-icon-carat-2-n-s',
+		    sortAsc    : 'ui-icon-carat-1-n',
+		    sortDesc   : 'ui-icon-carat-1-s',
+		    active     : 'ui-state-active', // applied when column is sorted
+		    hover      : 'ui-state-hover',  // hover class
+		    filterRow  : '',
+		    even       : 'ui-widget-content', // odd row zebra striping
+		    odd        : 'ui-state-default'   // even row zebra striping
+		  });
+	  	var $table = $("table")
+	  	.tablesorter({
+	  		theme: 'jui',
+	  		headerTemplate : '{content} {icon}', // needed to add icon for jui theme
+	  		widgets: ['uitheme', 'zebra', 'filter', 'editable'],
+	  		sortList : [[1,0]],
+	  		widgetOptions: {
+	  			zebra   : ["even", "odd"],
+	        	filter_columnFilters : true,
+	        	filter_ignoreCase : true,
+	        	filter_liveSearch : true,
+	        	filter_searchDelay : 300,
+	        	filter_reset : 'button.yo',
+		      	editable_columns       : [0,1],       // or "0-2" (v2.14.2); point to the columns to make editable (zero-based index)
+		        editable_enterToAccept : true,          // press enter to accept content, or click outside if false
+		        editable_autoAccept    : true,          // accepts any changes made to the table cell automatically (v2.17.6)
+		        editable_autoResort    : true,         // auto resort after the content has changed.
+		        editable_validate      : {
+		        	// make sure the order column are using a number
+		        	0 : function(txt, orig, columnIndex, $element) {
+		        		return isNaN( txt.replace(/\D/, '')) ? '' : txt;
+		        	},
+		        	// make sure the order column are using a number
+		        	1 : function(txt, orig, columnIndex, $element) {
+		        		return isNaN( txt.replace(/\D/, '')) ? '' : txt;
+		        	}		        	           	
+		        },          
+		        // return a valid string: function(text, original, columnIndex){ return text; }
+		        editable_focused       : function(txt, columnIndex, $element) {
+		          // $element is the div, not the td
+		          // to get the td, use $element.closest('td')
+		          $element.addClass('focused');
+		        },
+		        editable_blur          : function(txt, columnIndex, $element) {
+		          // $element is the div, not the td
+		          // to get the td, use $element.closest('td')
+		          $element.removeClass('focused');
+		        },
+		        editable_wrapContent   : '<div class="form-control input-sm">',       // wrap all editable cell content... makes this widget work in IE, and with autocomplete
+		        editable_noEdit        : 'no-edit',     // class name of cell that is not editable
+		        editable_editComplete  : 'editComplete' // event fired after the table content has been edited
+		      }
+		   })
+		    // config event variable new in v2.17.6
+		    .children('tbody').on('editComplete', 'td', function(event, config){
+		      var $this = $(this),
+		        newContent = $this.text(),
+		        cellIndex = this.cellIndex, // there shouldn't be any colspans in the tbody
+		        rowIndex = $this.closest('tr').attr('id'); // data-row-index stored in row id
+		    });
+		    
+		    $('.add').click(function(){
+			    var count = $('input[name="question_count"]').val()
+			    var section = $('#question_section').val(),
+	            row = '<tr>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm percents" name="test[percent][]" type="number"></td>' +
+	            '<td>&nbsp;</td>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
+	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
+	            '</tr>',
+	            $row = $(row),
+			      // resort table using the current sort; set to false to prevent resort, otherwise 
+			      // any other value in resort will automatically trigger the table resort. 
+			      resort = true;
+			    $('table')
+			      .find('tbody').append($row)
+			      .trigger('addRows', [$row, resort]);
+			    return false;
+			});
+	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  }
+);
+</script>
+<script>
+	$('.new_test').on('submit', function() {
+    // check validation
+    if ($('input[name="percent_total"]').val() != "100") {
+    	if ($('input[name="percent_total"]').val() == "") {
+    		alert('Total Percentage = 0')
+    	}
+    	else {
+    		alert('Total Percentage = ' + $('input[name="percent_total"]').val() )
+        }
+        return false;
+    }
+    if ($('input[name="test[total]"]').val() == "") {
+    	alert('Define Total Number of Questions')
+        return false;
+    }
+});
+</script>
