@@ -30,6 +30,8 @@ Certification::Application.routes.draw do
   
   resources :prints
   
+  resources :scores
+  
   resources :sessions, only: [:new, :create, :destroy]
   
   match '/signin', 	to: "sessions#new",				via: "get"

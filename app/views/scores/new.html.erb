@@ -1,0 +1,83 @@
+<%= form_for(@score) do |f| %>
+  <% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @score.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= hidden_field_tag :test_id, @test.id %>
+<%= hidden_field_tag :user_id, current_user.id %>
+<legend>Form Name</legend>
+<% @test.question_ids.each do |q| %>
+  <% @question = Question.find(q) %>
+  <% @answers = @question.answers %>
+  <% if @question.question_type == "MC" %>
+  
+    <% if (@answers.where(correct: true).count == 1) %>
+      	<div class="form-group">
+		  <label class="col-md-4 control-label" for="radios"><%= @question.content %></label>
+		  <%= hidden_field_tag :question_id, @question.id %>
+		  <div class="col-md-4">
+		  	<% @answers.each do |me| %>
+		  	  <div class="radio">
+			    <%= me.option %><br>
+		        <%= check_box_tag "answer_ids[]", me.id, me.id %>
+			  </div>
+		    <% end %>
+		</div>
+    <% else %>
+  		<div class="form-group">
+		  <label class="col-md-4 control-label" for="checkboxes"><%= @question.content %></label>
+		  <div class="col-md-4">
+		  <div class="checkbox">
+		    <label for="checkboxes-0">
+		      <input type="checkbox" name="checkboxes" id="checkboxes-0" value="1">
+		      Option one
+		    </label>
+			</div>
+		  <div class="checkbox">
+		    <label for="checkboxes-1">
+		      <input type="checkbox" name="checkboxes" id="checkboxes-1" value="2">
+		      Option two
+		    </label>
+			</div>
+		  </div>
+		</div>
+    <% end %>
+    <% else %>
+	<div class="form-group">
+	  <label class="col-md-4 control-label" for="radios"><%= @question.content %></label>
+	  <div class="col-md-4">
+	  	<% @answers.each do |me| %>
+	  	  <div class="radio">
+		    <%= me.option %><br>
+	        <%= check_box_tag "answer_ids[]", me.id %>
+		  </div>
+	    <% end %>
+	</div>
+    <% end %>
+  <% end %>
+
+<!-- Prepended checkbox 
+<div class="form-group">
+  <label class="col-md-4 control-label" for="prependedcheckbox">Prepended Checkbox</label>
+  <div class="col-md-4">
+    <div class="input-group">
+      <span class="input-group-addon">     
+          <input type="checkbox">     
+      </span>
+      <input id="prependedcheckbox" name="prependedcheckbox" class="form-control" type="text" placeholder="placeholder">
+    </div>
+    <p class="help-block">help</p>
+  </div>
+</div>
+-->
+<div class="actions">
+    <%= f.submit "Save Test", id: "commit", class: "btn btn-lg btn-primary" %>
+</div>
+<% end %>
