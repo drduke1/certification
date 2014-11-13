@@ -13,16 +13,7 @@ class ScoresController < ApplicationController
     # GET /tests/1
     # GET /tests/1.json
     def show
-      respond_to do |format|
-        format.html
-        format.pdf do
-          @pdf = []
-          @test = Test.find(params[:id])
-            
-          @test_questions = @test.questions.includes(:answers)
-          
-        end
-      end
+      
     end
   
     # GET /tests/new
@@ -58,10 +49,10 @@ class ScoresController < ApplicationController
       @score.test_id = params[:test_id]
       @score.user_id = params[:user_id]
       @answers = Answer.where(id: params[:answer_ids])
-       @correct_answers = @answers.where(correct: true).count
-       @wrong_answers = @answers.where(correct: false).count
+       @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
+       @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
        if @wrong_answers != 0
-         @score.scores = @correct_answers.to_i / @wrong_answers.to_i
+         @score.scores = @correct_answers.to_i  / ( @wrong_answers.to_i + @correct_answers.to_f )
        else
          @score.scores = 100
        end
@@ -110,7 +101,7 @@ class ScoresController < ApplicationController
     
     private
       # Use callbacks to share common setup or constraints between actions.
-      def set_test
+      def set_score
         @score = Score.find(params[:id])
       end
   
