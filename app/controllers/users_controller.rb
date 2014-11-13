@@ -31,15 +31,41 @@ class UsersController < ApplicationController
   # POST /users
   # POST /users.json
   def create
-    @user = User.new(user_params)
-
-    respond_to do |format|
-      if @user.save
-        format.html { redirect_to @user, notice: 'User was successfully created.' }
-        format.json { render action: 'show', status: :created, location: @user }
+    if user = User.find_by(email: params[:user][:email].downcase)
+    
+      if params[:user][:taking] == "taking"
+        sign_in user
+        redirect_to scores_path
       else
-        format.html { render action: 'new' }
-        format.json { render json: @user.errors, status: :unprocessable_entity }
+       redirect_to user, notice: 'User already exists.'
+      end
+    else
+      if params[:user][:taking] == "taking"
+        password = SecureRandom.urlsafe_base64(8)
+        params[:user][:password] = password
+        params[:user][:password_confirmation] = password
+        params[:user][:permission] = ["Read Only"]
+        @user = User.new(user_params)
+        user = @user
+        respond_to do |format|
+          if @user.save
+            sign_in user
+            format.html { redirect_to scores_path, notice: 'Tester was successfully created.' }
+          else
+            format.html { redirect_to home_path }
+          end
+        end
+      else
+        @user = User.new(user_params)
+          respond_to do |format|
+            if @user.save
+              format.html { redirect_to @user, notice: 'User was successfully created.' }
+              format.json { render action: 'show', status: :created, location: @user }
+            else
+              format.html { render action: 'new' }
+              format.json { render json: @user.errors, status: :unprocessable_entity }
+            end
+          end
       end
     end
   end
@@ -86,7 +112,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :permission => [])
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :taking, :permission => [])
     end
     
     def user_nopass_params

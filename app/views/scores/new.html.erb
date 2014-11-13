@@ -35,15 +35,40 @@
 	<% if (@answers.where(correct: true).count == 1) %>
 		  <label class="col-md-12 control-label" for="radios"><b><%= @i %>.&nbsp;</b><%= @question.content %></label>
 		  <div class="col-md-11">
-		  	<% @answers.each_with_index do |me, i| %>
-		  	  <div class="radio">
-		  	  	<span style="margin-left: 35px;">
+		  	<% if @question.question_type == 'TF' %>
+		  	<% @true = @answers.where(option: 'True') %>
+		  	<% @false = @answers.where(option: 'False')%>
+		  	  <% @true.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
 		  	  		<%= radio_button_tag @question.id, me.id %>
 		  	  		<%= @a[i] %>.
 		  	  		&nbsp;
 			    	<%= me.option %>
-			    </span>
-			  </div>
+			      </span>
+			    </div>
+		      <% end %>
+		      <% @false.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
+		  	  		<%= radio_button_tag @question.id, me.id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			      </span>
+			    </div>
+		      <% end %>
+		  	<% else %>
+		  	  <% @answers.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
+		  	  		<%= radio_button_tag @question.id, me.id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			      </span>
+			    </div>
+		      <% end %>
 		    <% end %>
 		</div>
 	<% else %>
