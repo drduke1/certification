@@ -1,0 +1,12 @@
+<%= render 'shared/error_messages' %>
+
+<%= f.label :name %>
+<%= f.text_field :name, class: "input-lg" %>
+
+<%= f.label :email %>
+<%= f.text_field :email, class: "input-lg" %>
+
+<%= f.label :code %>
+<%= f.text_field :code, class: "input-lg" %>
+
+<input id="user_permission" name="user[taking]" type="hidden" value="taking" checked>

@@ -5,7 +5,7 @@ Certification::Application.routes.draw do
 
 	root "sessions#new"
 	
-  get "static_pages/home"
+  get "home", to: "static_pages#home"
   get "static_pages/help"
   
   get "/mc_question", to: "questions#new_mc", as: "new_mc_question"
@@ -29,6 +29,8 @@ Certification::Application.routes.draw do
   resources :users
   
   resources :prints
+  
+  resources :scores
   
   resources :sessions, only: [:new, :create, :destroy]
   

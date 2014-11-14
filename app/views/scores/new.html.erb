@@ -1,0 +1,132 @@
+<style>
+	input {
+		width: inherit;
+	}
+	.save {
+		margin: 50px;
+		width: 250px;
+	}
+	label {
+		margin-top: 25px;
+	}
+</style>
+
+<%= form_for(@score) do |f| %>
+  <% if @score.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@score.errors.count, "error") %> prohibited this test from being saved:</h2>
+
+      <ul>
+      <% @score.errors.full_messages.each do |msg| %>
+        <li><%= msg %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+<%= hidden_field_tag :test_id, @test.id %>
+<%= hidden_field_tag :user_id, current_user.id %>
+<% @i = 0 %>
+<% @a = ("a".."z").to_a %>
+<% @checkbox_id = 0 %>
+<legend><%= @test.name %></legend>
+<% @test.question_ids.each do |q| %>
+  <% @question = Question.find(q) %>
+  <% @i += 1 %>
+  <% @answers = @question.answers %>
+	<% if (@answers.where(correct: true).count == 1) %>
+		  <label class="col-md-12 control-label" for="radios"><b><%= @i %>.&nbsp;</b><%= @question.content %></label>
+		  <div class="col-md-11">
+		  	<% if @question.question_type == 'TF' %>
+		  	<% @true = @answers.where(option: 'True') %>
+		  	<% @false = @answers.where(option: 'False')%>
+		  	  <% @true.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
+		  	  		<%= radio_button_tag @question.id, me.id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			      </span>
+			    </div>
+		      <% end %>
+		      <% @false.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
+		  	  		<%= radio_button_tag @question.id, me.id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			      </span>
+			    </div>
+		      <% end %>
+		  	<% else %>
+		  	  <% @answers.each_with_index do |me, i| %>
+		  	    <div class="radio">
+		  	  	  <span style="margin-left: 35px;">
+		  	  		<%= radio_button_tag @question.id, me.id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			      </span>
+			    </div>
+		      <% end %>
+		    <% end %>
+		</div>
+	<% else %>
+	  <% @checkbox_id += 1 %>
+		  <label class="col-md-12 control-label" for="checkboxes"><b><%= @i %>.&nbsp;</b><%= @question.content %></label>
+		  <div class="col-md-11">
+		  	Select all that apply:<br/>
+		  	<% @answers.each_with_index do |me, i| %>
+		  	  <div class="checkbox">
+		  	  	<span style="margin-left: 35px;">
+		  	  		<%= check_box_tag 'answer_ids[]', me.id, nil, :id => @checkbox_id %>
+		  	  		<%= @a[i] %>.
+		  	  		&nbsp;
+			    	<%= me.option %>
+			    </span>
+			  </div>
+		    <% end %>
+		</div>
+	<% end %>
+<% end %>
+<div class="actions">
+    <%= f.submit "Save Test", id: "commit", class: "btn btn-lg btn-primary save" %>
+</div>
+<% end %>
+<script>
+	$('.new_score').on('submit', function(e) {
+		//var input = new Array();
+		$( "form input:radio:checked" ).each(function(i, obj) {
+			 $('#new_score').append('<input id="answer_ids_'+i+'" name="answer_ids[]" type="hidden" value="'+obj.value+'" checked>');
+			//input += (obj.value) + ","
+		});
+		//var answers = input.split(',');
+		//$('input[type=hidden][name="answer_ids[]"]').val(answers)
+		
+		// Check all radio button groups have one selected
+		var all_answered = true;
+		$("input:radio").each(function(){
+		  var name = $(this).attr("name");
+		  if($("input:radio[name="+name+"]:checked").length == 0)
+		  {
+		    all_answered = false;
+		  }
+		});
+		
+		// Check all check box groups for at least one selected
+		var all_answered = true;
+		$("input:checkbox").each(function(){
+		  var id = $(this).attr("id");
+		  if($("input:checkbox[id="+id+"]:checked").length == 0)
+		  {
+		    all_answered = false;
+		  }
+		});
+		
+		if (all_answered == false) {
+		  alert('You have not answered all the questions. All Answered: ' + all_answered);
+		  e.preventDefault();
+		}
+});
+</script>
