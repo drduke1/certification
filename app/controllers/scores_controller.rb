@@ -1,13 +1,17 @@
 class ScoresController < ApplicationController
     before_action :set_score, only: [:show, :edit, :update, :destroy]  
     before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
+    before_action :set_code, only: [:new] 
   
   
     # GET /tests
     # GET /tests.json
     def index
-      @tests = Test.all
-      #@tests = Test.paginate(page: params[:page], per_page: 10)
+      if current_user.admin?
+        @tests = Test.all
+      else
+        # magic
+      end
     end
     
     # GET /tests/1
@@ -18,9 +22,12 @@ class ScoresController < ApplicationController
   
     # GET /tests/new
     def new
+      begin
       @score = Score.new
-      @test = Test.find(params[:format])
-      
+      @test = Test.find(@code)
+      rescue
+        redirect_to root_path
+      end
     end
     
   # get /tests
@@ -103,6 +110,10 @@ class ScoresController < ApplicationController
       # Use callbacks to share common setup or constraints between actions.
       def set_score
         @score = Score.find(params[:id])
+      end
+      
+      def set_code
+        @code = params[:user][:code]
       end
   
       # Never trust parameters from the scary internet, only allow the white list through.

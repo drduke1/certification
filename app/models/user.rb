@@ -14,7 +14,7 @@ class User < ActiveRecord::Base
 	
   validates :password, :presence => true, :confirmation => true, length: {minimum: 6}, :if => :password
   
-	attr_accessor	:taking			        
+	attr_accessor	:taking, :code			        
 	
 						        
 	has_secure_password

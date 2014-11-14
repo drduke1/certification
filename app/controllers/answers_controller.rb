@@ -1,4 +1,5 @@
 class AnswersController < ApplicationController
+  before_filter :permitted
   before_action :set_answer, only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
 

@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  before_filter :permitted, only: [:show, :update, :edit]
   before_action :set_user, 			 only: [:show, :edit, :update, :destroy]
   before_action :signed_in_user, only: [:edit, :show, :update]
   before_action :admin_user, 		 only: [:index, :destroy]
@@ -35,7 +36,8 @@ class UsersController < ApplicationController
     
       if params[:user][:taking] == "taking"
         sign_in user
-        redirect_to scores_path
+        code = params[:user][:code]
+        redirect_to new_score_path(request.parameters)
       else
        redirect_to user, notice: 'User already exists.'
       end
@@ -45,12 +47,13 @@ class UsersController < ApplicationController
         params[:user][:password] = password
         params[:user][:password_confirmation] = password
         params[:user][:permission] = ["Read Only"]
+        code = params[:user][:code]
         @user = User.new(user_params)
         user = @user
         respond_to do |format|
           if @user.save
             sign_in user
-            format.html { redirect_to scores_path, notice: 'Tester was successfully created.' }
+            format.html { redirect_to new_score_path(request.parameters), notice: 'Tester was successfully created.' }
           else
             format.html { redirect_to home_path }
           end
@@ -112,7 +115,7 @@ class UsersController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :taking, :permission => [])
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :admin, :taking, :code, :permission => [])
     end
     
     def user_nopass_params

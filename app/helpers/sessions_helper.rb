@@ -42,5 +42,19 @@ module SessionsHelper
 	def store_location
 		session[:return_to] = request.url if request.get?
 	end
+	
+  def permitted
+        if @permission = current_user.permission
+          if @permission.include?("Read Only")
+            begin
+              redirect_to home_path
+            rescue
+              return false
+            end
+            
+          else
+          end
+        end
+      end
 
 end

@@ -1,4 +1,5 @@
 class PrintsController < ApplicationController
+  before_filter :permitted
   before_action :set_print, only: [:show, :edit, :update, :destroy]  
   before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
   
