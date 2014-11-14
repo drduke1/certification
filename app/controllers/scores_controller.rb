@@ -17,16 +17,29 @@ class ScoresController < ApplicationController
     # GET /tests/1
     # GET /tests/1.json
     def show
-      
+      unless current_user.admin? == true
+        if @score.user_id != current_user.id
+          redirect_to home_path, notice: 'Your being logged, stop it.'
+        end
+      end
     end
   
     # GET /tests/new
     def new
+      #code = SecureRandom.urlsafe_base64(8)
       begin
-      @score = Score.new
-      @test = Test.find(@code)
+      #if code == params[:user][:code]
+        @test = Test.find(@code)
+        if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
+          redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
+        else
+          @score = Score.new
+        end
+        
+      #end
       rescue
-        redirect_to root_path
+        @score = Score.new
+        #redirect_to root_path
       end
     end
     
@@ -52,30 +65,34 @@ class ScoresController < ApplicationController
     # POST /tests.json
     def create
       @test = Test.find(params[:test_id])
-      @score = Score.new
-      @score.test_id = params[:test_id]
-      @score.user_id = params[:user_id]
-      @answers = Answer.where(id: params[:answer_ids])
-       @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
-       @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
-       if @wrong_answers != 0
-         @score.scores = @correct_answers.to_i  / ( @wrong_answers.to_i + @correct_answers.to_f )
-       else
-         @score.scores = 100
-       end
-      @score.answer_ids = params[:answer_ids].to_s
-      #@answer_ids = []
-      # @answers.each do |me|
-      #   @answer_ids << Answer.find(me)
-      # end
-      # @score.answer_ids = @answers_ids
-      respond_to do |format|
-        if @score.save 
-          format.html { redirect_to @score, notice: 'Test was successfully created.' }
-          format.json { render action: 'show', status: :created, location: @score }
-        else
-          format.html { render action: 'new' }
-          format.json { render json: @score.errors, status: :unprocessable_entity }
+      if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
+        redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
+      else
+        @score = Score.new
+        @score.test_id = params[:test_id]
+        @score.user_id = params[:user_id]
+        @answers = Answer.where(id: params[:answer_ids])
+         @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
+         @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
+         if @wrong_answers != 0
+           @score.scores = @correct_answers.to_i  / ( @wrong_answers.to_i + @correct_answers.to_f )
+         else
+           @score.scores = 100
+         end
+        @score.answer_ids = params[:answer_ids].to_s
+        #@answer_ids = []
+        # @answers.each do |me|
+        #   @answer_ids << Answer.find(me)
+        # end
+        # @score.answer_ids = @answers_ids
+        respond_to do |format|
+          if @score.save 
+            format.html { redirect_to @score, notice: 'Test was successfully created.' }
+            format.json { render action: 'show', status: :created, location: @score }
+          else
+            format.html { render action: 'new' }
+            format.json { render json: @score.errors, status: :unprocessable_entity }
+          end
         end
       end
     end

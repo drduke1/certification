@@ -33,14 +33,19 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     if user = User.find_by(email: params[:user][:email].downcase)
-    
-      if params[:user][:taking] == "taking"
-        sign_in user
-        code = params[:user][:code]
-        redirect_to new_score_path(request.parameters)
-      else
-       redirect_to user, notice: 'User already exists.'
-      end
+    #begin 
+      #unless user.permission != "Read Only"    
+        if params[:user][:taking] == "taking"
+          sign_in user
+          code = params[:user][:code]
+          redirect_to new_score_path(request.parameters)
+        else
+         redirect_to user, notice: 'User already exists.'
+        end
+      #end
+    #rescue
+    #  redirect_to root_path, notice: "Testing your knowledge?"
+    #end
     else
       if params[:user][:taking] == "taking"
         password = SecureRandom.urlsafe_base64(8)

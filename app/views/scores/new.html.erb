@@ -27,6 +27,7 @@
 <%= hidden_field_tag :user_id, current_user.id %>
 <% @i = 0 %>
 <% @a = ("a".."z").to_a %>
+<% @checkbox_id = 0 %>
 <legend><%= @test.name %></legend>
 <% @test.question_ids.each do |q| %>
   <% @question = Question.find(q) %>
@@ -72,13 +73,14 @@
 		    <% end %>
 		</div>
 	<% else %>
+	  <% @checkbox_id += 1 %>
 		  <label class="col-md-12 control-label" for="checkboxes"><b><%= @i %>.&nbsp;</b><%= @question.content %></label>
 		  <div class="col-md-11">
 		  	Select all that apply:<br/>
 		  	<% @answers.each_with_index do |me, i| %>
 		  	  <div class="checkbox">
 		  	  	<span style="margin-left: 35px;">
-		  	  		<%= check_box_tag 'answer_ids[]', me.id %>
+		  	  		<%= check_box_tag 'answer_ids[]', me.id, nil, :id => @checkbox_id %>
 		  	  		<%= @a[i] %>.
 		  	  		&nbsp;
 			    	<%= me.option %>
@@ -93,7 +95,7 @@
 </div>
 <% end %>
 <script>
-	$('.new_score').on('submit', function() {
+	$('.new_score').on('submit', function(e) {
 		//var input = new Array();
 		$( "form input:radio:checked" ).each(function(i, obj) {
 			 $('#new_score').append('<input id="answer_ids_'+i+'" name="answer_ids[]" type="hidden" value="'+obj.value+'" checked>');
@@ -101,5 +103,30 @@
 		});
 		//var answers = input.split(',');
 		//$('input[type=hidden][name="answer_ids[]"]').val(answers)
+		
+		// Check all radio button groups have one selected
+		var all_answered = true;
+		$("input:radio").each(function(){
+		  var name = $(this).attr("name");
+		  if($("input:radio[name="+name+"]:checked").length == 0)
+		  {
+		    all_answered = false;
+		  }
+		});
+		
+		// Check all check box groups for at least one selected
+		var all_answered = true;
+		$("input:checkbox").each(function(){
+		  var id = $(this).attr("id");
+		  if($("input:checkbox[id="+id+"]:checked").length == 0)
+		  {
+		    all_answered = false;
+		  }
+		});
+		
+		if (all_answered == false) {
+		  alert('You have not answered all the questions. All Answered: ' + all_answered);
+		  e.preventDefault();
+		}
 });
 </script>
