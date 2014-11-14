@@ -5,11 +5,28 @@
 			<nav>
 				<ul class="nav navbar-nav pull-right">
 					<% if signed_in? && permitted %>
-					<li><%= link_to "Home", questions_path %></li>
-					<li><%= link_to "Tests", tests_path %></li>
-					<li><%= link_to "Test Sections", sections_path %></li>
-					<li><%= link_to "Products", products_path %></li>
+					<li id="fat-menu" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Prepare Sections <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><%= link_to "1. Products", products_path %></li>
+							<li class="divider"></li>
+							<li><%= link_to "2. Test Sections", sections_path %></li>
+						</ul>
+					</li>
+					<li id="fat-menu" class="dropdown">
+						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+							Prepare Tests <b class="caret"></b>
+						</a>
+						<ul class="dropdown-menu">
+							<li><%= link_to "1. Questions", questions_path %></li>
+							<li class="divider"></li>
+							<li><%= link_to "2. Tests", tests_path %></li>
+						</ul>
+					</li>					
 					<% if admin_user? %>
+						<li><%= link_to "Scores", scores_path %></li>
 						<li><%= link_to "Users", users_path %></li>
 					  <% end %>
 					  <li id="fat-menu" class="dropdown">

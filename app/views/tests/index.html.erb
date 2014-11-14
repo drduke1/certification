@@ -2,29 +2,31 @@
 	td {text-align: center;}
 </style>
 <h1>Listing tests</h1>
-<div id="container" style="width:1150px; margin-left: auto; margin-right: auto;">
+<div id="container" style="width:1300px; margin-left: auto; margin-right: auto;">
 	<%= link_to 'New Generated Test', newgen_test_path, class: "btn btn-success" %> 
 	<%= link_to 'New Custom Test', new_test_path, class: "btn btn-success" %>
 <button type="button" style="float: right" class="btn btn-success">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="15%" data-placeholder="Search">Name</th>
-      <th width="10%" data-placeholder="Search">Type</th>
-	  <th width="15%" data-placeholder="Search">Category</th>
-	  <th width="30%" data-placeholder="Search">Description</th>
+  	  <th width="14%" data-placeholder="Search">Name</th>
+  	  <th width="6%" data-placeholder="Search">Code</th>
+      <th width="9%" data-placeholder="Search">Type</th>
+	  <th width="14%" data-placeholder="Search">Category</th>
+	  <th width="28%" data-placeholder="Search">Description</th>
 	  <th width="10%" data-placeholder="Search">User</th>
-      <th width="10%" class="filter-false">Functions</th>
+      <th width="9%" class="filter-false">Functions</th>
       </tr>
   </thead>
 
   <tbody>
     <% @tests.each do |test| %>
       <tr>
-        <td><%= link_to test.name, test %></td>
-        <td><%= test.type %></td>
+        <td style="text-align: left;"><%= link_to test.name, test %></td>
+        <td><%= test.id %></td>
+        <td style="text-align: left;"><%= test.type %></td>
         <td><%= test.category %></td>
-        <td><%= test.description %></td>
+        <td style="text-align: left;"><%= test.description %></td>
         <td><%= User.find(test.user_id).name %></td>
         <td><%= link_to test do %>
 			<i class="glyphicon glyphicon-zoom-in"></i>
