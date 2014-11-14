@@ -8,7 +8,7 @@ class ScoresController < ApplicationController
     # GET /tests.json
     def index
       if current_user.admin?
-        @tests = Test.all
+        @scores = Score.all
       else
         # magic
       end

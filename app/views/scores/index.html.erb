@@ -1,27 +1,28 @@
 <style>
 	td {text-align: center;}
 </style>
-<h1>Listing tests</h1>
+<h1>Test Scores</h1>
 
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
   	  <th width="20%" data-placeholder="Search">Name</th>
-      <th width="10%" data-placeholder="Search">Type</th>
-	  <th width="15%" data-placeholder="Search">Category</th>
-	  <th width="35%" data-placeholder="Search">Description</th>
-	  <th width="10%" data-placeholder="Search">User</th>
+      <th width="10%" data-placeholder="Search">Test</th>
+	  <th width="15%" data-placeholder="Search">Score</th>
+	  <th width="35%" data-placeholder="Search">Email</th>
+	  <th width="10%" data-placeholder="Search">Date Taken</th>
       </tr>
   </thead>
 
   <tbody>
-    <% @tests.each do |test| %>
+    <% @scores.each do |score| %>
+    <% @user = User.find(score.user_id) %>
       <tr>
-        <td><%= link_to test.name, new_score_path(test) %></td>
-        <td><%= test.type %></td>
-        <td><%= test.category %></td>
-        <td><%= test.description %></td>
-        <td><%= User.find(test.user_id).name %></td>
+        <td><%= @user.name %></td>
+        <td><%= Test.find(score.test_id).name %></td>
+        <td><%= number_to_percentage(score.scores * 100) %></td>
+        <td><%= @user.email %></td>
+        <td><%= score.created_at.strftime("%b %d, %y") %></td>
       </tr>
     <% end %>
   </tbody>
@@ -62,7 +63,7 @@
 	        	filter_reset : 'button.reset',
 	       }
 	  	});
-	  	$("#tests").removeClass('tablesorter tablesorter-jui');
+	  	$("#scores").removeClass('tablesorter tablesorter-jui');
 	  }
 );
 </script>
