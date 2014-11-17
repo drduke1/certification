@@ -20,7 +20,11 @@
       <tr>
         <td><%= @user.name %></td>
         <td><%= Test.find(score.test_id).name %></td>
+        <% if score.scores.to_s == '100.0'%>
         <td><%= number_to_percentage(score.scores) %></td>
+        <% else %>
+        <td><%= number_to_percentage(score.scores * 100) %></td>
+        <% end %>
         <td><%= @user.email %></td>
         <td><%= score.created_at.strftime("%b %d, %y") %></td>
       </tr>
