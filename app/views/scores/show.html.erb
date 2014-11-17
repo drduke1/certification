@@ -26,7 +26,11 @@
     <h3 class="panel-title">Score</h3>
   </div>
   <div class="panel-body">
-    <%= number_to_percentage(@score.scores * 100) %>
+  	<% if @score.scores.to_s == '100.0'%>
+    	<%= number_to_percentage(@score.scores) %>
+    <% else %>
+    	<%= number_to_percentage(@score.scores * 100) %>
+    <% end %>
   </div>
 </div>
 
