@@ -53,14 +53,18 @@ class UsersController < ApplicationController
         params[:user][:password_confirmation] = password
         params[:user][:permission] = ["Read Only"]
         code = params[:user][:code]
-        @user = User.new(user_params)
-        user = @user
-        respond_to do |format|
-          if @user.save
-            sign_in user
-            format.html { redirect_to new_score_path(request.parameters), notice: 'Tester was successfully created.' }
-          else
-            format.html { redirect_to home_path }
+        if Test.where(id: code).present? == false
+          redirect_to home_path, notice: 'The code entered is invalid'
+        else
+          @user = User.new(user_params)
+          user = @user
+          respond_to do |format|
+            if @user.save
+              sign_in user
+              format.html { redirect_to new_score_path(request.parameters), notice: 'Please answer all questions' }
+            else
+              format.html { redirect_to home_path }
+            end
           end
         end
       else
