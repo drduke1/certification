@@ -4,8 +4,8 @@ class ScoresController < ApplicationController
     before_action :set_code, only: [:new] 
   
   
-    # GET /tests
-    # GET /tests.json
+    # GET /scores
+    # GET /scores.json
     def index
       if current_user.admin?
         @scores = Score.all
@@ -14,14 +14,26 @@ class ScoresController < ApplicationController
       end
     end
     
-    # GET /tests/1
-    # GET /tests/1.json
+    # GET /scores/1
+    # GET /scores/1.json
     def show
       unless current_user.admin? == true
         if @score.user_id != current_user.id
           redirect_to home_path, notice: 'Your being logged, stop it.'
         end
       end
+      @each_answer = []
+      @scores = @score.answer_ids.scan(/\d+/).map(&:to_i)
+      #@scores = eval(@score.answer_ids)  # This executes string as Ruby code :D, isn't as fast as scan()
+      @scores.each do |me|
+        @each_answer << Answer.find(me)
+      end
+# This code block works    
+#      input = @score.answer_ids
+#      require 'json'
+#      ids = JSON.parse(input).map(&:to_i)
+#      @answers = []
+#      @answers += Answer.find(ids)
     end
   
     # GET /tests/new
@@ -98,23 +110,23 @@ class ScoresController < ApplicationController
     end
     
     
-    # PATCH/PUT /tests/1
-    # PATCH/PUT /tests/1.json
+    # PATCH/PUT /scores/1
+    # PATCH/PUT /scores/1.json
     def update
       respond_to do |format|
-        @test.question_ids = []
-        if @test.update(test_params)
-          format.html { redirect_to @test, notice: 'Test was successfully updated.' }
+        @score.question_ids = []
+        if @score.update(score_params)
+          format.html { redirect_to @score, notice: 'Test was successfully updated.' }
           format.json { head :no_content }
         else
           format.html { render action: 'edit' }
-          format.json { render json: @test.errors, status: :unprocessable_entity }
+          format.json { render json: @score.errors, status: :unprocessable_entity }
         end
       end
     end
   
-    # DELETE /tests/1
-    # DELETE /tests/1.json
+    # DELETE /scores/1
+    # DELETE /scores/1.json
     def destroy
       @score.destroy
       respond_to do |format|
