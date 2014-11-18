@@ -8,14 +8,11 @@
   <%= f.label :correct, "Correct Answer?" %><br>
   <%= f.check_box :correct %>
 
-  <%= f.number_field :question_id, class: "input-lg", value: @question.id, style: "visibility: hidden" %>
+  <%= f.number_field :question_id, class: "input-lg", style: "visibility: hidden" %>
 
   <%= f.submit "Update Answer", class: "btn btn-lg btn-primary" %>
     
 <% end %>
-
-<h1>World</h1>
-
 <script>
 	$(document).ready(function(){
 		$("#answer_correct").bootstrapSwitch('onText', 'Yes');
