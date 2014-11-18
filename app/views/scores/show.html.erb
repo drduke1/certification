@@ -41,18 +41,24 @@
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="14%" data-placeholder="Search">Question</th>
-  	  <th width="6%" data-placeholder="Search">Answer</th>
-      <th width="9%" data-placeholder="Search">Correct</th>
+  	  <th width="40%" data-placeholder="Search">Question</th>
+  	  <th width="25%" data-placeholder="Search">Tester's Answer</th>
+      <th width="15%" data-placeholder="Search">Correct</th>
+      <th width="20%" data-placeholder="Search">Correct Answer</th>
       </tr>
   </thead>
 
   <tbody>
     <% @each_answer.each do |a| %>
+    <% @question = Question.find(a.question_id) %>
+    <% @correct = @question.answers.where(correct: true) %>
       <tr>
-        <td style="text-align: left;"><%= Question.find(a.question_id).content %></td>
-        <td><%= a.option %></td>
+        <td style="text-align: left;"><%= @question.content %></td>
+        <td style="text-align: left;"><%= a.option %></td>
         <td><%= a.correct.to_s.capitalize %></td>
+        <td style="text-align: left;"><% @correct.each do |c| %>
+        <%= c.option %> 
+        <% end %></td>
       </tr>
     <% end %>
   </tbody>
