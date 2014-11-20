@@ -28,12 +28,17 @@ class ScoresController < ApplicationController
       @scores.each do |me|
         @each_answer << Answer.find(me)
       end
-# This code block works    
-#      input = @score.answer_ids
-#      require 'json'
-#      ids = JSON.parse(input).map(&:to_i)
-#      @answers = []
-#      @answers += Answer.find(ids)
+      # This code block works, does same thing as scan().map() above just parses with JSON.
+      #      input = @score.answer_ids
+      #      require 'json'
+      #      ids = JSON.parse(input).map(&:to_i)
+      #      @answers = []
+      #      @answers += Answer.find(ids)
+      
+      # Get correct & wrong answers count to show Tester
+      @answers = Answer.where(id: @scores)
+      @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
+      @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
     end
   
     # GET /tests/new
