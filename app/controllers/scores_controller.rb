@@ -17,7 +17,7 @@ class ScoresController < ApplicationController
     # GET /scores/1
     # GET /scores/1.json
     def show
-      unless current_user.admin? == true
+      if current_user.permission == ["Read Only"]
         if @score.user_id != current_user.id
           redirect_to home_path, notice: 'Your being logged, stop it.'
         end
