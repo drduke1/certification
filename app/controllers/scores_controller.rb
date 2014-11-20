@@ -7,10 +7,10 @@ class ScoresController < ApplicationController
     # GET /scores
     # GET /scores.json
     def index
-      if current_user.admin?
+      if current_user.permission != ["Read Only"]
         @scores = Score.all
       else
-        # magic
+        redirect_to home_path, notice: 'Your being logged, stop it.'
       end
     end
     
