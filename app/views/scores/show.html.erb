@@ -55,7 +55,7 @@
       <tr>
         <td style="text-align: left;"><%= @question.content %></td>
         <td style="text-align: left;"><%= a.option %></td>
-        <td><%= a.correct.to_s.capitalize %></td>
+        <td><span class="<%= a.correct ? 'glyphicon glyphicon-ok' : 'glyphicon glyphicon-remove' %>"></td>
         <td style="text-align: left;"><% @correct.each do |c| %>
         <%= c.option %> 
         <% end %></td>
