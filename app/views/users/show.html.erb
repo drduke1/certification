@@ -1,12 +1,18 @@
 <% provide(:title, @user.name) %>
-<div class="row">
+<div style="margin-top: 25px;" class="row">
 	<aside class="col-md-4">
 		<section>
 			<h1>
+				<strong>Name: </strong>
 				<%= @user.name %>
-			</h1>
+			</h1><br/>
 			<h5>
+				<strong>Email: </strong>
 				<%= @user.email %>
+			</h5>
+			<h5>
+				<strong>Permissions: </strong>
+				<%= @user.permission.to_s %>
 			</h5>
 		</section>
 	</aside>
