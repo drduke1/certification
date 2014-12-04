@@ -2,7 +2,11 @@
 	td {text-align: center;}
 </style>
 <div id="container" style="width:800px; margin-left: auto; margin-right: auto; margin-top: 15px;">
-<%= link_to 'New Product', new_product_path, class: "btn btn-success" %>
+<%= link_to new_product_path do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New Product
+	</button>
+<% end %>
 <button type="button" style="float: right" class="btn btn-success yo">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>

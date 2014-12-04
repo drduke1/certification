@@ -73,7 +73,36 @@
 	  </div>
 		<%= form_for(@question) do |q| %>
 		<div class="panel-heading">
-	  	  <div style="display: inline; text-align: left;">Add Test Section</div>  
+	  	  <div style="display: inline; text-align: left;">
+	  	  	
+	  	  	<div class="row" style="display: inline-block; margin-top: -5px; margin-bottom: -5px; margin-left: 0px;">
+	  	  		Add Test Section
+			    <button type="button" class="btn btn-success" style="margin-left: 15px;" data-toggle="collapse" data-target="#filter-panel">
+			        <span class="glyphicon glyphicon-cog"></span> Instructions
+			    </button>
+			    <div id="filter-panel" class="collapse filter-panel">
+			        <div class="panel panel-success" style="margin-top: 15px;">
+					  <div class="panel-heading">
+					    <h3 class="panel-title"><b>Instructions</b></h3>
+					  </div>
+						<div class="panel-body" style="font-size: 13pt;">
+							<b>Before adding sections to a test make sure the product(s), section(s), & question(s) are ready.</b></br/><br/>
+							First we want to select the Section(s) to add to our test.</br/>
+							&nbsp;&nbsp;1)&nbsp;&nbsp;Select the category the section is in.<br/>
+							&nbsp;&nbsp;2)&nbsp;&nbsp;Select the product or product series the section is in.<br/>
+							&nbsp;&nbsp;3)&nbsp;&nbsp;Select the section & click 'Add Section' to add it to the table.<br/>
+							&nbsp;&nbsp;4)&nbsp;&nbsp;Repeat until all sections are added as needed. Use the 'Remove' button on the table as needed.<br/><br/>
+							Second we want to select questions & define details about the number, order, & weight of theses questions.<br/>
+							&nbsp;&nbsp;1)&nbsp;&nbsp;Enter the total number of questions.<br/>
+							&nbsp;&nbsp;2)&nbsp;&nbsp;Enter the percentage of the test wanted from each section.<br/>
+							&nbsp;&nbsp;3)&nbsp;&nbsp;Use the 'Order' column to organize your questions in the order desired. (Use numbers, i.e. '1', '2'...)
+							
+						</div>
+					 </div>
+			    </div>
+			 </div>
+	  	  	
+	  	  </div>  
 	    </div>
 	    <div class="panel-body">
 	        <div class="row">
@@ -104,7 +133,7 @@
 				<%= q.label :product_id %><br>
 				<%= q.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
 				</div>
-				<%= q.label :section %><br>
+				<%= q.label :section %><p style="margin-left: 15px; display: inline-block;">Click <b><%= link_to 'HERE', new_section_path %></b> to create a section</p><br>
 				<%= q.select :section, options_for_select([ ["None", "None"] ]), {prompt: "Select a section"}, {class: "form-control input-lg" } %>
 				</div>
 				

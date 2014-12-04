@@ -2,7 +2,11 @@
 	td {text-align: center;}
 </style>
 <div id="container" style="width:1200px; margin-left: auto; margin-right: auto; margin-top: 15px;">
-<%= link_to 'New Section', new_section_path, class: "btn btn-success" %>
+<%= link_to new_section_path do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New Section
+	</button>
+<% end %>
 <button type="button" style="float: right" class="btn btn-success">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>

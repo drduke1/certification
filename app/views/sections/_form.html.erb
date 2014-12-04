@@ -19,7 +19,28 @@
       </ul>
     </div>
   <% end %>
-
+ 
+ <div class="row" style="margin-top: 15px; margin-bottom: 15px; margin-left: 15px;">
+    <div id="filter-panel" class="collapse filter-panel">
+        <div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title"><b>Instructions</b></h3>
+		  </div>
+			<div class="panel-body" style="font-size: 13pt;">
+				1)  	Enter the section's name.<br/>
+				2)  	Select if the section is active or not.<br/><hr/>
+				<b>Now select the Product(s) you want associated with the section.</b><br/>
+				3)  	Use the 'Search' filters to find & view products.<br/>
+				4)  	Check the checkboxes to select the product(s).<br/>
+				5)  	Use the checkbox in the table header to select all products <b>currently seen on the table.</b>
+			</div>
+		 </div>
+    </div>    
+    <button type="button" class="btn btn-success" style="margin-left: 0px;" data-toggle="collapse" data-target="#filter-panel">
+        <span class="glyphicon glyphicon-cog"></span> Instructions
+    </button>
+</div>
+ 
 <div class="col-lg-6 col-md-6 col-xs-6">
 	<div class="field">
       <%= f.label :name %><br>
@@ -52,7 +73,7 @@
 <table width="100%" class="tablesorter">
   <thead>
   	  <tr>
-  	  <th width="14%" class="filter-false"><input type="checkbox"></th>
+  	  <th width="14%" class="filter-false" style="background-color: #5cb85c;"><input type="checkbox"></th>
   	  <th width="45%" data-placeholder="Search">Name</th>
 	  <th width="41%" class="filter-select filter-match" data-placeholder="Select Category">Category</th>
       </tr>

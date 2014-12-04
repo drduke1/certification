@@ -11,6 +11,23 @@
     </div>
   <% end %>
 
+<div class="row" style="margin-top: 15px; margin-bottom: 15px; margin-left: 0px;">
+    <div id="filter-panel" class="collapse filter-panel">
+        <div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title"><b>Instructions</b></h3>
+		  </div>
+			<div class="panel-body" style="font-size: 13pt;">
+				1)  	Enter the <b>Product or Product Series</b> name.<br/>
+				2)  	Select the category<br/>
+			</div>
+		 </div>
+    </div>    
+    <button type="button" class="btn btn-success" style="margin-left: 0px;" data-toggle="collapse" data-target="#filter-panel">
+        <span class="glyphicon glyphicon-cog"></span> Instructions
+    </button>
+</div>
+
   <div class="field">
     <%= f.label :name %><br>
     <%= f.text_field :name, class: "input-lg" %>

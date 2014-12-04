@@ -3,8 +3,16 @@
 </style>
 <h1>Listing tests</h1>
 <div id="container" style="width:1300px; margin-left: auto; margin-right: auto;">
-	<%= link_to 'New Generated Test', newgen_test_path, class: "btn btn-success" %> 
-	<%= link_to 'New Custom Test', new_test_path, class: "btn btn-success" %>
+	<%= link_to newgen_test_path do %> 
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New Generated Test
+	</button>
+	<% end %>
+	<%= link_to new_test_path do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  New Custom Test
+	</button>
+	<% end %>
 <button type="button" style="float: right" class="btn btn-success">Reset Search</button>
 <table width="100%" class="tablesorter">
   <thead>

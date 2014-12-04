@@ -43,6 +43,25 @@
 	<%#= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  4} %>
 	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
  </div>
+ 
+ <div class="row" style="margin-top: 15px; margin-bottom: 15px; margin-left: 0px;">
+    <div id="filter-panel" class="collapse filter-panel">
+        <div class="panel panel-success">
+		  <div class="panel-heading">
+		    <h3 class="panel-title"><b>Instructions</b></h3>
+		  </div>
+			<div class="panel-body" style="font-size: 13pt;">
+				1)  	Use 'Search' filters to find & view questions.<br/>
+				2)  	Check the checkboxes to select the product(s).<br/>
+				3)  	Use the checkbox in the table header to select all products <b>currently seen on the table.</b><br/>
+				4)  	Use the 'Order' column to organize your questions in the order desired. (Use numbers, i.e. '1', '2'...)
+			</div>
+		 </div>
+    </div>    
+    <button type="button" class="btn btn-success" style="margin-left: 0px;" data-toggle="collapse" data-target="#filter-panel">
+        <span class="glyphicon glyphicon-cog"></span> Instructions
+    </button>
+ </div>
   
 <div id="container" style="width:1200px; margin-top: 15px; margin-left: auto; margin-right: auto;">
   <div style="display: inline-block; width: 24%;">
