@@ -6,7 +6,7 @@
     {
         display:none;
     }
-    .count {
+    .counter {
 		position: relative;
 		z-index: 2;
 		float: left;
@@ -138,20 +138,22 @@
 				</div>
 				
 			</div>
-			<button type="button" class="btn btn-success add">Add Section</button>
+			
+			 <!-- <%# link_to "Add Section", 'tests_count_questions', :method => 'get', :remote => true, :html => {:class => "btn btn-success add"} %> -->
+			  <button type="button" class="btn btn-success add">Add Section</button> 
 	    </div> 
 	    <% end %>
 	<div id="container" style="width: 1100px; margin-top: 15px; margin-left: auto; margin-right: auto;">
 	  <div style="display: inline-block; width: 25%;">
 	    <div class="input-group">
 	      <span class="input-group-addon">Set Number of Questions:</span>
-	      <%= f.text_field :total, class: "input-lg count" %>
+	      <%= f.text_field :total, class: "input-lg counter" %>
 	    </div>
 	  </div>
 	  <div style="display: inline-block; width: 20%;">
 	    <div class="input-group">
 	      <span class="input-group-addon">Total Percentage:</span>
-	      <input class="input-lg count" id="percent_total" name="percent_total" disabled="">
+	      <input class="input-lg counter" id="percent_total" name="percent_total" disabled="">
 	    </div>
 	  </div>
 	<button type="button" class="btn btn-success yo" style="display: inline-block; float: right;">Reset Search</button>
@@ -372,7 +374,6 @@ $(document).ready(function(e) {
 		        cellIndex = this.cellIndex, // there shouldn't be any colspans in the tbody
 		        rowIndex = $this.closest('tr').attr('id'); // data-row-index stored in row id
 		    });
-		    
 		    $('.add').click(function(){
 		    	var section = $('#question_section').val()
 		    	$.ajax({url: '/tests/count_questions?section=' + section , type: "POST", dataType: "script"}); // send a request and get javascript back
@@ -381,7 +382,7 @@ $(document).ready(function(e) {
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm percents" name="test[percent][]" type="number"></td>' +
 	            '<td>&nbsp;</td>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +	            
-	            '<td>&nbsp;</td>' +
+	            '<td class="count' + section + '" style="text-align: center; line-height: 1.5; margin-top: 5px;">' +
 	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
 	            '</tr>',
 	            $row = $(row),

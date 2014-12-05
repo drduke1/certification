@@ -143,6 +143,7 @@ class TestsController < ApplicationController
     
     def count_questions
       @count = Question.where(section: params[:section]).count
+      @section = '.count' + params[:section].to_s
        respond_to do |format|
           format.html 
           format.js 
