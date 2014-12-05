@@ -1,0 +1,5 @@
+$('#loading_placeholder_element').html('<%= escape_javascript(render(:partial => "create")) %>');
+
+
+// then make the next call once the other stuff is over (you may need to add this as a call back on an animation):
+$.ajax({url: "/controller/second_method", type: "POST", dataType: "script"});

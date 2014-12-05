@@ -7,7 +7,7 @@ Certification::Application.routes.draw do
 	
   get "home", to: "static_pages#home"
   get "static_pages/help"
-  
+  get "/tests/count_questions", to: "tests#count_questions"
   get "/mc_question", to: "questions#new_mc", as: "new_mc_question"
   get "/tf_question", to: "questions#new_tf", as: "new_tf_question"
   post "/mc_question", to: "questions#create"

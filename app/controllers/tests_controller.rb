@@ -140,6 +140,14 @@ class TestsController < ApplicationController
         end
       end
     end
+    
+    def count_questions
+      @count = Question.where(section: params[:section]).count
+       respond_to do |format|
+          format.html 
+          format.js 
+        end
+    end
   
     # DELETE /tests/1
     # DELETE /tests/1.json

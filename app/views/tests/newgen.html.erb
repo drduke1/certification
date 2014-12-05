@@ -88,8 +88,8 @@
 						<div class="panel-body" style="font-size: 13pt;">
 							<b>Before adding sections to a test make sure the product(s), section(s), & question(s) are ready.</b></br/><br/>
 							First we want to select the Section(s) to add to our test.</br/>
-							&nbsp;&nbsp;1)&nbsp;&nbsp;Select the category the section is in.<br/>
-							&nbsp;&nbsp;2)&nbsp;&nbsp;Select the product or product series the section is in.<br/>
+							&nbsp;&nbsp;1)&nbsp;&nbsp;Select the category the section belongs to.<br/>
+							&nbsp;&nbsp;2)&nbsp;&nbsp;Select the product or product series the section belongs to.<br/>
 							&nbsp;&nbsp;3)&nbsp;&nbsp;Select the section & click 'Add Section' to add it to the table.<br/>
 							&nbsp;&nbsp;4)&nbsp;&nbsp;Repeat until all sections are added as needed. Use the 'Remove' button on the table as needed.<br/><br/>
 							Second we want to select questions & define details about the number, order, & weight of theses questions.<br/>
@@ -160,7 +160,8 @@
 	  	  <tr>
 	  	  <th width="12%" data-placeholder="Search">Percent</th>
 	      <th width="12%" data-placeholder="Search">Order</th>
-		  <th width="40%" data-placeholder="Search">Section</th>
+		  <th width="30%" data-placeholder="Search">Section</th>
+		  <th width="10%" data-placeholder="Search">Questions</th>
 	  	  <th width="12%" class="filter-false">Remove</th>
 	      </tr>
 	  </thead>
@@ -373,12 +374,14 @@ $(document).ready(function(e) {
 		    });
 		    
 		    $('.add').click(function(){
-			    var count = $('input[name="question_count"]').val()
-			    var section = $('#question_section').val(),
+		    	var section = $('#question_section').val()
+		    	$.ajax({url: '/tests/count_questions?section=' + section , type: "POST", dataType: "script"}); // send a request and get javascript back
+			    var count = $('input[name="question_count"]').val(),
 	            row = '<tr>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm percents" name="test[percent][]" type="number"></td>' +
 	            '<td>&nbsp;</td>' +
-	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +
+	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +	            
+	            '<td>&nbsp;</td>' +
 	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
 	            '</tr>',
 	            $row = $(row),
