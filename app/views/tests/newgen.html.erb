@@ -376,13 +376,14 @@ $(document).ready(function(e) {
 		    });
 		    $('.add').click(function(){
 		    	var section = $('#question_section').val()
+		    	var sectionclass = section.replace(/\s/g, '')
 		    	$.ajax({url: '/tests/count_questions?section=' + section , type: "POST", dataType: "script"}); // send a request and get javascript back
 			    var count = $('input[name="question_count"]').val(),
 	            row = '<tr>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm percents" name="test[percent][]" type="number"></td>' +
 	            '<td>&nbsp;</td>' +
 	            '<td><input style="margin: 0px; height: 30px !important;" class="input-sm" name="test[section][]" type="text" value="' + section + '"></td>' +	            
-	            '<td class="count' + section + '" style="text-align: center; line-height: 1.5; margin-top: 5px;">' +
+	            '<td class="count' + sectionclass + '" style="text-align: center; line-height: 1.5; margin-top: 5px;">' +
 	            '<td class="removeRow"><button type="button" class="btn btn-success" >Remove</button></td>' +
 	            '</tr>',
 	            $row = $(row),

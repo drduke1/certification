@@ -142,9 +142,13 @@ class TestsController < ApplicationController
     end
     
     def count_questions
-      @param_section = URI.decode(params[:section])
+      @param_section = params[:section]
       @count = Question.where(section: @param_section).count
-      @section = '.count' + params[:section].to_s
+      if @param_section.match(/\s/).nil?
+        @section = '.count' + @param_section.to_s
+      else
+        @section = '.count' + @param_section.gsub!(/\s+/, "")
+      end
        respond_to do |format|
           format.html 
           format.js 
