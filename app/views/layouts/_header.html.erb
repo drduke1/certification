@@ -5,6 +5,7 @@
 			<nav>
 				<ul class="nav navbar-nav pull-right">
 					<% if signed_in? && permitted %>
+					<li><%= link_to "Overview", root_path %></li>
 					<li id="fat-menu" class="dropdown">
 						<a href="#" class="dropdown-toggle" data-toggle="dropdown">
 							Prepare Sections <b class="caret"></b>
