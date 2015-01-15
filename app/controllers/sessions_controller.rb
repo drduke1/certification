@@ -2,7 +2,7 @@ class SessionsController < ApplicationController
 	
 	def new 
 		if signed_in?
-			redirect_to questions_path
+			redirect_to overview_path
 		end
 	end
 	
@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 			sign_in user
 			flash[:success] = 'You have successfully signed in'
-			redirect_to questions_path
+			redirect_to overview_path
 		else
 			flash.now[:error] = 'Invalid email/password combination'
 			render 'new'
