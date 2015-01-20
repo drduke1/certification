@@ -1,32 +1,31 @@
 class TestReport < LayoutPdf
-  
-  #TABLE_WIDTHS = [20, 400, 200]
-  #TABLE_HEADERS = ["ID", "Content", "Answer"]
 
   def initialize(test_questions=[], test)
     super()
     @test_questions = test_questions
     @test = test
-    #@test_questions = test
-    #@all_answers = answer
     @i = 0
-    @a = ("a".."z").to_a
+    
     header "#{@test.name}"
     move_down 20
     @test_questions.each do |q|
-     @i += 1
-     span(800, :position => :left) do
-       text "#{@i}. " + "#{q.content}"
-       move_down 10
-       q.answers.each_with_index do |answer, i|
-         if answer
-           text "#{@a[i]}.  [ ]  " + "#{answer.option}", :indent_paragraphs => 15
-           move_down 4
-         end
-       end
-      move_down 10
-     end
+      @i += 1
+      span(800, :position => :left) do
+        group do
+        text "#{@i}. " + "#{q.content}"
+        move_down 10
+          @a = ("a".."z").to_a
+          q.answers.each_with_index do |answer, i|
+            if answer
+              text "#{@a[i]}.  " + "#{answer.option}", :indent_paragraphs => 15
+              move_down 4
+            end
+          end
+        move_down 10
+        end
+      end
     end
+    
     
     #display_test
     footer
