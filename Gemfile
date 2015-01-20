@@ -36,7 +36,7 @@ gem 'turbolinks'
 gem 'jbuilder'
 
 group :doc do
-  gem 'sdoc', '0.3.20', require: false
+  gem 'sdoc', '0.3.20'
 end
 
 group :production do
