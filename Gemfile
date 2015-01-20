@@ -15,6 +15,7 @@ gem 'jquery-ui-form'
 gem 'jquery-tablesorter'
 gem 'prawn'
 gem 'prawn-table'
+gem 'prawn-grouping'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'
