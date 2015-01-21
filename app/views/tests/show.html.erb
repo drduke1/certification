@@ -26,9 +26,24 @@
 	<strong>Question:</strong>
 	<%= @test.question_ids %>
 </p>
-
-<%= link_to 'Edit', edit_test_path(@test) %> |
-<%= link_to 'Back', tests_path %> |
-<%= link_to 'Print', prints_path(@test) %> |
+	<button type="button" class="btn btn-lg btn-default">
+		<span class="glyphicon glyphicon-download-alt"></span> <%= link_to 'Download', :action => 'show', :format => :pdf %>
+	</button>
+<%= link_to prints_path(@test) do %>
+	<button type="button" class="btn btn-lg btn-default">
+		<span class="glyphicon glyphicon-list-alt"></span> List
+	</button>
+<% end %>
+<%= link_to edit_test_path(@test) do %>
+	<button type="button" class="btn btn-lg btn-default">
+		<span class="glyphicon glyphicon-edit"></span> Edit
+	</button>
+<% end %>
+<p style="margin-top: 25px;">
+	<%= link_to tests_path do %>
+		<button type="button" class="btn btn-lg btn-default">
+			<span class="glyphicon glyphicon-backward"></span> Back
+		</button>
+	<% end %>
+</p>
 <%#= link_to 'Download', url_for(params), :format => :pdf %>
-<%= link_to 'Download', :action => 'show', :format => :pdf %>
