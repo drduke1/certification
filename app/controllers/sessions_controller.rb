@@ -2,7 +2,11 @@ class SessionsController < ApplicationController
 	
 	def new 
 		if signed_in?
+		  if current_user.permission.include?("Read Only")
+		    redirect_to home_path
+		  else
 			redirect_to overview_path
+		  end
 		end
 	end
 	

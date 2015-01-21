@@ -44,7 +44,8 @@ module SessionsHelper
 	end
 	
   def permitted
-    if @permission = current_user.permission
+    begin
+    @permission = current_user.permission
       if @permission.include?("Read Only")
         begin
           redirect_to home_path
@@ -55,6 +56,8 @@ module SessionsHelper
       else
         return true
       end
+    rescue
+      return false
     end
   end
 

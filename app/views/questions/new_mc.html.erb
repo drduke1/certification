@@ -32,7 +32,7 @@
 	
 	<div id="ip_video_telephony">
 	<%= f.label :product_id %><br>
-	<%= f.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
+	<%= f.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id6"} %>
 	</div>
 	
 	<div id="consumer_atas">
@@ -131,6 +131,17 @@ $(document).ready(function(e) {
 			
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id5').val())
+				{
+					
+						$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id6').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id6').val())
 				{
 					
 						$('#question_section').append("<option>" + this.section + "</option>");
