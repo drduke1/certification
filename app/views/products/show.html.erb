@@ -1,9 +1,24 @@
 <p id="notice"><%= notice %></p>
 
-<p>
-  <strong>Name:</strong>
-  <%= @product.name %>
-</p>
+<div class="panel panel-primary" style="margin-top: 15px;">
+	<div class="panel-heading">
+	  <h3 class="panel-title">Product</h3>
+	</div>
+	<div class="panel-body">
+    <span style="font-size: 18px;"><strong><%= @product.name %></strong></span>
+    <br/><br/>
+    <%= link_to edit_product_path(@product) do %>
+			<button type="button" class="btn btn-lg btn-default">
+				<span class="glyphicon glyphicon-edit"></span> Edit
+			</button>
+		<% end %>
+  </div>
+</div>
 
-<%= link_to 'Edit', edit_product_path(@product) %> |
-<%= link_to 'Back', products_path %>
+<p style="margin-top: 25px;">
+	<%= link_to products_path do %>
+		<button type="button" class="btn btn-lg btn-default">
+			<span class="glyphicon glyphicon-backward"></span> Back
+		</button>
+	<% end %>
+</p>
