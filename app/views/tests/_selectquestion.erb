@@ -270,12 +270,20 @@ $(function(){
  });
 </script>
 <script>
-	$(document).ready(function(){
+$(document).ready(function(){
 
     var $checkboxes = $('#new_test td input[type="checkbox"]');
         
     $checkboxes.change(function(){
         var countCheckedCheckboxes = $checkboxes.filter(':checked').length;
+        // $('#count-checked-checkboxes').text(countCheckedCheckboxes);
+        $('#count').val(countCheckedCheckboxes);
+    });
+    
+    var $editcheckboxes = $('.edit_test td input[type="checkbox"]');
+        
+    $editcheckboxes.change(function(){
+        var countCheckedCheckboxes = $editcheckboxes.filter(':checked').length;
         // $('#count-checked-checkboxes').text(countCheckedCheckboxes);
         $('#count').val(countCheckedCheckboxes);
     });
