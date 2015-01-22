@@ -1,0 +1,22 @@
+A New Test has been submitted. Test: <%= @test %>
+    
+      Dear <%= @user.name %>,
+    
+    
+      Your tests results are in,
+      
+      Test Title: <%= @test %>
+      
+      Tester's Name: <%= @user.name %>
+      
+      <% if @score.scores.to_s == '100.0'%>
+      Score: <%= number_to_percentage(@score.scores) %>
+	  <% else %>
+	  Score: <%= number_to_percentage(@score.scores * 100) %>
+	  <% end %>
+      
+      Number Correct: <%= @correct_answers %>
+      
+      Number Wrong: <%= @wrong_answers %>
+    
+      Thanks and have a great day!

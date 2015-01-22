@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    
+    <h1>A New Test has been submitted. Test: <%= @test %></h1>
+    
+    <p>
+      Dear <%= @user.name %>,
+    </p>
+    
+    <p>
+      Your tests results are in,
+      <br />
+      <br />
+      Test Title: <%= @test %>
+      <br />
+      <br />
+      Tester's Name: <%= @user.name %>
+      <br />
+      <br />
+      <% if @score.scores.to_s == '100.0'%>
+      Score: <%= number_to_percentage(@score.scores) %>
+	  <% else %>
+	  Score: <%= number_to_percentage(@score.scores * 100) %>
+	  <% end %>
+       <%= @user.name %>
+      <br />
+      <br />
+      Number Correct: <%= @correct_answers %>
+      <br />
+      <br />
+      Number Wrong: <%= @wrong_answers %>
+    </p> 
+
+    <p>Thanks and have a great day!</p>
+
+  </body>
+</html>

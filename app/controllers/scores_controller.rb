@@ -104,6 +104,7 @@ class ScoresController < ApplicationController
         # @score.answer_ids = @answers_ids
         respond_to do |format|
           if @score.save 
+            ScoreMailer.score_email(@score, @correct_answers, @wrong_answers).deliver
             format.html { redirect_to @score, notice: 'Test was successfully created.' }
             format.json { render action: 'show', status: :created, location: @score }
           else
