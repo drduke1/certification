@@ -19,9 +19,16 @@
 		opacity: 1;
 	}
 	.tablesorter .removeRow {
-  	text-align: center;
-  	cursor: pointer;
-}
+  		text-align: center;
+  		cursor: pointer;
+    }
+	select.time_select {
+		padding: 5px;
+		font-size: 25px;
+    	width:auto;
+    	border: 1px solid #cccccc;
+    	background-color: #ffffff;
+	}
 </style>
 
 <h1>New Generated Test</h1>
@@ -75,19 +82,19 @@
 		  	<div class="col-lg-4 col-md-4 col-xs-4">
 			  	<div class="input-group">
 					<%= f.label :region %><br>
-					<%= f.select :region, [ ["North America", "na"], ["Latin America", "latam"], ["Asia Pacific", "apac"], ["Europe, Middle East, Africa", "emea"] ], {prompt: "Select Region"}, class: "input-lg", :id => "region" %>
+					<%= f.select :region, [ ["North America", "na"], ["Latin America", "latam"], ["Asia Pacific", "apac"], ["Europe, Middle East, Africa", "emea"] ], {prompt: "Select Region"}, class: "input-lg", :style => "width: 80%;" %>
 				</div>
 			</div>
 			<div class="col-lg-4 col-md-4 col-xs-4">
 				<div class="input-group">
 					<%= f.label 'Lowest Passing Percentage' %><br>
-		    		<%= f.text_field :minimum, class: "input-lg", :style => "width: 70%;" %><span style="font-size: larger;"><strong></strong> %</span>
+		    		<%= f.number_field :minimum, class: "input-lg", :style => "width: 70%;" %><span style="font-size: larger;"><strong></strong> %</span>
 		    	</div>
 		    </div>
 	    	<div class="col-lg-4 col-md-4 col-xs-4">
-				<div class="input-group">
-					<%= f.label :time %><br>
-		    		<%= f.text_field :time, class: "input-lg" %>
+				<div class="dropdown">
+					<%= f.label "Time Allotment" %><br/>
+		    		<%= f.time_select :time, options = {:default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
 		    	</div>
 	    	</div>
 	 	  </div>
