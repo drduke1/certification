@@ -44,9 +44,10 @@
   	  <th width="6%" data-placeholder="Search">Code</th>
       <th width="9%" data-placeholder="Search">Type</th>
 	  <th width="14%" data-placeholder="Search">Category</th>
-	  <th width="28%" data-placeholder="Search">Description</th>
+	  <th width="7%" data-placeholder="Search">Region</th>
+	  <th width="20%" data-placeholder="Search">Description</th>
 	  <th width="10%" data-placeholder="Search">User</th>
-      <th width="9%" class="filter-false">Functions</th>
+      <th width="7%" class="filter-false">Function</th>
       </tr>
   </thead>
 
@@ -57,6 +58,7 @@
         <td><%= test.id %></td>
         <td style="text-align: left;"><%= test.type %></td>
         <td><%= test.category %></td>
+        <td><%= test.region %></td>
         <td style="text-align: left;"><%= test.description %></td>
         <td><%= User.find(test.user_id).name %></td>
         <td><%= link_to test do %>

@@ -30,8 +30,9 @@
   	  <tr>
   	  <th width="20%" data-placeholder="Search">Name</th>
       <th width="10%" data-placeholder="Search">Test</th>
-	  <th width="15%" data-placeholder="Search">Score</th>
-	  <th width="35%" data-placeholder="Search">Email</th>
+      <th width="8%" class="filter-select filter-match" data-placeholder="Search">Region</th>
+	  <th width="11%" data-placeholder="Search">Score</th>
+	  <th width="31%" data-placeholder="Search">Email</th>
 	  <th width="10%" data-placeholder="Search">Date Taken</th>
       </tr>
   </thead>
@@ -39,9 +40,11 @@
   <tbody>
     <% @scores.each do |score| %>
     <% @user = User.find(score.user_id) %>
+    <% @test = Test.find(score.test_id) %>
       <tr>
         <td><%= @user.name %></td>
-        <td><%= Test.find(score.test_id).name %></td>
+        <td><%= @test.name %></td>
+        <td><%= @test.region %></td>
         <% if score.scores.to_s == '100.0'%>
         <td><%= link_to number_to_percentage(score.scores), score %></td>
         <% else %>

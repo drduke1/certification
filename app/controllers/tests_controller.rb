@@ -106,9 +106,9 @@ class TestsController < ApplicationController
         @test.section = @section_names.to_s
         @test.percent = @percentages.to_s
         @test.total = @total_questions.to_s
-        @test.category = params[:question][:category]        
+        @test.category = params[:question][:category] 
         @test.hour = params[:test]["time(4i)"]
-        @test.minute = params[:test]["time(5i)"]        
+        @test.minute = params[:test]["time(5i)"]               
       end
       respond_to do |format|
         if @test.save 
@@ -136,10 +136,17 @@ class TestsController < ApplicationController
     def update
       respond_to do |format|
         @test.question_ids = []
+        if (params[:test]["time(4i)"] != "00")
+          @test.hour = params[:test]["time(4i)"]
+        end       
+        if (params[:test]["time(5i)"] != "00")
+          @test.minute = params[:test]["time(5i)"] 
+        end  
         if @test.update(test_params)
           format.html { redirect_to @test, notice: 'Test was successfully updated.' }
           format.json { head :no_content }
         else
+          @questions = Question.all
           format.html { render action: 'edit' }
           format.json { render json: @test.errors, status: :unprocessable_entity }
         end

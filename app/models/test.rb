@@ -15,6 +15,5 @@ class Test < ActiveRecord::Base
   validates :hour, presence: true
   validates :minute, presence: true
   validates :minimum, presence: true
-  validates :region, presence: true
   
 end

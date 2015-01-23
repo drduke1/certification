@@ -22,6 +22,20 @@
   <strong>User:</strong>
   <%= User.find(@test.user_id).name %>
 </p>
+<% if @test.region.nil? == false %>
+<p style="display: inline-block;">
+  <strong>Region:</strong>
+  <%= @test.region.upcase %>
+</p>
+<% end %>
+<p style="display: inline-block; margin-left: 25px;">
+  <strong>Passing %:</strong>
+  <%= @test.minimum %>
+</p>
+<p style="display: inline-block; margin-left: 25px;">
+  <strong>Time Allotment:</strong>
+  <%= @test.hour %> hour(s) <%= @test.minute %> minute(s)
+</p>
 <p>
 	<strong>Question:</strong>
 	<%= @test.question_ids %>
