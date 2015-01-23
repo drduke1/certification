@@ -68,6 +68,8 @@ class TestsController < ApplicationController
     def create
       @test = Test.new(test_params)
       @questions = Question.all
+      @test.hour = params[:test]["time(4i)"]
+      @test.minute = params[:test]["time(5i)"]
       respond_to do |format|
         if @test.save 
           format.html { redirect_to @test, notice: 'Test was successfully created.' }
@@ -104,6 +106,9 @@ class TestsController < ApplicationController
         @test.section = @section_names.to_s
         @test.percent = @percentages.to_s
         @test.total = @total_questions.to_s
+        @test.category = params[:question][:category]        
+        @test.hour = params[:test]["time(4i)"]
+        @test.minute = params[:test]["time(5i)"]        
       end
       respond_to do |format|
         if @test.save 
@@ -174,7 +179,7 @@ class TestsController < ApplicationController
   
       # Never trust parameters from the scary internet, only allow the white list through.
       def test_params
-        params.require(:test).permit(:name, :user_id, :type, :category, :description, :total, :question_ids => [], :section => [], :percent => [], questions_attributes: [ :id ] ).
+        params.require(:test).permit(:name, :user_id, :type, :category, :description, :total, :region, :minimum, :time => [], :question_ids => [], :section => [], :percent => [], questions_attributes: [ :id ] ).
         merge user_id: current_user.id
       end    
       

@@ -82,19 +82,19 @@
 		  	<div class="col-lg-4 col-md-4 col-xs-4">
 			  	<div class="input-group">
 					<%= f.label :region %><br>
-					<%= f.select :region, [ ["North America", "na"], ["Latin America", "latam"], ["Asia Pacific", "apac"], ["Europe, Middle East, Africa", "emea"] ], {prompt: "Select Region"}, class: "input-lg", :style => "width: 80%;" %>
+					<%= f.select :region, [ ["North America", "na"], ["Latin America", "latam"], ["Asia Pacific", "apac"], ["Europe, Middle East, Africa", "emea"] ], {prompt: "Select Region"}, class: "input-lg", :style => "width: 90%;" %>
 				</div>
 			</div>
-			<div class="col-lg-4 col-md-4 col-xs-4">
+			<div class="col-lg-3 col-md-3 col-xs-3 col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
 				<div class="input-group">
 					<%= f.label 'Lowest Passing Percentage' %><br>
-		    		<%= f.number_field :minimum, class: "input-lg", :style => "width: 70%;" %><span style="font-size: larger;"><strong></strong> %</span>
+		    		<%= f.number_field :minimum, class: "input-lg", :style => "width: 33%; margin-left: 20%;" %><span style="font-size: larger;"><strong></strong> %</span>
 		    	</div>
 		    </div>
-	    	<div class="col-lg-4 col-md-4 col-xs-4">
+	    	<div class="col-lg-3 col-md-3 col-xs-3 col-lg-offset-1 col-md-offset-1 col-xs-offset-1">
 				<div class="dropdown">
 					<%= f.label "Time Allotment" %><br/>
-		    		<%= f.time_select :time, options = {:default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
+		    		<%= f.time_select :time, options = {:ignore_date => true, :default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
 		    	</div>
 	    	</div>
 	 	  </div>
@@ -444,12 +444,11 @@ $(document).ready(function(e) {
     	alert('Define Total Number of Questions')
         return false;
     }
-    if ( $.isNumeric($('input[name="test[minimum]"').val()) ) {
-    	return true;
-    }
-    else {
-        alert('Define Passing Percentage')
-        return false;
-    }
+    
+    var regex = new RegExp(/^[1-9][0-9]?$|^100$/);
+    if($('input[name="test[minimum]"').val().match(regex)) {return true;}
+    return false;
+    
+    
 });
 </script>

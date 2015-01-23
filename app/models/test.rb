@@ -10,5 +10,11 @@ class Test < ActiveRecord::Base
   validates :name, presence: true
   validates :type, presence: true
   validates :description, presence: true
+  validates :category, presence: true
+  validates :user_id, presence: true
+  validates :hour, presence: true
+  validates :minute, presence: true
+  validates :minimum, presence: true
+  validates :region, presence: true
   
 end

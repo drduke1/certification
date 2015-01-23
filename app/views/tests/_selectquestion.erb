@@ -11,6 +11,13 @@
 		background-color: #eeeeee;
 		opacity: 1;
 	}
+	select.time_select {
+		padding: 5px;
+		font-size: 25px;
+    	width:auto;
+    	border: 1px solid #cccccc;
+    	background-color: #ffffff;
+	}
 </style>
 
 <%= form_for(@test) do |f| %>
@@ -38,11 +45,24 @@
     <%= f.label :description %><br>
     <%= f.text_field :description, class: "input-lg" %>
   </div>
-  <div class="input-group" style="display: inline-block;">
+  <div class="input-group" style="display: inline-block; width: 49%;">
+	<%= f.label :region %><br>
+	<%= f.select :region, [ ["North America", "na"], ["Latin America", "latam"], ["Asia Pacific", "apac"], ["Europe, Middle East, Africa", "emea"] ], {prompt: "Select Region"}, class: "input-lg", :style => "width: 90%;" %>
+  </div>
+  <div class="input-group" style="display: inline-block; width: 49%; float: right;">
     <%= f.label :category %><br>
 	<%#= f.select :category, [], { :include_blank => 'Select Category'}, {:class => 'form-control input-lg', :id => 'category', "data-column" =>  4} %>
 	<%= f.select :category, [ ["IP Voice Telephony", "ip_voice"], ["IP Video Surveillance", "ip_video_surveillance"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"] ], {prompt: "Select Category"}, class: "input-lg", :id => "category" %>
  </div>
+  <div class="input-group" style="display: inline-block; width: 24%;">
+	<%= f.label 'Lowest Passing Percentage' %><br>
+	<%= f.number_field :minimum, class: "input-lg", :style => "width: 33%; margin-left: 18%;" %><span style="font-size: larger;"><strong></strong> %</span>
+  </div>
+  <div class="dropdown" style="display: inline-block; width: 24%; float: left; margin-left: 20px;">
+	<%= f.label "Time Allotment" %><br/>
+	<%= f.time_select :time, options = {:ignore_date => true, :default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
+  </div>
+  
  
  <div class="row" style="margin-top: 15px; margin-bottom: 15px; margin-left: 0px;">
     <div id="filter-panel" class="collapse filter-panel">
@@ -287,5 +307,12 @@ $(document).ready(function(){
         // $('#count-checked-checkboxes').text(countCheckedCheckboxes);
         $('#count').val(countCheckedCheckboxes);
     });
+});
+</script>
+<script>
+	$('.new_test').on('submit', function() {
+    var regex = new RegExp(/^[1-9][0-9]?$|^100$/);
+    if($('input[name="test[minimum]"').val().match(regex)) {return true;}
+    return false;
 });
 </script>

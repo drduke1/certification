@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150122173832) do
+ActiveRecord::Schema.define(version: 20150123190421) do
 
   create_table "answers", force: true do |t|
     t.string   "option"
@@ -89,7 +89,9 @@ ActiveRecord::Schema.define(version: 20150122173832) do
     t.string   "percent"
     t.string   "region"
     t.string   "minimum"
-    t.decimal  "time"
+    t.string   "time"
+    t.string   "minute"
+    t.string   "hour"
   end
 
   create_table "users", force: true do |t|
