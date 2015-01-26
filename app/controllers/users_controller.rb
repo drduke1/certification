@@ -33,17 +33,18 @@ class UsersController < ApplicationController
   # POST /users.json
   def create
     if user = User.find_by(email: params[:user][:email].downcase)
-        if params[:user][:taking] == "taking"
-          code = params[:user][:code]
-          if Test.where(id: code).present? == false
-            redirect_to home_path, notice: 'The code entered is invalid'
-          else
-            sign_in user
-            redirect_to new_score_path(request.parameters)
-          end
-        else
-         redirect_to user, notice: 'User already exists.'
-        end
+      redirect_to signin_url, notice: "Please sign in."
+#        if params[:user][:taking] == "taking"
+#          code = params[:user][:code]
+#          if Test.where(id: code).present? == false
+#            redirect_to home_path, notice: 'The code entered is invalid'
+#          else
+#            sign_in user
+#            redirect_to new_score_path(request.parameters)
+#          end
+#        else
+#         redirect_to user, notice: 'User already exists.'
+#        end
     else
       if params[:user][:taking] == "taking"
         password = SecureRandom.urlsafe_base64(8)
