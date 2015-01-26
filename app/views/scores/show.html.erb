@@ -1,9 +1,19 @@
 <style>
 	td {text-align: center;}
+	h3 {
+		text-align: center;
+	}
 </style>
 
 <h1>Test Results</h1>
 
+<% if @score.passed %>
+<h1 style="color: green;">PASSED</h1>
+<% elsif @score.passed.nil? %>
+
+<% else %>
+<h1 style="color: red;">FAILED</h1>
+<% end %>
 <div class="panel panel-primary">
   <div class="panel-heading">
     <h3 class="panel-title">Test</h3>
@@ -64,6 +74,36 @@
   </tbody>
 </table>
 </div>
+<div class="row">
+<div style="padding: 0px;" class="col-lg-4 col-md-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-xs-offset-1 panel panel-success">
+  <div class="panel-heading">
+    <h3 class="panel-title">Number of Answers Correct</h3>
+  </div>
+  <div style="text-align: center;" class="panel-body">
+    <%= @correct_answers_count %>
+  </div>
+</div>
+<div style="padding: 0px;" class="col-lg-4 col-md-4 col-xs-4 col-lg-offset-2 col-md-offset-2 col-xs-offset-2 panel panel-warning">
+  <div class="panel-heading">
+    <h3 class="panel-title">Number of Answers Wrong</h3>
+  </div>
+  <div style="text-align: center;" class="panel-body">
+    <%= @wrong_answers_count %>
+  </div>
+</div>
+</div>
+<div class="row">
+<div style="padding: 0px;" class="col-lg-6 col-md-6 col-xs-4 col-lg-offset-3 col-md-offset-3 col-xs-offset-2 panel panel-warning">
+  <div class="panel-heading">
+    <h3 class="panel-title">Sections to Improve</h3>
+  </div>	  
+  <div style="text-align: center;" class="panel-body">
+  	<% @count.word_occurrences.each do |key, value| %>
+    <%= "#{key.titleize} : #{value} Wrong" %><br/>
+  	<% end %>
+  </div>
+</div>
+</div>
 
 <script>
 	$(function()
@@ -105,6 +145,7 @@
 );
 </script>
 <% else %>
+<div class="row">
   <div style="padding: 0px;" class="col-lg-4 col-md-4 col-xs-4 col-lg-offset-1 col-md-offset-1 col-xs-offset-1 panel panel-success">
 	  <div class="panel-heading">
 	    <h3 class="panel-title">Number of Answers Correct</h3>
@@ -121,5 +162,18 @@
 	    <%= @wrong_answers %>
 	  </div>
   </div>
-  <br/></br/><br/></br/>
+</div>
+<div class="row">
+<div style="padding: 0px;" class="col-lg-6 col-md-6 col-xs-4 col-lg-offset-3 col-md-offset-3 col-xs-offset-2 panel panel-warning">
+  <div class="panel-heading">
+    <h3 class="panel-title">Sections to Improve</h3>
+  </div>	  
+  <div style="text-align: center;" class="panel-body">
+  	<% @count.word_occurrences.each do |key, value| %>
+    <%= "#{key.titleize} : #{value} Wrong" %><br/>
+  	<% end %>
+  </div>
+</div>
+</div>
+  <br/></br/>
 <% end %>

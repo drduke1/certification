@@ -22,6 +22,14 @@ class ScoresController < ApplicationController
           redirect_to home_path, notice: 'Your being logged, stop it.'
         end
       end
+#      if @score.passed.nil?
+#        @passed = Test.find(@score.test_id).minimum
+#        if @score.scores >= @passed.to_i
+#          @score.passed = true
+#        else
+#          @score.passed = false
+#        end
+#      end
       @each_answer = []
       @scores = @score.answer_ids.scan(/\d+/).map(&:to_i)
       #@scores = eval(@score.answer_ids)  # This executes string as Ruby code :D, isn't as fast as scan()
@@ -37,8 +45,19 @@ class ScoresController < ApplicationController
       
       # Get correct & wrong answers count to show Tester
       @answers = Answer.where(id: @scores)
-      @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
-      @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
+      @correct_answers = @answers.where(correct: true).distinct(:question_id)
+      @wrong_answers = @answers.where(correct: false).distinct(:question_id)
+      
+      @correct_answers_count = @correct_answers.count(:question_id)
+      @wrong_answers_count = @wrong_answers.count(:question_id)
+      
+      # Get sections and number wrong from section
+      @wrong_sections = []
+      @wrong_answers.each do |a|
+        @wrong_sections << a.question.section 
+      end
+      @string_wrong = @wrong_sections.map(&:inspect).join(', ')
+      @count = WordsCounted.count(@string_wrong)
     end
   
     # GET /tests/new
@@ -88,6 +107,7 @@ class ScoresController < ApplicationController
         @score = Score.new
         @score.test_id = params[:test_id]
         @score.user_id = params[:user_id]
+        @passed = @test.minimum          
         @answers = Answer.where(id: params[:answer_ids])
          @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
          @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
@@ -96,6 +116,11 @@ class ScoresController < ApplicationController
          else
            @score.scores = 100
          end
+        if @score.scores >= @passed.to_i
+          @score.passed = true
+        else
+          @score.passed = false
+        end
         @score.answer_ids = params[:answer_ids].to_s
         #@answer_ids = []
         # @answers.each do |me|

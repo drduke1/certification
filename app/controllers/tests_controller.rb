@@ -136,12 +136,8 @@ class TestsController < ApplicationController
     def update
       respond_to do |format|
         @test.question_ids = []
-        if (params[:test]["time(4i)"] != "00")
           @test.hour = params[:test]["time(4i)"]
-        end       
-        if (params[:test]["time(5i)"] != "00")
-          @test.minute = params[:test]["time(5i)"] 
-        end  
+          @test.minute = params[:test]["time(5i)"]
         if @test.update(test_params)
           format.html { redirect_to @test, notice: 'Test was successfully updated.' }
           format.json { head :no_content }
