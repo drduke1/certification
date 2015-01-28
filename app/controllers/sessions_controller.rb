@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	def new 
 		if signed_in?
 		  if current_user.permission.include?("Read Only")
-		    redirect_to home_path
+		    redirect_to score_path
 		  else
 			redirect_to overview_path
 		  end
@@ -15,7 +15,11 @@ class SessionsController < ApplicationController
 		if user && user.authenticate(params[:session][:password])
 			sign_in user
 			flash[:success] = 'You have successfully signed in'
-			redirect_to overview_path
+			if user.permission.include?("Read Only")
+			  redirect_to scores_path
+			else
+			  redirect_to overview_path
+			end
 		else
 			flash.now[:error] = 'Invalid email/password combination'
 			render 'new'

@@ -19,6 +19,7 @@ Certification::Application.routes.draw do
   post "/newgen", to: "tests#creategen"
   
   get "/print/:id", to: "tests#print", as: 'print'
+  get "/new_form", to: "scores#new_form"
   
   resources :answers
 

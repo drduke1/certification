@@ -1,7 +1,7 @@
 class Score < ActiveRecord::Base
   belongs_to :user
   
-  #attr_accessor :total, :section, :percent
+  attr_accessor :code
   
   self.inheritance_column = nil
   

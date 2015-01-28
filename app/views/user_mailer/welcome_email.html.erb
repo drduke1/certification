@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta content='text/html; charset=UTF-8' http-equiv='Content-Type' />
+  </head>
+  <body>
+    <h1>Dear <%= @user.name %>,</h1>
+    <br />
+    <p>
+      You have a new account with Grandstream's Certification Portal!
+    </p>
+    <br />
+    <p>
+    	<ul style="list-style: none">
+    		<li>URL: http://certification.grandstream.com/</li>
+    		<li></li>
+    		<li><strong>Username:</strong>: <%= @user.email %></li>
+    		<li><strong>Password</strong>: <%= @user.password %></li>
+    	</ul>
+    </p>
+    <br />    
+    <p>Thanks for joining and have a great day!</p>
+  </body>
+</html>

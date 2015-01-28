@@ -1,0 +1,16 @@
+<% provide(:title, "Take New Test") %>
+<h1>New Tester</h1>
+
+<div class="row">
+  <div class="col-md-6 col-md-offset-3">
+		<%= form_for(@score) do |f| %>	
+			<%= f.label :code %>
+			<%= f.text_field :code, class: "input-lg" %>
+		  <%= f.submit "Take Test", class: "btn btn-lg btn-primary" %>
+		<% end %>
+	</div>
+</div>
+
+<hr/>
+
+<%= link_to 'Back', users_path %>

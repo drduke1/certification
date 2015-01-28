@@ -48,7 +48,7 @@ module SessionsHelper
     @permission = current_user.permission
       if @permission.include?("Read Only")
         begin
-          redirect_to home_path
+          redirect_to signin_url
         rescue
           return false
         end

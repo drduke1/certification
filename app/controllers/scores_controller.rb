@@ -1,4 +1,5 @@
 class ScoresController < ApplicationController
+    before_filter :permitted, only: [:new, :edit, :update, :destroy]
     before_action :set_score, only: [:show, :edit, :update, :destroy]  
     before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
     before_action :set_code, only: [:new] 
@@ -10,7 +11,7 @@ class ScoresController < ApplicationController
       if current_user.permission != ["Read Only"]
         @scores = Score.all
       else
-        redirect_to home_path, notice: 'Your being logged, stop it.'
+        @scores = Score.where(user_id: current_user.id)
       end
     end
     
@@ -61,7 +62,16 @@ class ScoresController < ApplicationController
       @count = WordsCounted.count(@string_wrong_nospace) 
     end
   
-    # GET /tests/new
+    # Get /scores/new_form
+    def new_form
+      if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
+        redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
+      else
+        @score = Score.new(take_test)
+      end
+    end
+    
+    # GET /scores/new
     def new
       #code = SecureRandom.urlsafe_base64(8)
       begin
@@ -75,13 +85,13 @@ class ScoresController < ApplicationController
         
       #end
       rescue
-        @score = Score.new
-        #redirect_to root_path
+        #@score = Score.new
+        redirect_to root_path
       end
     end
     
-  # get /tests
-    # get /tests.json
+  # get /scores
+    # get /scores.json
     def edit
       @score = Score.new(score_params)
       @test = Test.find(params[:score][:test_id])
@@ -98,10 +108,15 @@ class ScoresController < ApplicationController
     end
     
     
-    # POST /tests
-    # POST /tests.json
+    # POST /scores
+    # POST /scores.json
     def create
-      @test = Test.find(params[:test_id])
+      if params[:score][:code]
+        @test = Test.find(params[:score][:code])
+      else
+        @test = Test.find(params[:test_id])
+      end
+      
       if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
         redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
       else
@@ -181,6 +196,10 @@ class ScoresController < ApplicationController
       def score_params
         params.require(:score).permit(:name, :user_id, :test_id, :answer_ids => [] )
       end    
+      
+      def take_test
+        params.permit(:code )
+      end 
       
       # Before filters
       def signed_in_user

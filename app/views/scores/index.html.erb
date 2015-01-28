@@ -8,7 +8,13 @@
 	}
 </style>
 <h1>Test Scores</h1>
-
+<% if current_user.permission.include?('Read Only') %>
+  <%= link_to 'new_form', id: "new_button" do %>
+	<button type="button" class="btn btn-lg btn-success">
+		<span class="glyphicon glyphicon-plus"></span>  Take New Test
+	</button>
+  <% end %>
+<% end %>
 <div class="awesome" style="width: 1400px; margin-left: auto; margin-right: auto; padding-left: 5px; padding-top: 15px;">
 	<!-- Page: <select class="gotoPage"></select> -->
 	<img src="../assets/jquery-tablesorter/addons/pager/icons/first.png" class="first" alt="First" title="First page" />

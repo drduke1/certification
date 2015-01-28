@@ -14,6 +14,13 @@ class StaticPagesController < ApplicationController
   end
   
   def overview
+    if current_user.permission == "Read Only"
+      @tester = true
+    elsif current_user.permission != "Read Only"
+      @tester = false
+    else
+      redirect_to signin_url
+    end
   end
   
   # Before filters

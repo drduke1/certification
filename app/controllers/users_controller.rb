@@ -59,6 +59,7 @@ class UsersController < ApplicationController
           user = @user
           respond_to do |format|
             if @user.save
+              UserMailer.welcome_email(user).deliver
               sign_in user
               format.html { redirect_to new_score_path(request.parameters), notice: 'Please answer all questions' }
             else

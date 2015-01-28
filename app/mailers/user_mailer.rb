@@ -1,9 +1,9 @@
 class UserMailer < ActionMailer::Base
   default from: "certification@grandstream.com"
   
-  def new_user(user)
+  def welcome_email(user)
     @user = user
-    mail(to: "certification@grandstream.com", :bcc => "david.duke@grandstream.com", subject: 'Grandstream Certification - New Application Submitted')
+    mail(to: "user.email", :bcc => "david.duke@grandstream.com", subject: 'Grandstream Certification - New User')
   end
   
   def reset_email(user)
