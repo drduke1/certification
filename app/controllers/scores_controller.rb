@@ -57,7 +57,8 @@ class ScoresController < ApplicationController
         @wrong_sections << a.question.section 
       end
       @string_wrong = @wrong_sections.map(&:inspect).join(', ')
-      @count = WordsCounted.count(@string_wrong)
+      @string_wrong_nospace = @string_wrong.gsub(/\s+(?=[a-zA-Z])/, "-")
+      @count = WordsCounted.count(@string_wrong_nospace) 
     end
   
     # GET /tests/new
