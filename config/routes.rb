@@ -20,6 +20,7 @@ Certification::Application.routes.draw do
   
   get "/print/:id", to: "tests#print", as: 'print'
   get "/new_form", to: "scores#new_form"
+  post "/new_form", to: "scores#new"
   
   resources :answers
 

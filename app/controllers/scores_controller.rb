@@ -1,7 +1,7 @@
 class ScoresController < ApplicationController
-    before_filter :permitted, only: [:new, :edit, :update, :destroy]
+    before_filter :permitted, only: [:edit, :update, :destroy]
     before_action :set_score, only: [:show, :edit, :update, :destroy]  
-    before_action :signed_in_user, only: [:index, :edit, :show, :update, :destroy]
+    before_action :signed_in_user, only: [:new, :new_form, :index, :edit, :show, :update, :destroy]
     before_action :set_code, only: [:new] 
   
   
@@ -64,26 +64,24 @@ class ScoresController < ApplicationController
   
     # Get /scores/new_form
     def new_form
-      if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
-        redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
-      else
-        @score = Score.new(take_test)
-      end
+      #if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
+      #  redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
+      #else
+        #@code = take_test
+        #redirect_to new_score_path(request.parameters)
+      #end
     end
     
     # GET /scores/new
     def new
       #code = SecureRandom.urlsafe_base64(8)
       begin
-      #if code == params[:user][:code]
         @test = Test.find(@code)
         if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
           redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
         else
           @score = Score.new
         end
-        
-      #end
       rescue
         #@score = Score.new
         redirect_to root_path
@@ -111,11 +109,7 @@ class ScoresController < ApplicationController
     # POST /scores
     # POST /scores.json
     def create
-      if params[:score][:code]
-        @test = Test.find(params[:score][:code])
-      else
-        @test = Test.find(params[:test_id])
-      end
+      @test = Test.find(params[:test_id])
       
       if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
         redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'

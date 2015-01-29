@@ -3,7 +3,7 @@ class SessionsController < ApplicationController
 	def new 
 		if signed_in?
 		  if current_user.permission.include?("Read Only")
-		    redirect_to score_path
+		    redirect_to scores_path
 		  else
 			redirect_to overview_path
 		  end

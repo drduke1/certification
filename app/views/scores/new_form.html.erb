@@ -1,9 +1,9 @@
 <% provide(:title, "Take New Test") %>
-<h1>New Tester</h1>
+<h1>New Test, Good Luck!</h1>
 
 <div class="row">
   <div class="col-md-6 col-md-offset-3">
-		<%= form_for(@score) do |f| %>	
+		<%= form_for :user do |f| %>	
 			<%= f.label :code %>
 			<%= f.text_field :code, class: "input-lg" %>
 		  <%= f.submit "Take Test", class: "btn btn-lg btn-primary" %>
