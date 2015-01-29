@@ -10,10 +10,12 @@
 				<strong>Email: </strong>
 				<%= @user.email %>
 			</h5>
+			<% unless @user.permission.include?('Read Only') %>
 			<h5>
 				<strong>Permissions: </strong>
 				<%= @user.permission.to_s %>
 			</h5>
+			<% end %>
 		</section>
 	</aside>
 </div>

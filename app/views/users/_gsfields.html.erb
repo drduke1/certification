@@ -1,0 +1,20 @@
+<%= render 'shared/error_messages' %>
+
+<%= f.label :name %>
+<%= f.text_field :name, class: "input-lg" %>
+
+<%= f.label :email %>
+<%= f.text_field :email, class: "input-lg" %>
+
+<%= f.label :password %>
+<%= f.password_field :password, class: "input-lg" %>
+
+<%= f.label :password_confirmation, "Confirm Password" %>
+<%= f.password_field :password_confirmation, class: "input-lg" %>
+
+<%= f.label :permission, "Permission Level" %>
+<%= f.select :permission, [ ["Read Only", "Read Only"], ["IP Voice Telephony", "ip_voice"], ["IP Video Telephony", "ip_video_telephony"], ["Enterprise Gateways", "enterprise_gateways"], ["Consumer ATAs", "consumer_atas"], ["IP PBX", "ip_pbx"], ["Master of All", "all"] ], {}, {:multiple => true, class: "input-lg"} %>
+	
+<%= f.label :admin, "Administrator" %>
+	<span style="display: inline-block; width: 20px; margin-left: 20px; margin-bottom: 25px;"><%= f.check_box :admin %></span>
+	
