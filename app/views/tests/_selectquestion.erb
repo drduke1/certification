@@ -58,10 +58,10 @@
 	<%= f.label 'Lowest Passing Percentage' %><br>
 	<%= f.number_field :minimum, class: "input-lg", :style => "width: 33%; margin-left: 18%;" %><span style="font-size: larger;"><strong></strong> %</span>
   </div>
-  <div class="dropdown" style="display: inline-block; width: 24%; float: left; margin-left: 20px;">
-	<%= f.label "Time Allotment" %><br/>
-	<%= f.time_select :time, options = {:ignore_date => true, :default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
-  </div>
+  <!-- <div class="dropdown" style="display: inline-block; width: 24%; float: left; margin-left: 20px;">
+	<%#= f.label "Time Allotment" %><br/>
+	<%#= f.time_select :time, options = {:ignore_date => true, :default => {:hour => '0', :minute => '0'}}, html_options = {class: "time_select"} %>
+  </div> -->
   
  
  <div class="row" style="margin-top: 15px; margin-bottom: 15px; margin-left: 0px;">
