@@ -3,6 +3,7 @@ class ScoresController < ApplicationController
     before_action :set_score, only: [:show, :edit, :update, :destroy]  
     before_action :signed_in_user, only: [:new, :new_form, :index, :edit, :show, :update, :destroy]
     before_action :set_code, only: [:new] 
+    respond_to :html, :js
   
   
     # GET /scores
@@ -72,20 +73,53 @@ class ScoresController < ApplicationController
       #end
     end
     
+    def time
+      unless current_user.time != nil
+        @time = Time.now
+        @user = User.find(current_user.id)
+        @user.update_attributes(time: @time)
+      end
+    end
+    
     # GET /scores/new
     def new
       #code = SecureRandom.urlsafe_base64(8)
-      begin
+      #begin
         @test = Test.find(@code)
         if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
           redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
         else
-          @score = Score.new
+          #Get time limit
+          @hours = @test.hour
+          @minutes = @test.minute
+          @hour = @hours.to_i
+          @minute = @minutes.to_i
+          @deadline = @hour + @minute
+          @score = Score.new()
+          @user_time = current_user.time
+          if (@user_time != nil) && (@deadline != 0)
+            @submit_deadline2 = @user_time.to_time
+            @submit_deadline = @submit_deadline2 + @hour.hour + @minute.minute
+            @time = @user_time
+            if Time.now < @submit_deadline
+              @start = @user_time.to_time
+              @difference = Time.diff(@submit_deadline, Time.now, '%y, %M, %d and %h:%m:%s')
+            else
+              @difference = "SAVE" #{:year=>0, :month=>0, :week=>0, :day=>0, :hour=>0, :minute=>0, :second=>0, :diff=>"00:00:00"}
+            end            
+          else
+            @time = ""
+            @difference = ""          
+          end
         end
-      rescue
+        respond_to do |format|
+          format.html
+          format.json { render action: 'time' }
+        end
+      #rescue
         #@score = Score.new
-        redirect_to root_path
-      end
+       # redirect_to root_path
+      #end
     end
     
   # get /scores
@@ -110,7 +144,6 @@ class ScoresController < ApplicationController
     # POST /scores.json
     def create
       @test = Test.find(params[:test_id])
-      
       if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
         redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
       else
@@ -126,12 +159,20 @@ class ScoresController < ApplicationController
          else
            @score.scores = 100
          end
-        if @score.scores >= @passed.to_i
+        @score_digit = @score.scores * 100
+        if @score_digit >= @passed.to_d
           @score.passed = true
         else
           @score.passed = false
         end
-        @score.answer_ids = params[:answer_ids].to_s
+        if params[:answer_ids]
+          @score.answer_ids = params[:answer_ids].to_s
+        else
+          @score.answer_ids = "[]"
+          @score.passed = false
+          @score.scores = 0
+        end
+        
         #@answer_ids = []
         # @answers.each do |me|
         #   @answer_ids << Answer.find(me)
@@ -139,6 +180,8 @@ class ScoresController < ApplicationController
         # @score.answer_ids = @answers_ids
         respond_to do |format|
           if @score.save 
+            @user = User.find(current_user.id)
+            @user.update_attributes(time: nil)
             ScoreMailer.score_email(@score, @correct_answers, @wrong_answers).deliver
             format.html { redirect_to @score, notice: 'Test was successfully created.' }
             format.json { render action: 'show', status: :created, location: @score }

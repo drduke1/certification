@@ -17,6 +17,8 @@ gem 'prawn'
 gem 'prawn-table'
 gem 'prawn-grouping'
 gem 'words_counted'
+gem 'jquery-countdown-rails'
+gem 'time_diff'
 
 group :development, :test do
   gem 'sqlite3', '1.3.8'

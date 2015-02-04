@@ -7,7 +7,7 @@ class Score < ActiveRecord::Base
   
   validates :user_id, presence: true
   validates :test_id, presence: true
-  validates :scores, presence: true
+  #validates :scores, presence: true
   validates :answer_ids, presence: true
   
 end

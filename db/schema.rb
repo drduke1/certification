@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150123190421) do
+ActiveRecord::Schema.define(version: 20150130182908) do
 
   create_table "answers", force: true do |t|
     t.string   "option"
@@ -104,6 +104,7 @@ ActiveRecord::Schema.define(version: 20150123190421) do
     t.boolean  "admin",           default: false
     t.string   "permission"
     t.string   "validate_code"
+    t.string   "time"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true
