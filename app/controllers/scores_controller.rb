@@ -3,6 +3,7 @@ class ScoresController < ApplicationController
     before_action :set_score, only: [:show, :edit, :update, :destroy]  
     before_action :signed_in_user, only: [:new, :new_form, :index, :edit, :show, :update, :destroy]
     before_action :set_code, only: [:new] 
+    before_action :taken_before, only: [:new]
     respond_to :html, :js
   
   
@@ -86,9 +87,7 @@ class ScoresController < ApplicationController
       #code = SecureRandom.urlsafe_base64(8)
       #begin
         @test = Test.find(@code)
-        if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
-          redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
-        else
+        
           #Get time limit
           @hours = @test.hour
           @minutes = @test.minute
@@ -111,7 +110,6 @@ class ScoresController < ApplicationController
             @time = ""
             @difference = ""          
           end
-        end
         respond_to do |format|
           format.html
           format.json { render action: 'time' }
@@ -152,13 +150,21 @@ class ScoresController < ApplicationController
         @score.user_id = params[:user_id]
         @passed = @test.minimum          
         @answers = Answer.where(id: params[:answer_ids])
-         @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
-         @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
-         if @wrong_answers != 0
-           @score.scores = @correct_answers.to_i  / ( @wrong_answers.to_i + @correct_answers.to_f )
-         else
-           @score.scores = 100
-         end
+        @correct_answers = @answers.where(correct: true).distinct(:question_id).count(:question_id)
+        @wrong_answers = @answers.where(correct: false).distinct(:question_id).count(:question_id)
+        
+        #Get total number of questions
+        @test = Test.find(params[:test_id])
+        @total_questions = []
+        @test.questions.each do |q|
+          @total_questions << Answer.where(question_id: q)
+        end
+        @total = @total_questions.count 
+        @score.scores = @correct_answers.to_i  / @total.to_f
+        if @score_calc == 1.0
+          @score.scores = 100
+          #@score.scores = @correct_answers.to_i  / ( @wrong_answers.to_i + @correct_answers.to_f )
+        end
         @score_digit = @score.scores * 100
         if @score_digit >= @passed.to_d
           @score.passed = true
@@ -221,6 +227,13 @@ class ScoresController < ApplicationController
     
     private
       # Use callbacks to share common setup or constraints between actions.
+      def taken_before
+        @test = Test.find(@code)
+        if @score = Score.find_by_user_id_and_test_id(current_user.id,@test)
+          redirect_to score_path(@score), notice: 'You have a recorded submission for the code used.'
+        end
+      end
+    
       def set_score
         @score = Score.find(params[:id])
       end
