@@ -148,19 +148,19 @@
 				</div>
 				<div id="ip_video_telephony">
 				<%= q.label :product_id %><br>
-				<%= q.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id2"} %>
+				<%= q.collection_select :ip_video_telephony_product_id, Product.where({ category: "ip_video_telephony" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id3"} %>
 				</div>
 				<div id="consumer_atas">
 				<%= q.label :product_id %><br>
-				<%= q.collection_select :consumer_atas_product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id3"} %>
+				<%= q.collection_select :consumer_atas_product_id, Product.where({ category: "consumer_atas" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id4"} %>
 				</div>
 				<div id="enterprise_gateways">
 				<%= q.label :product_id %><br>
-				<%= q.collection_select :enterprise_gateways_product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id4"} %>
+				<%= q.collection_select :enterprise_gateways_product_id, Product.where({ category: "enterprise_gateways" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
 				</div>
 				<div id="ip_pbx">
 				<%= q.label :product_id %><br>
-				<%= q.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id5"} %>
+				<%= q.collection_select :ip_pbx_product_id, Product.where({ category: "ip_pbx" }), :id, :name, {prompt: "Select a product"}, {class: "form-control input-lg", id: "question_product_id6"} %>
 				</div>
 				<%= q.label :section %><p style="margin-left: 15px; display: inline-block;">Click <b><%= link_to 'HERE', new_section_path %></b> to create a section</p><br>
 				<%= q.select :section, options_for_select([ ["None", "None"] ]), {prompt: "Select a section"}, {class: "form-control input-lg" } %>
@@ -254,6 +254,16 @@ $(document).ready(function(e) {
 			
 			$.each( product_sections, function(){
 				if (this.product == $('#question_product_id5').val())
+				{
+					$('#question_section').append("<option>" + this.section + "</option>");
+				}
+			});
+		});
+		$('#question_product_id6').change(function(){
+			$('#question_section').html("<option>Please Select a Section</option>");
+			
+			$.each( product_sections, function(){
+				if (this.product == $('#question_product_id6').val())
 				{
 					$('#question_section').append("<option>" + this.section + "</option>");
 				}

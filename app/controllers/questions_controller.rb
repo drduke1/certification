@@ -114,7 +114,9 @@ class QuestionsController < ApplicationController
 
     # Never trust parameters from the scary internet, only allow the white list through.
     def question_params
-      params.require(:question).permit(:ip_pbx_product_id, :ip_video_telephony_product_id, :enterprise_gateways_product_id, :ip_video_surveillance_product_id, :ip_voice_product_id, :consumer_atas_product_id, :section, :content, :question_type, :category, :product_id, :active, :user_id, answers_attributes: [ :option, :correct, :question_id ] ).
+      params.require(:question).permit(:ip_pbx_product_id, :ip_video_telephony_product_id, :enterprise_gateways_product_id, :ip_video_surveillance_product_id, 
+        :ip_voice_product_id, :consumer_atas_product_id, :section, :content, :question_type, :category, :product_id, :active, :user_id, 
+        answers_attributes: [ :option, :correct, :question_id ] ).
       merge user_id: current_user.id
     end    
     
