@@ -1,3 +1,5 @@
 # Exam Certification Question Bank
 
-This application is used to store all questions used for Certification purposes.
+This application is designed for managing exam questions, users, tests, and results. 
+
+This is not maintained so any contributions are welcome!
